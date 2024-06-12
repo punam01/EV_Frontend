@@ -45,3 +45,19 @@
 .bag-icon{
     color:#535353;
 }
+
+.error-message {
+    flex-wrap: wrap;
+    margin-left: 20rem;
+    margin-top: 2rem;
+    z-index: -2;
+    color: #ff0000; 
+    background-color: #ffe5e5; 
+    border: 1px solid #ff0000; 
+    padding: 10px; 
+    border-radius: 5px; 
+    margin: 20px; 
+    text-align: center;
+    font-weight: bold; 
+  }
+  

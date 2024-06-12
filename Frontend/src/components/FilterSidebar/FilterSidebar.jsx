@@ -4,13 +4,15 @@ import Category from './Category/Category';
 import Price from './Price/Price';
 import ExteriorPaint from './ExteriorPaint/ExteriorPaint';
 import { getAllCars, getAllVariants, getDesiredVariant } from '../../services/carServices';
+import Steering from './Steering/Steering';
 
-const FilterSidebar = ({ onVariantsUpdate }) => {
+const FilterSidebar = ({ onVariantsUpdate, onError }) => {
   const [cars, setCars] = useState([]);
   const [priceRanges, setPriceRanges] = useState([]);
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedPriceRange, setSelectedPriceRange] = useState({});
   const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSteering, setSelectedSteering] = useState(null);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -52,6 +54,10 @@ const FilterSidebar = ({ onVariantsUpdate }) => {
     setSelectedColor(color);
   };
 
+  const handleSteeringChange = (steering) => {
+    setSelectedSteering(steering)
+  };
+
   const handleCategoryChange = async (modelName) => {
     try {
       const variants = await getAllVariants(modelName);
@@ -76,11 +82,14 @@ const FilterSidebar = ({ onVariantsUpdate }) => {
       const filteredVariant = await getDesiredVariant(queryParams);
       if (filteredVariant) {
         onVariantsUpdate([filteredVariant]);
+        onError(null); 
       } else {
         onVariantsUpdate([]);
+        onError('No variants found.'); 
       }
     } catch (error) {
       console.error('Error fetching desired variant:', error);
+      onError('Error fetching desired variant.');
     }
   };
 
@@ -90,6 +99,7 @@ const FilterSidebar = ({ onVariantsUpdate }) => {
         <Category cars={cars} onCategoryChange={handleCategoryChange} />
         <Price priceRanges={priceRanges} onPriceChange={handlePriceChange} />
         <ExteriorPaint onColorChange={handleColorChange} />
+        <Steering onSteeringChange={handleSteeringChange}/>
       </section>
     </>
   );

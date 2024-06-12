@@ -24,33 +24,6 @@
     color: black;
   }
 
-  .nav{
-    position: fixed;
-    display: flex;
-    flex-direction:row ;
-    justify-content: space-between;
-  }
-
-  .nav-links{
-    display: flex;
-  }
-
-  .logo,
-  .nav-items{
-    margin: 1em;
-    font-weight: 400;
-    font-size: 1.5vw;
-  }
-
-  h1{
-    width: 80%;
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    text-align: center;
-    text-transform: uppercase;
-  }
   .slide-in{
     position: fixed;
     width:100%;

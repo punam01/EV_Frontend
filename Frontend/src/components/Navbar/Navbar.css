@@ -1,0 +1,123 @@
+/* Base styles for navigation */
+nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #aeaeae;
+  }
+  
+  .logo {
+    width: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+  
+  .menu-btn {
+    display: none;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  ul {
+    flex: 1;
+    list-style: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-links {
+    display: inline-block;
+    margin: 5px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .nav-links:hover {
+    background-color: #e8e9e8;
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+  
+  .nav-items {
+    text-decoration: none;
+  }
+  
+  .profile {
+    width: 50px;
+    cursor: pointer;
+  }
+  
+  /* Responsive styles */
+  
+  /* Tablets and larger screens */
+  @media (min-width: 600px) {
+    .nav-links {
+      font-size: 14px;
+    }
+  }
+  
+  /* Desktops and larger screens */
+  @media (min-width: 768px) {
+    .nav-links {
+      font-size: 16px;
+      margin: 5px 15px;
+    }
+  
+    .profile {
+      width: 60px;
+    }
+  }
+  
+  /* Small screens (phones) */
+  @media (max-width: 599px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 5px;
+    }
+  
+    .logo {
+      margin-bottom: 10px;
+    }
+  
+    .menu-btn {
+      display: block;
+    }
+  
+    ul {
+      flex-direction: column;
+      width: 100%;
+      text-align: left;
+      padding-left: 10px;
+      display: none;
+    }
+  
+    .nav-links {
+      display: block;
+      margin: 5px 0;
+    }
+  
+    .profile {
+      align-self: flex-end;
+      display: none;
+    }
+  
+    nav.active ul,
+    nav.active .profile {
+      display: block;
+    }
+  }
+  
