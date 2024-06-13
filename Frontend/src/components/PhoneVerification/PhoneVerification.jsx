@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-//import 'react-phone-input-2/lib/style.css';
+import 'react-phone-input-2/lib/style.css';
 import { GoShieldLock } from "react-icons/go";
 import { CgSpinner } from "react-icons/cg";
 import { BsTelephoneFill } from "react-icons/bs";
 import OtpInput from 'react-otp-input';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
-
+import axios from "../../services/axiosInstance";
 
 function PhoneVerification({ onSuccess }) {
   const auth = getAuth();

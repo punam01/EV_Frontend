@@ -1,33 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgSpinner } from "react-icons/cg";
 
 import axios from "../../services/axiosInstance"; 
 import toast, { Toaster } from 'react-hot-toast';
 
+
 function UserDetailsForm({ user }) {
+  console.log(user)
   const [userDetails, setUserDetails] = useState({
     first_name: '',
     last_name: '',
     email: '',
     address: '',
-    pincode: ''
+    pincode: '',
+    custom_id:''
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    const customId = localStorage.getItem('customId'); 
+    if (customId) {
+      setUserDetails(prevDetails => ({
+        ...prevDetails,
+        custom_id: customId
+      }));
+    }
+  }, []);
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
+  
+    
+    const { custom_id, first_name, last_name, email, address, pincode } = userDetails;
+    console.log(custom_id,first_name,last_name,email,address,pincode)
     try {
-      await axios.post('/api/user', { ...userDetails, _id: user.uid, contact: user.phoneNumber });
+      await axios.post('/api/user', {
+        custom_id: userDetails.custom_id,
+        first_name: userDetails.first_name,
+        last_name: userDetails.last_name,
+        email: userDetails.email,
+        address: userDetails.address,
+        pincode: userDetails.pincode,
+        contact: user.phoneNumber 
+      });
+
       toast.success("User registered successfully!");
       setSubmitted(true);
     } catch (error) {
-      console.log(error);
+      console.error('Failed to register user:', error);
       toast.error("Failed to register user.");
     }
+
     setLoading(false);
   }
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

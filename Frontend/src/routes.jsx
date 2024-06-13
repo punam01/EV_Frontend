@@ -6,7 +6,7 @@ import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
-
+import UserProfilePage from './pages/UserProfile/UserProfilePage'
 const AppRoutes = () => (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -15,6 +15,7 @@ const AppRoutes = () => (
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/product/:id" element={<PDP />} />
+      <Route path="/profile" element={<UserProfilePage />} />
     </Routes>
 );
 
