@@ -12,7 +12,7 @@ const Navbar = () => {
   return(
   <nav className={menuOpen ? 'active' : ''}>
     <img src="https://th.bing.com/th?id=OIP.7zE0FSzeF1sz-8_t_IkQIgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="logo" className='logo'/>
-    <button class="menu-btn" onClick={toggleMenu}>Menu</button>
+    <button className="menu-btn" onClick={toggleMenu}>Menu</button>
     <ul className={`nav-items ${menuOpen ? 'active' : ''}`}>
       <li className='nav-links'><Link className='nav-items' to="/">Home</Link></li>
       <li className='nav-links'><Link className='nav-items' to="/showroom">Digital Showroom</Link></li>
