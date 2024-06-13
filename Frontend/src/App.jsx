@@ -6,13 +6,15 @@ import AppRoutes from '../src/routes'
 import './App.css';
 import ModelTypes from './components/ModelTypes/ModelTypes';
 import SignUp from './components/SignUp/SignUp';
+import Login from './components/Login/Login';
 
 const App = () => {
   const location = useLocation();
   return (
     <div className="App">
       {<Navbar />}
-      <SignUp />
+      {/*<SignUp />*/}
+      <Login />
       {/*<ModelTypes/>
       <AnimatePresence mode='wait'>
         <AppRoutes location={location} key={location.pathname} />

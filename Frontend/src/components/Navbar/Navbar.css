@@ -5,7 +5,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    border-bottom: 1px solid #aeaeae;
+    background-color: var(--black-color);
   }
   
   .logo {
@@ -38,20 +38,24 @@ nav {
   .nav-links {
     display: inline-block;
     margin: 5px 10px;
-    font-size: 13px;
+    font-size: 10px;
     cursor: pointer;
     padding: 0.5rem;
     font-weight: 500;
+    color:white;
   }
   
   .nav-links:hover {
     background-color: #e8e9e8;
     padding: 0.5rem;
     border-radius: 5px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
   }
   
   .nav-items {
     text-decoration: none;
+    color:white;
   }
   
   .profile {
@@ -64,14 +68,14 @@ nav {
   /* Tablets and larger screens */
   @media (min-width: 600px) {
     .nav-links {
-      font-size: 14px;
+      font-size: 10px;
     }
   }
   
   /* Desktops and larger screens */
   @media (min-width: 768px) {
     .nav-links {
-      font-size: 16px;
+      font-size: 13px;
       margin: 5px 15px;
     }
   
