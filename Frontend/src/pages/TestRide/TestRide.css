@@ -14,7 +14,7 @@
 .zipcode-container{
     margin-bottom:40px ;
 }
-
+.popup-container h3,
 .content-container h3,
 .zipcode-container h3{
     font-weight:600 ;
@@ -91,7 +91,7 @@
     justify-content: space-between;
     align-items: center;
 }
-
+.popup input,
 .form-input select,
 .form-input input{
     border: none;
@@ -112,7 +112,7 @@
     background-color: #e8e8e8;
     color: black;
 }
-
+.popup input:focus,
 .form-input select:focus,
 .form-input input:focus {
     outline: 1px solid gray;
@@ -149,3 +149,33 @@
     font-size: 15px;
 }
 
+.popup-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px); 
+    z-index: 1000; 
+}
+.popup{
+    margin: auto;
+    background-color: white;
+    width:40%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding:2rem;
+    margin-top:15rem;
+}
+.popup input{
+    margin-bottom: 10px;
+}
+
+.popup button{
+    background-color: #535AD6;
+    border-radius: 5px;
+    color:white;
+    font-weight: 500;
+}
