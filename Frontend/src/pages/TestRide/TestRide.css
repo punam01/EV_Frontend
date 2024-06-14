@@ -1,0 +1,151 @@
+.test-drive-container {
+    margin: auto;
+    width: 65%;
+    padding: 2rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.test-drive-container p {
+    font-weight: 300;
+    font-size:15px;
+    margin-bottom: 40px;
+}
+
+.zipcode-container{
+    margin-bottom:40px ;
+}
+
+.content-container h3,
+.zipcode-container h3{
+    font-weight:600 ;
+    margin-bottom: 10px;
+}
+.form-label,
+.location-container span,
+.zipcode-container span{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.zipcode-container span button{
+    background-color: white;
+    color: gray;
+    padding:2px;
+}
+
+.schedule-content{
+    margin-bottom: 40px;
+}
+
+.location-card-container{    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    margin-bottom: 40px;
+}
+.location-card-container::-webkit-scrollbar {
+    display: none;
+}
+.location-card{
+    border: 1px solid lightgray;
+    padding:1rem;
+    margin-right:0.5rem ;
+    margin-top: 10px;
+    border-radius: 5px;
+    min-width:200px;
+    cursor: pointer;
+}
+.location-card:hover{
+    border: 2px solid blue;
+}
+.location-card.active{
+    border: 2px solid blue;
+}
+.location-name{
+    padding: 2px;
+    font-weight: 400;
+}
+
+.location-address{
+    font-weight: 400;
+}
+
+.form-layout{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.form-item{
+    margin-right: 0.5rem;
+    width:50%;
+    margin-bottom: 2rem;
+}
+
+.form-label{
+    padding: 0;
+}
+
+.form-input{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-input select,
+.form-input input{
+    border: none;
+    border-radius: 5px;
+    background-color: #e8e8e8;
+    width:100%;
+    height:40px;
+    padding: 10px;
+    box-sizing: border-box; 
+}
+.form-input option{
+    font-size: 13px;
+    background-color: #ffffff;
+    border-radius: 0px;
+}
+
+.form-input select option:checked {
+    background-color: #e8e8e8;
+    color: black;
+}
+
+.form-input select:focus,
+.form-input input:focus {
+    outline: 1px solid gray;
+}
+.checkbox-group{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox-group input{
+    margin-right: 2px;
+    width:20px;
+}
+
+.checkbox-group span{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.disclaimer-txt{
+    margin-bottom: 40px;
+}
+.disclaimer-txt span,a{
+    font-size: 12px;
+    font-weight: 500;
+}
+.btn-conatiner button{
+    background-color: #535AD6;
+    width: 50%;
+    border-radius: 5px;
+    color:white;
+    font-weight: 700;
+    font-size: 15px;
+}
+

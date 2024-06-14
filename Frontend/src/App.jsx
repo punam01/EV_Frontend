@@ -9,6 +9,7 @@ import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
 import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import { UserProvider } from './contexts/UserContext'
+import TestRide from './pages/TestRide/TestRide';
 const App = () => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,13 +23,14 @@ const App = () => {
     <UserProvider>
     <div className="App">
       {<Navbar />}
-      {/*<SignUp />*/}
+      {/*<SignUp />
       {!isLoggedIn ? (
           <Login onLoginSuccess={handleLogin} /> 
         ) : (
           <UserProfilePage />
-        )}
+        )}*/}
         {/*<AppRoutes location={location} key={location.pathname} />*/}
+        <TestRide />
     </div>
     </UserProvider>
   );

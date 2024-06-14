@@ -7,6 +7,7 @@ import PDP from './pages/PDP';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
 import UserProfilePage from './pages/UserProfile/UserProfilePage'
+import TestRide from './pages/TestRide/TestRide';
 const AppRoutes = () => (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -16,6 +17,7 @@ const AppRoutes = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/product/:id" element={<PDP />} />
       <Route path="/profile" element={<UserProfilePage />} />
+      <Route path="/testride" element={<TestRide />} />
     </Routes>
 );
 
