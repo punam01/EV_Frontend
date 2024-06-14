@@ -108,6 +108,7 @@ const TestRide = () => {
 
     const handleSubmit = () => {
         console.log(firstName, lastName, email, phoneNumber)
+        
     }
 
     function onCaptchVerify() {
@@ -117,14 +118,14 @@ const TestRide = () => {
                 'callback': (response) => {
                     onSignup();
                 }
-            }, auth); // Pass auth object here
+            }, auth); 
         }
     }
 
     function onSignup() {
         onCaptchVerify();
         const appVerifier = window.recaptchaVerifier;
-        const formatPh = `+${phoneNumber}`; // Ensure correct formatting
+        const formatPh = `+${phoneNumber}`; 
         signInWithPhoneNumber(auth, formatPh, appVerifier)
             .then((confirmationResult) => {
                 window.confirmationResult = confirmationResult;

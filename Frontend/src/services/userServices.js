@@ -31,3 +31,16 @@ export const updateUser = async (customId, userData) => {
       throw error;
     }
   };
+
+  export const checkUserEligibilityForTestDrive = async (customId) => {
+    try {
+      const user = await getUserByCustomId(customId); 
+      if (user.testdrive === false) {
+        return { eligible: true, message: 'User is eligible for test drive' };
+      } else {
+        return { eligible: false, message: 'User is not eligible for test drive' };
+      }
+    } catch (error) {
+      throw error;
+    }
+  };

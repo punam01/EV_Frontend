@@ -179,3 +179,16 @@
     color:white;
     font-weight: 500;
 }
+@media only screen and (max-width: 748px){
+    .form-layout{
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .form-item{
+        min-width:100%;
+    }
+    .btn-conatiner button{
+        width:100%;
+    }
+}
