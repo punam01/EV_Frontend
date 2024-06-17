@@ -11,6 +11,7 @@ import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import { UserProvider } from './contexts/UserContext'
 import TestRide from './pages/TestRide/TestRide';
 import Zipcode from './pages/TestRide/Zipcode';
+import DigitalShowroom from './pages/DigitalShowroom/DigitalShowroom';
 
 const App = () => {
   const location = useLocation();
@@ -25,9 +26,10 @@ const App = () => {
     <UserProvider>
     <div className="App">
       
-    {<Navbar />}
-      <Routes ><Route path="/testride" element={<TestRide />} /></Routes>
-    
+    {/*<Navbar />*/}
+      <Routes ><Route path="/testride" element={<TestRide />} />
+      <Route path="/showroom" element={<DigitalShowroom />} />
+      </Routes>
       {/*<SignUp />
       {!isLoggedIn ? (
           <Login onLoginSuccess={handleLogin} /> 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import DigitalShowroom from './pages/DigitalShowroom';
+import DigitalShowroom from './pages/DigitalShowroom/DigitalShowroom';
 import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP';
 import SignUp from './components/SignUp/SignUp';
