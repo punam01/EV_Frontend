@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PhoneVerification from '../PhoneVerification/PhoneVerification';
 import UserDetails from '../UserDetails/UserDetails'
-
+import '../Login/Login.css'
 function SignUp() {
   const [user, setUser] = useState(null);
 

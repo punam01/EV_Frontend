@@ -60,9 +60,24 @@ const Bmw_m4_f82 = ({ props, exteriorColor,interiorColor,rimColor,windowGlass}) 
       metalness: 0.3,
     }),
   }
-  console.log(windowGlass)
   const getWindowGlassProps = () => windowGlassMaterials[windowGlass]
 
+  var headlightMaterial = new THREE.MeshStandardMaterial({
+    color: 0x808080, 
+    roughness: 0.821,
+    metalness: 0,
+    emissive: new THREE.Color(0x000000), 
+    emissiveIntensity: 1,
+    side: THREE.FrontSide
+});
+function turnHeadlightOn() {
+  headlightMaterial.emissive.set(0xffff00);
+}
+
+function turnHeadlightOff() {
+  headlightMaterial.emissive.set(0x000000); 
+}
+turnHeadlightOn();
   return (
     <group {...props} dispose={null}>
       <group scale={0.01}>

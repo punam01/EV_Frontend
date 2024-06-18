@@ -8,7 +8,7 @@ import OtpInput from 'react-otp-input';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from "../../services/axiosInstance";
-
+import '../Login/Login.css'
 function PhoneVerification({ onSuccess }) {
   const auth = getAuth();
   const [phone, setPhone] = useState('');
@@ -61,8 +61,8 @@ function PhoneVerification({ onSuccess }) {
     <section className=''>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
       <div id="recaptcha-container"></div>
-      <div>
-        <div className=''>
+      <div className='verify-container'>
+        <div className='icon'>
           <BsTelephoneFill size={30} />
         </div>
         {showOtp ? (

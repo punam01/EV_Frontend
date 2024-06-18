@@ -13,7 +13,7 @@ import './Login.css';
 import {auth} from '../../firebase.config'
 import { useUser } from '../../contexts/UserContext'
 
-function Login({ onLoginSuccess }) {
+function Login() {
   const auth = getAuth();
   const { setUserId } = useUser();
   const navigate = useNavigate(); 
@@ -74,7 +74,6 @@ function Login({ onLoginSuccess }) {
       setLoading(false);
       setRecaptchaVisible(false); 
       toast.success("Login successful!");
-      onLoginSuccess();
       navigate('/profile'); 
       setLoading(false)
     }).catch(err => {
