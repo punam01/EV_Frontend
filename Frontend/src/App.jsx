@@ -11,6 +11,7 @@ import DigitalShowroom from './pages/DigitalShowroom/DigitalShowroom';
 import Home from './pages/Home';
 import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP';
+import Vehicles from './pages/Vehicles/Vehicles';
 
 const App = () => {
   const location = useLocation();
@@ -30,7 +31,7 @@ const App = () => {
           <Route path="/testride" element={<TestRide />} />
           <Route path="/showroom" element={<DigitalShowroom />} />
           {/*<Route path="/" element={<Home />} />*/}
-          <Route path="/products" element={<PLP />} />
+          <Route path="/vehicles" element={<PLP />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/product/:id" element={<PDP />} />

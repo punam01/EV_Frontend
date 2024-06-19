@@ -1,11 +1,12 @@
 import React from 'react'
 
-const Card = () => {
+const Button = () => {
   return (
     <div>
-      
+      Button
     </div>
   )
 }
 
-export default Card
+export default Button
+

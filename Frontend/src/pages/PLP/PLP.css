@@ -1,6 +1,14 @@
+.page-heading{
+    background-color: white;
+    font-size: 3rem;
+    font-weight: 900;
+    padding: 2rem;
+    margin: 0;
+}
 .card-container{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row ;
     margin-left: 20rem;
     margin-top: 2rem;
     z-index: -2;
