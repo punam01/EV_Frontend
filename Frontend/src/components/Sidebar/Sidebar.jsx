@@ -4,7 +4,7 @@ import Colors from './Colors/Color';
 import Steering from './Steering/Steering';
 import AutopilotFilter from './Autopilot/Autopilot';
 import SeatingCapacityFilter from './SeatingCapacity/SeatingCapacity';
-
+import './Sidebar.css'
 const Sidebar = ({
   handleChange,
   handleSteeringChange,

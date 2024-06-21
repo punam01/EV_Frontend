@@ -1,3 +1,7 @@
+.plp-container{
+    background-color: #d5ab55;
+    display: flex;
+}
 .page-heading{
     background-color: white;
     font-size: 3rem;

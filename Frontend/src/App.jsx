@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP';
 import Vehicles from './pages/Vehicles/Vehicles';
+import Blogs from './pages/Blogs/Blogs';
 
 const App = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/product/:id" element={<PDP />} />
           <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/blogs" element={<Blogs />} />
         </Routes>
         {/*<SignUp />
       {!isLoggedIn ? (

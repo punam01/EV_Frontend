@@ -20,7 +20,7 @@ const PLP = () => {
       try {
         const data = await getAllCars();
         setCars(data);
-        console.log("Fetched cars:", data); 
+        console.log("Fetched cars:", data);
       } catch (error) {
         console.error("Error fetching cars:", error);
       }
@@ -64,34 +64,34 @@ const PLP = () => {
     }
 
     if (selectedModelId) {
-      filteredCars = filteredCars.filter((car) => 
+      filteredCars = filteredCars.filter((car) =>
         car.modelId === selectedModelId
       );
     }
 
     if (selectedSteering) {
-      filteredCars = filteredCars.filter((car) => 
+      filteredCars = filteredCars.filter((car) =>
         car.steering === selectedSteering
       );
     }
 
     if (selectedAutopilot) {
-      filteredCars = filteredCars.filter((car) => 
+      filteredCars = filteredCars.filter((car) =>
         car.autopilot === true
       );
     }
 
     if (selectedSeatingCapacity) {
-      filteredCars = filteredCars.filter((car) => 
+      filteredCars = filteredCars.filter((car) =>
         car.seatingCapacity >= selectedSeatingCapacity
       );
     }
 
-    console.log("Filtered cars:", filteredCars); 
+    console.log("Filtered cars:", filteredCars);
 
     return filteredCars.map(({ _id, images, name, basePrice }) => (
       <Card
-        key={_id} 
+        key={_id}
         img={images[0]}
         title={name}
         star={5}
@@ -108,17 +108,21 @@ const PLP = () => {
       <h1 className='page-heading'>
         Inventory
       </h1>
-      <Recommended handleClick={handleClick} />
-      {cars.length > 0 && (
-        <Sidebar 
-          handleChange={handleChange} 
-          handleSteeringChange={handleSteeringChange}
-          handleAutopilotChange={handleAutopilotChange}
-          handleSeatingCapacityChange={handleSeatingCapacityChange}
-          cars={cars}
-        />
-      )}
-      <Vehicles result={result} />
+
+      <div className="plp-container">
+        <Recommended handleClick={handleClick} />
+        {cars.length > 0 && (
+          <Sidebar
+            handleChange={handleChange}
+            handleSteeringChange={handleSteeringChange}
+            handleAutopilotChange={handleAutopilotChange}
+            handleSeatingCapacityChange={handleSeatingCapacityChange}
+            cars={cars}
+          />
+        )}
+        <Vehicles result={result} />
+      </div>
+
     </>
   );
 };
