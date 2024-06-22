@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './UserProfilePage.css'
+import './UserProfilePage.css';
+
 import { getUserByCustomId, updateUser } from '../../services/userServices';
+import { fetchUserHistory, cancelBooking } from '../../services/testRideService';
+import { useUser } from '../../contexts/UserContext';
+
 function UserProfilePage() {
     const [activeTab, setActiveTab] = useState('profile');
 
@@ -22,6 +26,7 @@ function UserProfilePage() {
 }
 
 function ProfileSettings() {
+    const { user, setUser } = useUser();
     const [userProfile, setUserProfile] = useState({
         first_name: '',
         last_name: '',
@@ -29,40 +34,29 @@ function ProfileSettings() {
         contact: '',
         address: '',
         pincode: '',
-        custom_id:''
+        custom_id: user ? user.uid : ''
     });
 
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
-        fetchUserProfile();
-        console.log(userProfile)
-    }, []);
+        if (user) {
+            fetchUserProfile(user.uid);
+        }
+    }, [user]);
 
-    useEffect(() => {
-        console.log("UserProfile state updated:", userProfile);
-    }, [userProfile]);
-
-    const fetchUserProfile = async () => {
+    const fetchUserProfile = async (customId) => {
         try {
-            const userId = localStorage.getItem('userId'); 
-            console.log("user id",userId)
-            if (userId) {
-                const response = await getUserByCustomId(userId); 
-                console.log("res",response)
-                setUserProfile({
-                    first_name: response.first_name,
-                    last_name: response.last_name,
-                    email: response.email,
-                    contact: response.contact,
-                    address: response.address,
-                    pincode: response.pincode,
-                    custom_id: userId  
-                });
-                console.log(userProfile)
-            } else {
-                console.error('User ID not found in localStorage');
-            }
+            const response = await getUserByCustomId(customId);
+            setUserProfile({
+                first_name: response.first_name,
+                last_name: response.last_name,
+                email: response.email,
+                contact: response.contact,
+                address: response.address,
+                pincode: response.pincode,
+                custom_id: customId
+            });
         } catch (error) {
             console.error('Error fetching user profile:', error);
         }
@@ -74,23 +68,10 @@ function ProfileSettings() {
 
     const handleSaveClick = async () => {
         try {
-            const userId = localStorage.getItem('userId'); 
-            if (userId) {
-                const updatedUser = await updateUser(userId, userProfile); 
-                console.log(updatedUser)
-                setUserProfile({
-                    first_name: updateUser.first_name,
-                    last_name: updateUser.last_name,
-                    email: updateUser.email,
-                    contact: updateUser.contact,
-                    address: updateUser.address,
-                    pincode: updateUser.pincode,
-                });
-                setEditMode(false);
-                console.log('Profile updated successfully!');
-            } else {
-                console.error('User ID not found in localStorage');
-            }
+            const updatedUser = await updateUser(userProfile.custom_id, userProfile);
+            setUser(updatedUser);
+            setEditMode(false);
+            console.log('Profile updated successfully!');
         } catch (error) {
             console.error('Error updating user profile:', error);
         }
@@ -129,13 +110,19 @@ function ProfileSettings() {
                 </div>
                 <div className='form-label'>
                     <label>Contact</label>
+                    <div className='info'>
                     <input
                         type="text"
                         name="contact"
                         value={userProfile.contact}
                         onChange={handleChange}
-                        disabled={!editMode}
+                        disabled={true}
                     />
+                    <div className="info-icon">
+                        <i>ℹ️</i>
+                        <div className="tooltip">Mobile number is not editable</div>
+                    </div>
+                    </div>
                 </div>
             </div>
             <div className="group">
@@ -181,7 +168,67 @@ function ProfileSettings() {
 }
 
 function PurchaseHistory() {
-    return <div>Purchase History</div>;
+    const { user } = useUser();
+    const [purchaseHistory, setPurchaseHistory] = useState([]);
+
+    useEffect(() => {
+        if (user) {
+            fetchHistory(user.uid);
+        }
+    }, [user]);
+
+    const fetchHistory = async (customId) => {
+        try {
+            const response = await fetchUserHistory(customId);
+            setPurchaseHistory(response);
+        } catch (error) {
+            console.error('Error fetching purchase history:', error);
+        }
+    };
+
+    const handleCancelBooking = async (bookId) => {
+        try {
+            await cancelBooking(bookId);
+            setPurchaseHistory((prevHistory) =>
+                prevHistory.map((booking) =>
+                    booking._id === bookId ? { ...booking, bookStatus: 'cancelled' } : booking
+                )
+            );
+        } catch (error) {
+            console.error('Error canceling booking:', error);
+        }
+    };
+
+    return (
+        <div className="purchase-history">
+            {purchaseHistory.length === 0 ? (
+                <p>No purchase history available.</p>
+            ) : (
+                <ul>
+                    {purchaseHistory.map((history) => (
+                        <li key={history._id} className="purchase-item">
+                            <div className="purchase-details">
+                                <p>Booking ID: {history._id}</p>
+                                <p>Location ID: {history.locationId}</p>
+                                <p>Model Name: {history.modelName}</p>
+                                <p>Booking Time: {history.bookingTime}</p>
+                                <p>Contact: {history.contact}</p>
+                                <p>Status: {history.bookStatus}</p>
+                            </div>
+                            {history.bookStatus !== 'cancelled' && (
+                                <button
+                                    className="cancel-btn"
+                                    onClick={() => handleCancelBooking(history._id)}
+                                >
+                                    Cancel Booking
+                                </button>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
 }
 
 export default UserProfilePage;

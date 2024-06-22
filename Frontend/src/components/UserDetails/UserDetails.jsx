@@ -1,60 +1,61 @@
-import { useEffect, useState } from 'react';
+// src/components/UserDetails/UserDetailsForm.js
+import React, { useState, useContext, useEffect } from 'react';
 import { CgSpinner } from "react-icons/cg";
-
-import axios from "../../services/axiosInstance"; 
+import { registerUser } from "../../services/userServices"; 
 import toast, { Toaster } from 'react-hot-toast';
+import { useUser } from '../../contexts/UserContext';
 
-
-function UserDetailsForm({ user }) {
-  console.log(user)
+const UserDetails=() =>{
+  const { user } = useUser();
   const [userDetails, setUserDetails] = useState({
     first_name: '',
     last_name: '',
     email: '',
     address: '',
     pincode: '',
-    custom_id:''
+    custom_id: user ? user.uid : '',
+    _id: ''
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const customId = localStorage.getItem('customId'); 
-    if (customId) {
+    if (user) {
       setUserDetails(prevDetails => ({
         ...prevDetails,
-        custom_id: customId
+        custom_id: user.uid
       }));
     }
-  }, []);
-  async function handleSubmit(e) {
+  }, [user]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
-    
-    const { custom_id, first_name, last_name, email, address, pincode } = userDetails;
-    console.log(custom_id,first_name,last_name,email,address,pincode)
+
     try {
-      await axios.post('/api/user', {
+      const response = await registerUser({
         custom_id: userDetails.custom_id,
         first_name: userDetails.first_name,
         last_name: userDetails.last_name,
         email: userDetails.email,
         address: userDetails.address,
         pincode: userDetails.pincode,
-        contact: user.phoneNumber 
+        contact: user.phoneNumber
       });
 
-      toast.success("User registered successfully!");
+      toast.success(response.msg);
+      setUserDetails(prevDetails => ({
+        ...prevDetails,
+        _id: response._id 
+      }));
       setSubmitted(true);
     } catch (error) {
       console.error('Failed to register user:', error);
-      toast.error("Failed to register user.");
+      toast.error(error.message || "Failed to register user.");
     }
 
     setLoading(false);
-  }
-  
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,13 +66,14 @@ function UserDetailsForm({ user }) {
   };
 
   return (
-    <section className=''>
+    <section>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
       <div>
         {submitted ? (
           <div>
             <h2>Registration Success!!</h2>
             <div>
+            <p><strong>UID_:</strong> {userDetails._id}</p>
               <p><strong>UID:</strong> {user.uid}</p>
               <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
               <p><strong>Name:</strong> {userDetails.first_name} {userDetails.last_name}</p>
@@ -98,4 +100,4 @@ function UserDetailsForm({ user }) {
   );
 }
 
-export default UserDetailsForm;
+export default UserDetails;

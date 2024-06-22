@@ -8,6 +8,7 @@ import OtpInput from 'react-otp-input';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from "../../services/axiosInstance";
+import { useUser } from '../../contexts/UserContext';
 import '../Login/Login.css'
 function PhoneVerification({ onSuccess }) {
   const auth = getAuth();
@@ -15,6 +16,7 @@ function PhoneVerification({ onSuccess }) {
   const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
@@ -49,6 +51,7 @@ function PhoneVerification({ onSuccess }) {
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async (res) => {
       setLoading(false);
+      setUser(res.user);
       onSuccess(res.user);
     }).catch(err => {
       console.log(err);

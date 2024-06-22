@@ -11,6 +11,27 @@ export const getUserById = async (userId) => {
     }
 };
 
+export const registerUser = async (userDetails) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/`, userDetails);
+    console.log(response.data)
+    return response.data; // Assuming response data has the structure { msg, user }
+  } catch (error) {
+    if (error.response) {
+      // Server responded with a status other than 200 range
+      console.error('Error response:', error.response.data);
+      throw new Error(error.response.data.msg || 'Failed to register user.');
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('Error request:', error.request);
+      throw new Error('No response from server. Please try again later.');
+    } else {
+      // Something happened in setting up the request
+      console.error('Error message:', error.message);
+      throw new Error('Error in setting up the request.');
+    }
+  }
+};
 
 export const getUserByCustomId = async (customId) => {
     console.log(customId)
@@ -22,6 +43,7 @@ export const getUserByCustomId = async (customId) => {
         throw error;
     }
 };
+
 
 export const updateUser = async (customId, userData) => {
     try {
@@ -44,3 +66,17 @@ export const updateUser = async (customId, userData) => {
       throw error;
     }
   };
+
+  export const verifyUserDetails = async (firstName, lastName, email, phoneNumber) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/user/verify`, {
+            firstName,
+            lastName,
+            email,
+            phoneNumber
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
