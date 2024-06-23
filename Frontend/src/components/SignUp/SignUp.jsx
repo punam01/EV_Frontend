@@ -1,15 +1,15 @@
-// src/components/SignUp/SignUp.js
-import React, { useContext } from 'react';
+// components/SignUp/SignUp.js
+
+import React from 'react';
 import PhoneVerification from '../PhoneVerification/PhoneVerification';
 import UserDetails from '../UserDetails/UserDetails';
 import { useUser } from '../../contexts/UserContext';
-import '../Login/Login.css';
 
 function SignUp() {
   const { user, setUser } = useUser();
 
   const handlePhoneVerificationSuccess = (userData) => {
-    setUser(userData);
+    setUser(userData); // Set user in UserContext
     console.log(userData);
   };
 

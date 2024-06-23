@@ -4,7 +4,6 @@ import './PLP.css';
 import Vehicles from '../Vehicles/Vehicles';
 import Recommended from '../../components/Recommended/Recommended';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import Card from '../../components/AdvFilter/Card';
 import { getAllCars } from '../../services/carServices';
 
 const PLP = () => {
@@ -89,19 +88,11 @@ const PLP = () => {
 
     console.log("Filtered cars:", filteredCars);
 
-    return filteredCars.map(({ _id, images, name, basePrice }) => (
-      <Card
-        key={_id}
-        img={images[0]}
-        title={name}
-        star={5}
-        reviews={10}
-        prevPrice={basePrice}
-      />
-    ));
+    return filteredCars;
   };
 
   const result = filteredData(cars, selectedModelId, selectedSteering, selectedAutopilot, selectedSeatingCapacity, query);
+  console.log("PLP result", result);
 
   return (
     <>
@@ -120,9 +111,8 @@ const PLP = () => {
             cars={cars}
           />
         )}
-        <Vehicles result={result} />
+        <Vehicles cars={result} />
       </div>
-
     </>
   );
 };

@@ -25,11 +25,11 @@ const Navbar = () => {
         <img src="https://th.bing.com/th?id=OIP.7zE0FSzeF1sz-8_t_IkQIgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="logo" className='logo' />
         <button className="menu-btn" onClick={toggleMenu}>Menu</button>
         <ul className={`nav-items ${menuOpen ? 'active' : ''}`}>
-          <li className='nav-links'><Link className='nav-items' to="" onClick={()=>handleNavClick('home')}>Home</Link></li>
+          <li className='nav-links'><Link className='nav-items' to="/" onClick={()=>handleNavClick('home')}>Home</Link></li>
           <li className='nav-links'><Link className='nav-items' to="/showroom" onClick={()=>handleNavClick('showroom')}>Digital Showroom</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="" onClick={()=>handleNavClick('vehicles')}>Vehicles</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="" onClick={()=>handleNavClick('blog')}>Blog</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="" onClick={()=>handleNavClick('routePlanner')}>Route Planner</Link></li>
+          <li className='nav-links'><Link className='nav-items' to="/cars" onClick={()=>handleNavClick('vehicles')}>Vehicles</Link></li>
+          <li className='nav-links'><Link className='nav-items' to="/blogs" onClick={()=>handleNavClick('blog')}>Blog</Link></li>
+          <li className='nav-links'><Link className='nav-items' to="/" onClick={()=>handleNavClick('routePlanner')}>Route Planner</Link></li>
         </ul>
         <div className=''>
           <FaRegUserCircle className='profile' />

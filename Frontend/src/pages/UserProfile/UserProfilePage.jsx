@@ -7,7 +7,6 @@ import { useUser } from '../../contexts/UserContext';
 
 function UserProfilePage() {
     const [activeTab, setActiveTab] = useState('profile');
-
     return (
         <div className="user-profile-page">
             <div className="tabs">
@@ -27,6 +26,7 @@ function UserProfilePage() {
 
 function ProfileSettings() {
     const { user, setUser } = useUser();
+    console.log(user)
     const [userProfile, setUserProfile] = useState({
         first_name: '',
         last_name: '',

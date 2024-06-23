@@ -1,11 +1,12 @@
-// src/components/UserDetails/UserDetailsForm.js
-import React, { useState, useContext, useEffect } from 'react';
-import { CgSpinner } from "react-icons/cg";
-import { registerUser } from "../../services/userServices"; 
+// components/UserDetails/UserDetailsForm.js
+
+import React, { useState, useEffect } from 'react';
+import { CgSpinner } from 'react-icons/cg';
+import { registerUser } from '../../services/userServices';
 import toast, { Toaster } from 'react-hot-toast';
 import { useUser } from '../../contexts/UserContext';
 
-const UserDetails=() =>{
+const UserDetailsForm = () => {
   const { user } = useUser();
   const [userDetails, setUserDetails] = useState({
     first_name: '',
@@ -13,17 +14,17 @@ const UserDetails=() =>{
     email: '',
     address: '',
     pincode: '',
-    custom_id: user ? user.uid : '',
-    _id: ''
+    custom_id: user ? user.uid : '', // Access user details
+    _id: '',
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (user) {
-      setUserDetails(prevDetails => ({
+      setUserDetails((prevDetails) => ({
         ...prevDetails,
-        custom_id: user.uid
+        custom_id: user.uid,
       }));
     }
   }, [user]);
@@ -40,18 +41,18 @@ const UserDetails=() =>{
         email: userDetails.email,
         address: userDetails.address,
         pincode: userDetails.pincode,
-        contact: user.phoneNumber
+        contact: user.phoneNumber, // Use user details
       });
 
       toast.success(response.msg);
-      setUserDetails(prevDetails => ({
+      setUserDetails((prevDetails) => ({
         ...prevDetails,
-        _id: response._id 
+        _id: response._id,
       }));
       setSubmitted(true);
     } catch (error) {
       console.error('Failed to register user:', error);
-      toast.error(error.message || "Failed to register user.");
+      toast.error(error.message || 'Failed to register user.');
     }
 
     setLoading(false);
@@ -59,9 +60,9 @@ const UserDetails=() =>{
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserDetails(prevDetails => ({
+    setUserDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -73,13 +74,27 @@ const UserDetails=() =>{
           <div>
             <h2>Registration Success!!</h2>
             <div>
-            <p><strong>UID_:</strong> {userDetails._id}</p>
-              <p><strong>UID:</strong> {user.uid}</p>
-              <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
-              <p><strong>Name:</strong> {userDetails.first_name} {userDetails.last_name}</p>
-              <p><strong>Email:</strong> {userDetails.email}</p>
-              <p><strong>Address:</strong> {userDetails.address}</p>
-              <p><strong>Pincode:</strong> {userDetails.pincode}</p>
+              <p>
+                <strong>UID_:</strong> {userDetails._id}
+              </p>
+              <p>
+                <strong>UID:</strong> {user.uid}
+              </p>
+              <p>
+                <strong>Phone Number:</strong> {user.phoneNumber}
+              </p>
+              <p>
+                <strong>Name:</strong> {userDetails.first_name} {userDetails.last_name}
+              </p>
+              <p>
+                <strong>Email:</strong> {userDetails.email}
+              </p>
+              <p>
+                <strong>Address:</strong> {userDetails.address}
+              </p>
+              <p>
+                <strong>Pincode:</strong> {userDetails.pincode}
+              </p>
             </div>
           </div>
         ) : (
@@ -90,7 +105,7 @@ const UserDetails=() =>{
             <input type="text" name="address" placeholder="Address" onChange={handleChange} required />
             <input type="text" name="pincode" placeholder="Pincode" onChange={handleChange} required />
             <button type="submit">
-              {loading && <CgSpinner className='animate-spin' />}
+              {loading && <CgSpinner className="animate-spin" />}
               <span>Submit Details</span>
             </button>
           </form>
@@ -98,6 +113,6 @@ const UserDetails=() =>{
       </div>
     </section>
   );
-}
+};
 
-export default UserDetails;
+export default UserDetailsForm;

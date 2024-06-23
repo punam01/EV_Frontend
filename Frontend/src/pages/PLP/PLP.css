@@ -1,6 +1,6 @@
 .plp-container{
-    background-color: #d5ab55;
     display: flex;
+    flex-direction: column;
 }
 .page-heading{
     background-color: white;

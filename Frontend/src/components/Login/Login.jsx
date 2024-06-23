@@ -25,11 +25,8 @@ function Login() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        localStorage.setItem('userId', user.uid);
-        console.log('login', localStorage.getItem('userId'));
         setUser(user);  // Set user in UserContext
       } else {
-        localStorage.removeItem('userId');
         setUser(null);  // Clear user in UserContext
       }
     });

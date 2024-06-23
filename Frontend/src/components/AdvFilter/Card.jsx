@@ -1,15 +1,41 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AiFillStar } from 'react-icons/ai';
+import { useUser } from '../../contexts/UserContext';
 
-const Card = ({img,title,star,reviews,prevPrice}) => {
+const Card = ({ img, title, star, reviews, prevPrice, id }) => {
+  const navigate = useNavigate();
+  const { user } = useUser();
+
+  console.log(user)
+  
+  const handleViewDetails = () => {
+    navigate(`/cars/${id}`);
+  };
+
+  const handleBookNow = () => {
+    if (user) {
+      navigate(`/prebooking/${id}`);
+    } else {
+      console.log('redirecting to login')
+      navigate('/login');
+    }
+  };
+
   return (
-    <section className="vehicles-item">
-      <img className="card-img" src={img} alt="" />
+    <div className="card">
+      <img src={img} alt={title} className="card-img" />
       <div className="card-details">
-        <p className="card-title">{title}</p>
-        <p className="card-title">${prevPrice}</p>
+        <h2 className="card-title">{title}</h2>
+        <div className="card-price">Starting at ${prevPrice}</div>
+        <div className="card-star">
+          <AiFillStar /> {star} ({reviews} reviews)
+        </div>
+        <button onClick={handleViewDetails}>View Details</button>
+        <button onClick={handleBookNow}>Book Now</button>
       </div>
-    </section>
-  )
-}
+    </div>
+  );
+};
 
-export default Card
+export default Card;

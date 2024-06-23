@@ -13,7 +13,7 @@ import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP';
 import Vehicles from './pages/Vehicles/Vehicles';
 import Blogs from './pages/Blogs/Blogs';
-
+import PreBooking from './pages/PreBooking/PreBooking'
 const App = () => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,7 +24,6 @@ const App = () => {
   };
 
   return (
-    <UserProvider>
       <div className="App">
 
         {<Navbar />}
@@ -33,12 +32,13 @@ const App = () => {
           <Route path="/testride" element={<TestRide />} />
           <Route path="/showroom" element={<DigitalShowroom />} />
           {/*<Route path="/" element={<Home />} />*/}
-          <Route path="/vehicles" element={<PLP />} />
+          <Route path="/cars" element={<PLP />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/product/:id" element={<PDP />} />
+          <Route path="/cars/:id" element={<PDP />} />
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path='/prebooking/:id' element={<PreBooking />}/>
         </Routes>
         {/*<SignUp />
       {!isLoggedIn ? (
@@ -49,7 +49,6 @@ const App = () => {
         {/*<AppRoutes location={location} key={location.pathname} />*/}
 
       </div>
-    </UserProvider>
   );
 };
 
