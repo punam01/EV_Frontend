@@ -9,8 +9,8 @@ function SignUp() {
   const { user, setUser } = useUser();
 
   const handlePhoneVerificationSuccess = (userData) => {
-    setUser(userData); // Set user in UserContext
-    console.log(userData);
+    setUser(userData); 
+    console.log("signup",userData);
   };
 
   return (

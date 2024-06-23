@@ -12,7 +12,6 @@ const PreBooking = () => {
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
   const { user } = useUser();
-
   useEffect(() => {
     const fetchCar = async () => {
       try {
@@ -28,12 +27,6 @@ const PreBooking = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-
     try {
       const bookingDetails = {
         userId: user.userId, // Ensure user.userId is correctly set in UserContext

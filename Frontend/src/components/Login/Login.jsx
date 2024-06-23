@@ -30,9 +30,10 @@ function Login() {
         setUser(null);  // Clear user in UserContext
       }
     });
-
+  
     return () => unsubscribe();
   }, [auth, setUser]);
+  
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
@@ -65,7 +66,7 @@ function Login() {
   function onOTPVerify() {
     setLoading(true);
     window.confirmationResult.confirm(otp).then((res) => {
-      setUser(res.user);  // Set user in UserContext
+      setUser(res.user); 
       setLoading(false);
       setRecaptchaVisible(false);
       toast.success("Login successful!");

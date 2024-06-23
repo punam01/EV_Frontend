@@ -8,18 +8,14 @@ const Card = ({ img, title, star, reviews, prevPrice, id }) => {
   const { user } = useUser();
 
   console.log(user)
-  
+
   const handleViewDetails = () => {
     navigate(`/cars/${id}`);
   };
 
   const handleBookNow = () => {
-    if (user) {
       navigate(`/prebooking/${id}`);
-    } else {
-      console.log('redirecting to login')
-      navigate('/login');
-    }
+  
   };
 
   return (
