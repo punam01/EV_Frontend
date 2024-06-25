@@ -18,7 +18,7 @@
 }
 
 .content-item {
-    padding: 10px;
+    padding: 15px;
     background-color: white;
     border-radius: 20px;
     width: 100%;
@@ -28,6 +28,7 @@
 
 table {
     width: 100%;
+    height:20px;
     border-collapse: collapse;
 }
 
@@ -41,11 +42,13 @@ td {
 .content-heading {
     font-weight: 500;
     font-size: 18px;
+    margin-top: 0;
 }
 
 .content-sub-heading {
     font-weight: 300;
     font-size: 13px;
+    margin: 0;
 }
 
 .standard-color {
@@ -53,6 +56,7 @@ td {
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    margin-top: 0;
     padding: 5px;
 }
 

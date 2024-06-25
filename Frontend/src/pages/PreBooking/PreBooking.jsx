@@ -25,6 +25,7 @@ const PreBooking = () => {
     fetchCar();
   }, [id]);
 
+  console.log(user)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useUser } from '../../contexts/UserContext';
 
 const UserDetailsForm = () => {
-  const { user } = useUser();
+  const { user,setUser } = useUser();
   const [userDetails, setUserDetails] = useState({
     first_name: '',
     last_name: '',
@@ -41,7 +41,7 @@ const UserDetailsForm = () => {
         email: userDetails.email,
         address: userDetails.address,
         pincode: userDetails.pincode,
-        contact: user.phoneNumber, // Use user details
+        contact: user.phoneNumber, 
       });
 
       toast.success(response.msg);
@@ -49,6 +49,8 @@ const UserDetailsForm = () => {
         ...prevDetails,
         _id: response._id,
       }));
+      setUser(userDetails)
+      console.log("USER::::",user)
       setSubmitted(true);
     } catch (error) {
       console.error('Failed to register user:', error);

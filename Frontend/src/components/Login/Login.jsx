@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import { GoShieldLock } from "react-icons/go";
-import { CgSpinner } from "react-icons/cg";
-import { BsTelephoneFill } from "react-icons/bs";
-import OtpInput from 'react-otp-input';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useUser } from '../../contexts/UserContext';
-import {auth} from '../../firebase.config';
-
-function Login() {
+import PhoneNumberInput from './PhoneNumberInput';
+import OtpVerification from './OtpVerification';
+import{auth} from '../../firebase.config'
+const Login = () => {
   const auth = getAuth();
-  const { setUser } = useUser();  // Use setUser from UserContext
+  const { setUser } = useUser(); 
   const navigate = useNavigate(); 
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
@@ -25,15 +20,14 @@ function Login() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        setUser(user);  // Set user in UserContext
+        setUser(user);  
       } else {
-        setUser(null);  // Clear user in UserContext
+        setUser(null);  
       }
     });
   
     return () => unsubscribe();
   }, [auth, setUser]);
-  
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
@@ -85,42 +79,9 @@ function Login() {
       <div>
         <div className='welcome'>WELCOME BACK!</div>
         {showOtp ? (
-          <div className='verify-container'>
-            <div className='icon'>
-              <GoShieldLock size={30} />
-            </div>
-            <label htmlFor='otp'>Enter your OTP</label>
-            <OtpInput
-              value={otp}
-              onChange={setOtp}
-              numInputs={6}
-              renderSeparator={<span>-</span>}
-              renderInput={(props) => <input {...props} />}
-              className="otp-container"
-            />
-            <button onClick={onOTPVerify}>
-              {loading && <CgSpinner className='animate-spin' />}
-              <span>Verify OTP</span>
-            </button>
-          </div>
+          <OtpVerification otp={otp} setOtp={setOtp} onOTPVerify={onOTPVerify} loading={loading} />
         ) : (
-          <div className='verify-container'>
-            <div className='icon'>
-              <BsTelephoneFill size={30} />
-            </div>
-            <label className="label-text" htmlFor='phone'>Verify your phone number</label>
-            <PhoneInput
-              country={'in'}
-              value={phone}
-              onChange={setPhone}
-              id='phone'
-              className="phone-input"
-            />
-            <button onClick={onLogin}>
-              {loading && <CgSpinner className='animate-spin' />}
-              <span>Send code via SMS</span>
-            </button>
-          </div>
+          <PhoneNumberInput phone={phone} setPhone={setPhone} onLogin={onLogin} loading={loading} />
         )}
       </div>
     </section>

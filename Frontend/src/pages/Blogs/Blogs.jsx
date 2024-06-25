@@ -16,6 +16,7 @@ const Blogs = () => {
                 setBlogs(blogsData);
                 const tagsData = await getAllTags();
                 setTags(tagsData);
+                tags.map((tag) => { console.log(tag) })
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -41,14 +42,16 @@ const Blogs = () => {
             <div className="blog-header-section">
                 <h2 className='page-heading'>Our Stories</h2>
                 <div className="search-section">
-                    <input 
-                        type="search" 
-                        placeholder='Search' 
+                    <input
+                        type="search"
+                        placeholder='Search'
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <select 
+                    {<select 
+                    style={{display:'block'}}
                         aria-placeholder='Tags' 
+                        name='selectedTag'
                         value={selectedTag}
                         onChange={(e) => setSelectedTag(e.target.value)}
                     >
@@ -56,14 +59,14 @@ const Blogs = () => {
                         {tags.map(tag => (
                             <option key={tag} value={tag}>{tag}</option>
                         ))}
-                    </select>
+                    </select>}
                 </div>
             </div>
             <div className="blog-content-section">
                 {filteredBlogs.map(blog => (
                     <BlogCard
                         key={blog._id}
-                        imageSrc={blog.image} 
+                        imageSrc={blog.image}
                         headline={blog.headline}
                         description={blog.description}
                         authorName={blog.authorName}

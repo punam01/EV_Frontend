@@ -5,6 +5,7 @@ const Autopilot = ({ handleAutopilotChange }) => {
     <div className="filter">
       <label htmlFor="autopilot">Autopilot:</label>
       <input
+        style={{display:'block'}}
         type="checkbox"
         id="autopilot"
         name="autopilot"

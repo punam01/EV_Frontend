@@ -15,7 +15,7 @@ import PreBooking from './pages/PreBooking/PreBooking'
 const App = () => {
   return (
     <div className="App">
-      <Navbar />
+      
       <Routes >
         <Route path="/testride" element={<TestRide />} />
         <Route path="/showroom" element={<DigitalShowroom />} />
