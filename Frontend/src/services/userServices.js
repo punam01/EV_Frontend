@@ -75,6 +75,7 @@ export const updateUser = async (customId, userData) => {
             email,
             phoneNumber
         });
+        console.log(response.data)
         return response.data;
     } catch (error) {
         throw error;

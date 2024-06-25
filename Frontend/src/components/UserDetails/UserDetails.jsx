@@ -1,13 +1,13 @@
-// components/UserDetails/UserDetailsForm.js
-
 import React, { useState, useEffect } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 import { registerUser } from '../../services/userServices';
 import toast, { Toaster } from 'react-hot-toast';
-import { useUser } from '../../contexts/UserContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, selectUser } from '../../features/user/userSlice';
 
 const UserDetailsForm = () => {
-  const { user,setUser } = useUser();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const [userDetails, setUserDetails] = useState({
     first_name: '',
     last_name: '',
@@ -19,7 +19,7 @@ const UserDetailsForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
+  console.log(user)
   useEffect(() => {
     if (user) {
       setUserDetails((prevDetails) => ({
@@ -35,7 +35,7 @@ const UserDetailsForm = () => {
 
     try {
       const response = await registerUser({
-        custom_id: userDetails.custom_id,
+        custom_id: user.uid,
         first_name: userDetails.first_name,
         last_name: userDetails.last_name,
         email: userDetails.email,
@@ -49,8 +49,13 @@ const UserDetailsForm = () => {
         ...prevDetails,
         _id: response._id,
       }));
-      setUser(userDetails)
-      console.log("USER::::",user)
+      dispatch(setUser({
+        ...user,
+        userDetails: {
+          ...userDetails,
+          _id: response._id,
+        }
+      }));
       setSubmitted(true);
     } catch (error) {
       console.error('Failed to register user:', error);

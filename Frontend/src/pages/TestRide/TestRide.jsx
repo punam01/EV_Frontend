@@ -99,7 +99,7 @@ const TestRide = () => {
                 formDetails.email,
                 formDetails.phoneNumber
             );
-
+            console.log(verificationResult)
             if (verificationResult) {
                 const combinedDateTime = `${formDetails.selectedTime}`;
                 const action = 'remove';

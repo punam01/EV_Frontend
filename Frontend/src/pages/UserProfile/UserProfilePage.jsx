@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import './UserProfilePage.css';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { getUserByCustomId, updateUser } from '../../services/userServices';
 import { fetchUserHistory, cancelBooking } from '../../services/testRideService';
-import { useUser } from '../../contexts/UserContext';
-
+import { clearUser,selectUser,setUser } from '../../features/user/userSlice';
 function UserProfilePage() {
     const [activeTab, setActiveTab] = useState('profile');
+    const dispatch=useDispatch()
+    const user = useSelector(selectUser);
+    console.log(user)
+    const handleLogout=()=>{
+        dispatch(clearUser())
+    }
     return (
         <div className="user-profile-page">
             <div className="tabs">
                 <button className="tab-btn" onClick={() => setActiveTab('profile')}>Profile Settings</button>
                 <button className="tab-btn" onClick={() => setActiveTab('history')}>Purchase History</button>
+                <button className='tab-btn' onClick={handleLogout}>Logout</button>
             </div>
             <div className="content">
                 {activeTab === 'profile' ? (
@@ -25,7 +32,8 @@ function UserProfilePage() {
 }
 
 function ProfileSettings() {
-    const { user, setUser } = useUser();
+    const { user } = useSelector(state => state.user); // Access user state from Redux
+    const dispatch = useDispatch();
     console.log(user)
     const [userProfile, setUserProfile] = useState({
         first_name: '',
@@ -34,7 +42,8 @@ function ProfileSettings() {
         contact: '',
         address: '',
         pincode: '',
-        custom_id: user ? user.uid : ''
+        custom_id: user ? user.uid : '',
+        _id:user?user._id:''
     });
 
     const [editMode, setEditMode] = useState(false);
@@ -69,7 +78,7 @@ function ProfileSettings() {
     const handleSaveClick = async () => {
         try {
             const updatedUser = await updateUser(userProfile.custom_id, userProfile);
-            setUser(updatedUser);
+            dispatch(setUser(updatedUser)); 
             setEditMode(false);
             console.log('Profile updated successfully!');
         } catch (error) {
@@ -85,8 +94,14 @@ function ProfileSettings() {
         }));
     };
 
+    
+    const handleLogout = () => {
+        dispatch(clearUser()); // Dispatch clearUser action to reset user state
+    };
+
     return (
         <div className='profile-settings'>
+            
             <div className="group">
                 <div className='form-label'>
                     <label>First Name</label>
@@ -111,17 +126,17 @@ function ProfileSettings() {
                 <div className='form-label'>
                     <label>Contact</label>
                     <div className='info'>
-                    <input
-                        type="text"
-                        name="contact"
-                        value={userProfile.contact}
-                        onChange={handleChange}
-                        disabled={true}
-                    />
-                    <div className="info-icon">
-                        <i>ℹ️</i>
-                        <div className="tooltip">Mobile number is not editable</div>
-                    </div>
+                        <input
+                            type="text"
+                            name="contact"
+                            value={userProfile.contact}
+                            onChange={handleChange}
+                            disabled={true} // Keep contact field disabled as per original logic
+                        />
+                        <div className="info-icon">
+                            <i>ℹ️</i>
+                            <div className="tooltip">Mobile number is not editable</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,7 +183,9 @@ function ProfileSettings() {
 }
 
 function PurchaseHistory() {
-    const { user } = useUser();
+    const { user } = useSelector(state => state.user); 
+    console.log(user.uid)
+
     const [purchaseHistory, setPurchaseHistory] = useState([]);
 
     useEffect(() => {

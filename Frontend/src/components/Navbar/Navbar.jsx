@@ -32,7 +32,8 @@ const Navbar = () => {
           <li className='nav-links'><Link className='nav-items' to="/" onClick={()=>handleNavClick('routePlanner')}>Route Planner</Link></li>
         </ul>
         <div className=''>
-          <FaRegUserCircle className='profile' />
+        <Link className='nav-items' to="/profile" ><FaRegUserCircle className='profile' /></Link>
+          
         </div>
       </nav>
       {vehiclesMenuOpen && <div className='nav-sub-item-list'>

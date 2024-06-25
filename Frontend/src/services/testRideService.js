@@ -19,6 +19,7 @@ export const createDemoBooking = async (userId, locationId, modelName, bookingTi
 };
 
 export const fetchUserHistory = async (userId) => {
+    console.log(userId)
     try {
         const response = await axios.post(`${API_BASE_URL}/history`, { userId }); 
         return response.data;

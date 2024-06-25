@@ -1,16 +1,16 @@
-// components/SignUp/SignUp.js
-
 import React from 'react';
 import PhoneVerification from '../PhoneVerification/PhoneVerification';
 import UserDetails from '../UserDetails/UserDetails';
-import { useUser } from '../../contexts/UserContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, selectUser } from '../../features/user/userSlice';
 
 function SignUp() {
-  const { user, setUser } = useUser();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   const handlePhoneVerificationSuccess = (userData) => {
-    setUser(userData); 
-    console.log("signup",userData);
+    dispatch(setUser(userData)); 
+    console.log("signup", userData);
   };
 
   return (

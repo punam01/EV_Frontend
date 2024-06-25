@@ -7,22 +7,24 @@ import { BsTelephoneFill } from "react-icons/bs";
 import OtpInput from 'react-otp-input';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
-import axios from "../../services/axiosInstance";
-import { useUser } from '../../contexts/UserContext';
-import '../Login/Login.css'
+import { useDispatch } from 'react-redux';
+import { setUser, setSignupStatus } from '../../features/user/userSlice';
+
+import {auth} from '../../firebase.config'
+
 function PhoneVerification({ onSuccess }) {
   const auth = getAuth();
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setUser } = useUser();
+  const dispatch = useDispatch();
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-        'size': 'invisible',
-        'callback': (response) => {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth,'recaptcha-container', {
+        size: 'invisible',
+        callback: (response) => {
           onSignup();
         }
       });
@@ -51,7 +53,11 @@ function PhoneVerification({ onSuccess }) {
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async (res) => {
       setLoading(false);
-      setUser(res.user);
+      dispatch(setUser({
+        uid: res.user.uid,
+        phoneNumber: res.user.phoneNumber,
+      }));
+      dispatch(setSignupStatus(true));
       onSuccess(res.user);
     }).catch(err => {
       console.log(err);
@@ -61,7 +67,7 @@ function PhoneVerification({ onSuccess }) {
   }
 
   return (
-    <section className=''>
+    <section className='phone-verification'>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
       <div id="recaptcha-container"></div>
       <div className='verify-container'>
@@ -78,9 +84,8 @@ function PhoneVerification({ onSuccess }) {
               numInputs={6}
               renderSeparator={<span>-</span>}
               renderInput={(props) => <input {...props} />}
-
             />
-            <button onClick={onOTPVerify}>
+            <button onClick={onOTPVerify} disabled={loading}>
               {loading && <CgSpinner className='animate-spin' />}
               <span>Verify OTP</span>
             </button>
@@ -94,7 +99,7 @@ function PhoneVerification({ onSuccess }) {
               onChange={setPhone}
               id='phone'
             />
-            <button onClick={onSignup}>
+            <button onClick={onSignup} disabled={loading}>
               {loading && <CgSpinner className='animate-spin' />}
               <span>Send code via SMS</span>
             </button>
