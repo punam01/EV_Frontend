@@ -41,3 +41,15 @@ export const getDesiredVariant = async (queryParams) => {
     throw error;
   }
 };
+
+export const compareCars = async (model1,model2) => {
+  try {
+    const response = await axios.get('http://localhost:5000/api/car/compare', {
+      params: { model1, model2 }
+    });
+    return response.data;
+    
+  } catch (err) {
+    console.log(err)
+  }
+};

@@ -8,6 +8,7 @@ import video2 from '/public/assets/carlight_medium.mp4';
 import { FaPauseCircle, FaPlayCircle } from "react-icons/fa";
 import { GiStarShuriken } from "react-icons/gi";
 import Experience from './DigitalShowroom/Experience';
+import CompareCars from './CompareCars/CompareCars';
 
 const Home = () => {
   const toggleMenu = () => {
@@ -162,6 +163,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <CompareCars />
       </div>
     </>
   );
