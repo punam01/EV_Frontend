@@ -1,13 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
-import { useUser } from '../../contexts/UserContext';
 
 const Card = ({ img, title, star, reviews, prevPrice, id }) => {
   const navigate = useNavigate();
-  const { user } = useUser();
-
-  console.log(user)
+  
 
   const handleViewDetails = () => {
     navigate(`/cars/${id}`);

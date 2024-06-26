@@ -3,6 +3,7 @@ import './Vehicles.css';
 import Card from '../../components/AdvFilter/Card';
 
 const Vehicles = ({ cars }) => {
+  console.log(cars)
   return (
     <section className='vehicles-card-container'>
       <div className="vehicle-item">

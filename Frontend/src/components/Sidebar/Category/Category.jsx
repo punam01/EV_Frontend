@@ -3,7 +3,7 @@ import Input from '../../AdvFilter/Input';
 import './Category.css';
 
 const Category = ({ handleChange }) => {
-  const options = ["Model A", "Model B", "Model C", "Model D"];
+  const options = ["ModelA", "ModelB", "ModelC", "ModelD"];
   
   return (
     <Input 

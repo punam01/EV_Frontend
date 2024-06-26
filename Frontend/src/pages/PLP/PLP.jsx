@@ -82,7 +82,7 @@ const PLP = () => {
 
     if (selectedSeatingCapacity) {
       filteredCars = filteredCars.filter((car) =>
-        car.seatingCapacity >= selectedSeatingCapacity
+        car.seatingCapacity == selectedSeatingCapacity
       );
     }
 
