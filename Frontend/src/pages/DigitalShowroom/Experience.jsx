@@ -5,7 +5,7 @@ import Bmw_m4_f82 from './Bmw_m4_f82';
 
 const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,autoRotateSpeed }) => {
     return (
-        <Canvas shadows camera={{ position: [0, 0, 2], fov: 50 }} style={{ width: '100vw', height: '120vh' }}>
+        <Canvas shadows camera={{ position: [0, 0, 2], fov: 50 }} style={{ width: '100vw', height: '120vh' ,backgroundColor:'#f3f2f2'}}>
             <ambientLight intensity={0.5} />
             <directionalLight
                 position={[5, 5, 5]}

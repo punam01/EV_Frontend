@@ -43,9 +43,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    pointer-events: none; /* Ensure clicks go through */
+    justify-content: center; 
+    align-items: center;
+    pointer-events: none; 
 }
 
 .car-name-backdrop {
@@ -54,5 +54,5 @@
     font-family: "Satisfy", cursive;
     font-weight: 600;
     font-style: normal;
-    pointer-events: none; /* Ensure clicks go through */
+    pointer-events: none; 
 }
