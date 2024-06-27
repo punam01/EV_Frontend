@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PhoneVerification from '../PhoneVerification/PhoneVerification';
 import UserDetails from '../UserDetails/UserDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, selectUser } from '../../features/user/userSlice';
+import { setUser, setSignupStatus, selectSignupStatus, selectUser } from '../../features/user/userSlice';
 
 function SignUp() {
   const dispatch = useDispatch();
+  const signupStatus = useSelector(selectSignupStatus);
   const user = useSelector(selectUser);
+  console.log('init state',user)
+  
+  useEffect(() => {
+    const storedSignupStatus = localStorage.getItem('signupStatus');
+    if (storedSignupStatus) {
+      dispatch(setSignupStatus(JSON.parse(storedSignupStatus)));
+    }
+  }, [dispatch]);
 
   const handlePhoneVerificationSuccess = (userData) => {
+    dispatch(setSignupStatus(true));
     dispatch(setUser(userData)); 
-    console.log("signup", userData);
   };
-
+  const customId=localStorage.getItem('customId');
   return (
     <div>
-      {!user ? (
+      { !customId ? (
         <PhoneVerification onSuccess={handlePhoneVerificationSuccess} />
       ) : (
         <UserDetails user={user} />

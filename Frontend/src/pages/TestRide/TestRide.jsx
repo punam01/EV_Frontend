@@ -101,20 +101,9 @@ const TestRide = () => {
             );
             console.log(verificationResult)
             if (verificationResult) {
+                
                 const combinedDateTime = `${formDetails.selectedTime}`;
                 const action = 'remove';
-                const updateResponse = await updateTimeSlot(
-                    selectedLocation._id,
-                    formDetails.selectedModel,
-                    combinedDateTime,
-                    action
-                );
-
-                if (updateResponse.msg === 'Time slot updated successfully') {
-                    toast.success('Date/time updated successfully');
-                } else {
-                    toast.error(updateResponse.msg);
-                }
 
                 const demoBookingCreated = await createDemoBooking(
                     verificationResult.userId,
@@ -125,11 +114,24 @@ const TestRide = () => {
                 );
 
                 if (demoBookingCreated) {
+                    const updateResponse = await updateTimeSlot(
+                        selectedLocation._id,
+                        formDetails.selectedModel,
+                        combinedDateTime,
+                        action
+                    );
+
+                    if (updateResponse.msg === 'Time slot updated successfully') {
+                        toast.success('Date/time updated successfully');
+                    } else {
+                        toast.error(updateResponse.msg);
+                    }
                     toast.success('Demo booking created successfully');
                     navigate('/profile');
                 } else {
                     toast.error('Failed to create demo booking');
                 }
+
             } else {
                 toast.error('User not found. Redirecting to signup...');
                 navigate('/signup');
@@ -210,7 +212,7 @@ const TestRide = () => {
                                         <label htmlFor="models" className="form-label">Available Models</label>
                                         <div className="form-input">
                                             <select
-                                                style={{display:'block'}}
+                                                style={{ display: 'block' }}
                                                 name="selectedModel"
                                                 id="models"
                                                 className='form-input-text'
@@ -244,7 +246,7 @@ const TestRide = () => {
                                             <label htmlFor="times" className="form-label">Time</label>
                                             <div className="form-input">
                                                 <select
-                                                    style={{display:'block'}}
+                                                    style={{ display: 'block' }}
                                                     name="selectedTime"
                                                     id="times"
                                                     className='form-input-text'

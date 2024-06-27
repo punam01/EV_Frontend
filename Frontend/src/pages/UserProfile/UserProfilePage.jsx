@@ -4,15 +4,17 @@ import './UserProfilePage.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserByCustomId, updateUser } from '../../services/userServices';
 import { fetchUserHistory, cancelBooking } from '../../services/testRideService';
-import { clearUser,selectUser,setUser } from '../../features/user/userSlice';
+import { clearUser, selectUser, setUser } from '../../features/user/userSlice';
+
 function UserProfilePage() {
+    const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState('profile');
-    const dispatch=useDispatch()
     const user = useSelector(selectUser);
-    console.log(user)
-    const handleLogout=()=>{
-        dispatch(clearUser())
-    }
+
+    const handleLogout = () => {
+        dispatch(clearUser());
+    };
+
     return (
         <div className="user-profile-page">
             <div className="tabs">
@@ -31,32 +33,24 @@ function UserProfilePage() {
     );
 }
 
-function ProfileSettings() {
-    const { user } = useSelector(state => state.user); // Access user state from Redux
-    const dispatch = useDispatch();
+/*function ProfileSettings() {
+    //const dispatch = useDispatch();
+    //const user = useSelector(state => state.user);
+    //console.log(user)
+    const user = useSelector(state => state.user);
     console.log(user)
-    const [userProfile, setUserProfile] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        contact: '',
-        address: '',
-        pincode: '',
-        custom_id: user ? user.uid : '',
-        _id:user?user._id:''
-    });
-
+    const [userProfile, setUserProfile] = useState({})
     const [editMode, setEditMode] = useState(false);
-
+    //const user = localStorage.getItem('USER')
     useEffect(() => {
-        if (user) {
+        if (user.uid) {
             fetchUserProfile(user.uid);
         }
     }, [user]);
 
-    const fetchUserProfile = async (customId) => {
+    const fetchUserProfile = async (idofuser) => {
         try {
-            const response = await getUserByCustomId(customId);
+            const response = await getUserByCustomId(idofuser);
             setUserProfile({
                 first_name: response.first_name,
                 last_name: response.last_name,
@@ -64,8 +58,9 @@ function ProfileSettings() {
                 contact: response.contact,
                 address: response.address,
                 pincode: response.pincode,
-                custom_id: customId
+                custom_id: idofuser
             });
+            console.log("response", response)
         } catch (error) {
             console.error('Error fetching user profile:', error);
         }
@@ -78,7 +73,7 @@ function ProfileSettings() {
     const handleSaveClick = async () => {
         try {
             const updatedUser = await updateUser(userProfile.custom_id, userProfile);
-            dispatch(setUser(updatedUser)); 
+            dispatch(setUser(updatedUser));
             setEditMode(false);
             console.log('Profile updated successfully!');
         } catch (error) {
@@ -94,14 +89,8 @@ function ProfileSettings() {
         }));
     };
 
-    
-    const handleLogout = () => {
-        dispatch(clearUser()); // Dispatch clearUser action to reset user state
-    };
-
     return (
         <div className='profile-settings'>
-            
             <div className="group">
                 <div className='form-label'>
                     <label>First Name</label>
@@ -131,7 +120,7 @@ function ProfileSettings() {
                             name="contact"
                             value={userProfile.contact}
                             onChange={handleChange}
-                            disabled={true} // Keep contact field disabled as per original logic
+                            disabled={true}
                         />
                         <div className="info-icon">
                             <i>ℹ️</i>
@@ -181,23 +170,169 @@ function ProfileSettings() {
         </div>
     );
 }
+*/
 
+function ProfileSettings() {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+    const customId=localStorage.getItem('customId')
+    const [userProfile, setUserProfile] = useState({});
+    const [editMode, setEditMode] = useState(false);
+  
+    useEffect(() => {
+      const userId = localStorage.getItem('customId');
+      if (userId) {
+        fetchUserProfile(userId);
+      }
+    }, []);
+  
+    const fetchUserProfile = async (customId) => {
+      try {
+        const response = await getUserByCustomId(customId);
+        setUserProfile({
+          first_name: response.first_name,
+          last_name: response.last_name,
+          email: response.email,
+          contact: response.contact,
+          address: response.address,
+          pincode: response.pincode,
+          custom_id: customId
+        });
+        console.log("response", response);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+  
+    const handleEditClick = () => {
+      setEditMode(true);
+    };
+  
+    const handleSaveClick = async () => {
+      try {
+        const updatedUser = await updateUser(userProfile.custom_id, userProfile);
+        dispatch(setUser(updatedUser));
+        setEditMode(false);
+        console.log('Profile updated successfully!');
+      } catch (error) {
+        console.error('Error updating user profile:', error);
+      }
+    };
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setUserProfile((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    };
+  
+    return (
+      <div className='profile-settings'>
+        <div className="group">
+          <div className='form-label'>
+            <label>First Name</label>
+            <input
+              type="text"
+              name="first_name"
+              value={userProfile.first_name}
+              onChange={handleChange}
+              disabled={!editMode}
+            />
+          </div>
+          <div className='form-label'>
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="last_name"
+              value={userProfile.last_name}
+              onChange={handleChange}
+              disabled={!editMode}
+            />
+          </div>
+          <div className='form-label'>
+            <label>Contact</label>
+            <div className='info'>
+              <input
+                type="text"
+                name="contact"
+                value={userProfile.contact}
+                onChange={handleChange}
+                disabled={true} 
+              />
+              <div className="info-icon">
+                <i>ℹ️</i>
+                <div className="tooltip">Mobile number is not editable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="group">
+          <div className='form-label'>
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={userProfile.email}
+              onChange={handleChange}
+              disabled={!editMode}
+            />
+          </div>
+          <div className='form-label'>
+            <label>Pincode</label>
+            <input
+              type="text"
+              name="pincode"
+              value={userProfile.pincode}
+              onChange={handleChange}
+              disabled={!editMode}
+            />
+          </div>
+        </div>
+        <div className='form-label'>
+          <label>Address</label>
+          <textarea
+            name="address"
+            value={userProfile.address}
+            onChange={handleChange}
+            disabled={!editMode}
+            rows={4}
+          />
+        </div>
+  
+        {!editMode ? (
+          <button onClick={handleEditClick}>Edit</button>
+        ) : (
+          <button onClick={handleSaveClick}>Save</button>
+        )}
+      </div>
+    );
+  }
+  
 function PurchaseHistory() {
-    const { user } = useSelector(state => state.user); 
-    console.log(user.uid)
+    const user = useSelector(selectUser);
+    const customId=localStorage.getItem('USER')
+    console.log(customId)
+    const [purchaseHistory, setPurchaseHistory] = useState([
 
-    const [purchaseHistory, setPurchaseHistory] = useState([]);
+    ]);
 
     useEffect(() => {
-        if (user) {
-            fetchHistory(user.uid);
+        if (customId) {
+            fetchHistory(customId);
         }
     }, [user]);
+
+    useEffect(() => {
+        console.log("purchaseHistory updated:", purchaseHistory);
+        setPurchaseHistory(purchaseHistory)
+    }, [purchaseHistory]);
 
     const fetchHistory = async (customId) => {
         try {
             const response = await fetchUserHistory(customId);
             setPurchaseHistory(response);
+            console.log("response", purchaseHistory)
         } catch (error) {
             console.error('Error fetching purchase history:', error);
         }
@@ -215,13 +350,13 @@ function PurchaseHistory() {
             console.error('Error canceling booking:', error);
         }
     };
-
+    console.log(purchaseHistory.length)
     return (
         <div className="purchase-history">
             {purchaseHistory.length === 0 ? (
                 <p>No purchase history available.</p>
             ) : (
-                <ul>
+                <ul style={{ display: 'block' }}>
                     {purchaseHistory.map((history) => (
                         <li key={history._id} className="purchase-item">
                             <div className="purchase-details">

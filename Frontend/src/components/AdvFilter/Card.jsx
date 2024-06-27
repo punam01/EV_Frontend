@@ -11,6 +11,7 @@ const Card = ({ img, title, star, reviews, prevPrice, id }) => {
   };
 
   const handleBookNow = () => {
+    localStorage.setItem('carId',id)
       navigate(`/prebooking/${id}`);
   
   };

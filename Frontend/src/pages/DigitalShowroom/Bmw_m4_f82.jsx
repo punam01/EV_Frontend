@@ -449,7 +449,7 @@ turnHeadlightOn();
         <mesh geometry={nodes.ARm4_underbody_etkc_0.geometry} material={materials.etkc} rotation={[-Math.PI / 2, 0, 0]} />
         <mesh geometry={nodes.ARm4_doorglass_R_ARm4_glass_0.geometry} material={getWindowGlassProps()} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         <mesh geometry={nodes.ARm4_doorglass_L_ARm4_glass_0.geometry} material={getWindowGlassProps()} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
-        <mesh geometry={nodes.ARm4_windshield_ARm4_glass_0.geometry} material={materials.ARm4_glass} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
+        <mesh geometry={nodes.ARm4_windshield_ARm4_glass_0.geometry} material={getWindowGlassProps()} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         <mesh geometry={nodes.ARm4_roof_ARm4_common_carbon_0.geometry} material={materials.ARm4_common_carbon} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         <mesh geometry={nodes.ARm4_interior_rgb_ARm4_rgb_0.geometry} material={materials.ARm4_rgb} rotation={[-Math.PI / 2, 0, 0]} scale={100} />
         <mesh geometry={nodes.ARm4_sideglass_R_tinted_ARm4_glass_tinted_0.geometry} material={getWindowGlassProps()} rotation={[-Math.PI / 2, 0, 0]} scale={100} />

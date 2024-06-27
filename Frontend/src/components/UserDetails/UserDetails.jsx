@@ -5,26 +5,25 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../../features/user/userSlice';
 
-const UserDetailsForm = () => {
+const UserDetailsForm = ({user}) => {
+  console.log(user)
+  
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  //const user = useSelector(selectUser);
   const [userDetails, setUserDetails] = useState({
     first_name: '',
     last_name: '',
     email: '',
     address: '',
     pincode: '',
-    custom_id: user ? user.uid : '', // Access user details
-    _id: '',
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  console.log(user)
+
   useEffect(() => {
     if (user) {
       setUserDetails((prevDetails) => ({
         ...prevDetails,
-        custom_id: user.uid,
       }));
     }
   }, [user]);
@@ -34,6 +33,8 @@ const UserDetailsForm = () => {
     setLoading(true);
 
     try {
+      // Print current user data before submitting
+
       const response = await registerUser({
         custom_id: user.uid,
         first_name: userDetails.first_name,
@@ -41,21 +42,28 @@ const UserDetailsForm = () => {
         email: userDetails.email,
         address: userDetails.address,
         pincode: userDetails.pincode,
-        contact: user.phoneNumber, 
+        contact: user.phoneNumber,
       });
+
+      // Print the response received from the server
+      console.log('Response from server:', response);
 
       toast.success(response.msg);
       setUserDetails((prevDetails) => ({
         ...prevDetails,
         _id: response._id,
       }));
+
       dispatch(setUser({
-        ...user,
+        uid: user.uid,
+        _id: response._id,
         userDetails: {
           ...userDetails,
           _id: response._id,
-        }
+        },
+        phoneNumber: user.phoneNumber,
       }));
+
       setSubmitted(true);
     } catch (error) {
       console.error('Failed to register user:', error);
@@ -72,7 +80,9 @@ const UserDetailsForm = () => {
       [name]: value,
     }));
   };
-
+  
+  console.log('Current user data:', user);
+  //localStorage.setItem('USER',user._id)
   return (
     <section>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
@@ -82,7 +92,7 @@ const UserDetailsForm = () => {
             <h2>Registration Success!!</h2>
             <div>
               <p>
-                <strong>UID_:</strong> {userDetails._id}
+                <strong>UID_:</strong> {user._id}
               </p>
               <p>
                 <strong>UID:</strong> {user.uid}

@@ -1,85 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getCarById } from '../../services/carServices';
-import { createPreBooking } from '../../services/preBookingService';
-import { useUser } from '../../contexts/UserContext';
+import React, { useEffect, useState } from 'react';
+import { bookCar } from '../../services/preBookingService';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/user/userSlice';
 
 const PreBooking = () => {
-  const { id } = useParams();
-  const [car, setCar] = useState(null);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const navigate = useNavigate();
-  const { user } = useUser();
+  const user = useSelector(selectUser);
+  const [carId, setCarId] = useState('');
+  const [bookingTime, setBookingTime] = useState('');
+  const [contact, setContact] = useState('');
+  const [paymentAmount, setPaymentAmount] = useState('');
+
   useEffect(() => {
-    const fetchCar = async () => {
-      try {
-        const carData = await getCarById(id);
-        setCar(carData);
-      } catch (error) {
-        console.error("Error fetching car details:", error);
-      }
-    };
+    // Get carId and userId from local storage
+    const storedCarId = localStorage.getItem('carId');
+    const storedUserId = localStorage.getItem('USER');
 
-    fetchCar();
-  }, [id]);
+    if (storedCarId) setCarId(storedCarId);
+    if (storedUserId) {
+      // Assuming you have a way to set the userId in the user object
+      // You can also directly set the userId in the state if needed
+    }
+  }, []);
 
-  console.log(user)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleBooking = async () => {
     try {
-      const bookingDetails = {
-        userId: user.userId, // Ensure user.userId is correctly set in UserContext
-        carId: id,
-        bookingTime: new Date(),
-        contact: phone
+      const bookingData = {
+        userId: user.uid, // Assuming user object has uid property
+        carId,
+        bookingTime,
+        contact,
+        paymentMade: true,
       };
-
-      await createPreBooking(bookingDetails);
-      navigate(`/booking-success`);
+      const bookedCar = await bookCar(bookingData);
+      console.log('Booked Car:', bookedCar);
     } catch (error) {
-      console.error("Error creating booking:", error);
+      console.error('Error booking car:', error);
     }
   };
 
-  if (!car) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div className="booking-container">
-      <h1>Booking for {car.name}</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Phone:
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Book Now</button>
-      </form>
+    <div>
+      <h2>Booking Form</h2>
+      <input type="text" placeholder="Car ID" value={carId} onChange={(e) => setCarId(e.target.value)} />
+      <input type="datetime-local" placeholder="Booking Time" value={bookingTime} onChange={(e) => setBookingTime(e.target.value)} />
+      <input type="text" placeholder="Contact" value={contact} onChange={(e) => setContact(e.target.value)} />
+      <button onClick={handleBooking}>Book Car</button>
     </div>
   );
 };

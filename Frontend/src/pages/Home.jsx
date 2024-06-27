@@ -5,6 +5,7 @@ import transition from '../transition';
 import './Home.css';
 import video1 from '/public/assets/bmw1_medium.mp4';
 import video2 from '/public/assets/carlight_medium.mp4';
+import reel1 from '/public/assets/reel1.mp4';
 import { FaPauseCircle, FaPlayCircle } from "react-icons/fa";
 import { GiStarShuriken } from "react-icons/gi";
 import Experience from './DigitalShowroom/Experience';
@@ -44,13 +45,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Initialize the carousel
     if (window.M && window.M.Carousel) {
-      // Initialize the first carousel without indicators
       const galleryElems = document.querySelectorAll('.gallery .carousel');
-      window.M.Carousel.init(galleryElems, { });
+      window.M.Carousel.init(galleryElems, {});
 
-      // Initialize the second carousel with indicators
       const modelCarouselElems = document.querySelectorAll('.model-carousel .carousel');
       window.M.Carousel.init(modelCarouselElems, {
         fullWidth: true,
@@ -58,7 +56,6 @@ const Home = () => {
       });
     }
 
-    // Add event listeners to carousel items
     const carouselItems = document.querySelectorAll('.carousel-item');
     carouselItems.forEach((item) => {
       item.addEventListener('click', () => {
@@ -67,11 +64,9 @@ const Home = () => {
       });
     });
 
-    // Add event listeners to play/pause buttons
     document.querySelector('.play').addEventListener('click', playVideo);
     document.querySelector('.pause').addEventListener('click', pauseVideo);
 
-    // Cleanup event listeners on component unmount
     return () => {
       carouselItems.forEach((item) => {
         item.removeEventListener('click', () => {
@@ -87,7 +82,7 @@ const Home = () => {
 
   return (
     <>
-      <div>
+      <div className='home-container'>
         <header>
           <span className='year'>2018-2023</span>
           <a href='' className='logo'>
@@ -145,25 +140,84 @@ const Home = () => {
             <div className="head-text">
               <h2>THE SMART CHOICE<br /><span>FOR THE ROAD AHEAD</span></h2>
             </div>
+            <div className="brand-name">
+              Electric
+            </div>
             <div className="model-carousel">
-              <div className="carousel" data-indicators="true">
+              {/*<div className="carousel" data-indicators="true">
                 <a className="carousel-item" href="#">
-                  <p>Car 1</p>
                   <img src="/public/assets/images/car04.png" />
                 </a>
                 <a className="carousel-item" href="#">
-                  <p>Car 2</p>
                   <img src="/public/assets/images/car02.png" />
                 </a>
                 <a className="carousel-item" href="#">
-                  <p>Car 3</p>
                   <img src="/public/assets/images/car03.png" />
                 </a>
+              </div>*/}
+            </div>
+            <div className="car-details">
+              <div className="left">
+                <p>Electric motor produce instant torque, or rotational force, which means electric cars can accelerate quickly from a stop.</p>
+                <button className="explore-btn-grp">EXPLORE MORE<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                </svg></span></button>
+              </div>
+              <div className="right">
+                <p>480<sup>KM</sup> <span>Range upto</span></p>
+                <p>320<sup>KW</sup>  <span>Power upto</span></p>
+                <p>11,000<sup>LBS</sup>  <span>Tow up</span></p>
               </div>
             </div>
           </div>
         </div>
-        <CompareCars />
+        <div className="car-exterior">
+          <div className="car-ext-head">
+            <h2>Active<br /><span>Exterior</span></h2>
+            <p>Minimilistic design. Powerful Performance. The EV1 propels the driving exp into the post petrol era</p>
+          </div>
+          <div className="car-ext-img">
+            <img src="/assets/images/car_3d_t.png" alt="" />
+          </div>
+          <div className="car-ext-end">
+            <div className="color-swatches">
+              <div className="swatch" style={{ backgroundColor: "#f3f2f2" }}></div>
+              <div className="swatch" style={{ backgroundColor: "#fff" }}></div>
+              <div className="swatch" style={{ backgroundColor: "orange" }}></div>
+            </div>
+          </div>
+        </div>
+        <div className="car-interior">
+          <div className="car-int-head">
+            <h2>DESIGN<br /><span>FOLLOWS</span><br />FUNCTIONS</h2>
+            <p>Minimilistic design. Powerful Performance. The EV1 propels the driving exp into the post petrol era.Minimilistic design. Powerful Performance. The EV1 propels the driving exp into the post petrol era</p>
+          </div>
+          <div className="car-int-img">
+            <div className="left">
+              <img className="circle" src="/assets/images/steering.jpg" alt="" />
+              <p>Refined Interior Design</p>
+              <button className="explore-btn-grp">EXPLORE MORE<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+              </svg></span></button>
+            </div>
+            <div className="right">
+              <img className="square" src="/assets/images/car-int.jpg" alt="" />
+              <p>Topnocth Technology</p>
+              <button className="explore-btn-grp">EXPLORE MORE<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+              </svg></span></button>
+            </div>
+
+          </div>
+        </div>
+        <div className="car-reels">
+          <video src={reel1} autoPlay
+            loop
+            muted></video>
+          <div className="overlay-text">HIGH<br /> PERFORMANCE <br />AND DURABILTY</div>
+        </div>
+
+        {/*<CompareCars />*/}
       </div>
     </>
   );

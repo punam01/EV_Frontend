@@ -1,0 +1,23 @@
+.demo-drive-page {
+    background-color: aqua;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row; 
+}
+
+.demo-img-holder {
+    width: 60vw;
+    height: 100%;
+    background-color: pink;
+}
+
+@media (max-width: 600px) {
+    .demo-drive-page {
+        flex-direction: column; 
+    }
+    .demo-img-holder {
+        width: 100vw;
+        height: 50vh;
+    }
+}

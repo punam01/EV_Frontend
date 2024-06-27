@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../../features/user/userSlice';
+import { setUser, clearUser } from '../../features/user/userSlice';
 import PhoneNumberInput from './PhoneNumberInput';
 import OtpVerification from './OtpVerification';
-import { auth } from '../../firebase.config'
 import UserProfilePage from '../../pages/UserProfile/UserProfilePage';
+
 const Login = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.user);
-  const auth = getAuth();
+  const user = useSelector(state => state.user);
+  console.log(user)
+  const authInstance = getAuth();
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
@@ -21,20 +22,20 @@ const Login = () => {
   const [recaptchaVisible, setRecaptchaVisible] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = authInstance.onAuthStateChanged(user => {
       if (user) {
-        dispatch(setUser(user)); // Dispatch setUser action when user is authenticated
+        dispatch(setUser(user)); 
       } else {
-        dispatch(setUser(null)); // Clear user when not authenticated
+        dispatch(clearUser()); 
       }
     });
 
     return () => unsubscribe();
-  }, [auth, dispatch]);
+  }, [authInstance, dispatch]);
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      window.recaptchaVerifier = new RecaptchaVerifier(authInstance, 'recaptcha-container', {
         'size': 'invisible',
         'callback': (response) => {
           onLogin();
@@ -48,7 +49,7 @@ const Login = () => {
     onCaptchVerify();
     const appVerifier = window.recaptchaVerifier;
     const formatPh = '+' + phone;
-    signInWithPhoneNumber(auth, formatPh, appVerifier)
+    signInWithPhoneNumber(authInstance, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         setLoading(false);
@@ -63,12 +64,12 @@ const Login = () => {
   function onOTPVerify() {
     setLoading(true);
     window.confirmationResult.confirm(otp).then((res) => {
-      dispatch(setUser(res.user));
+      dispatch(setUser(res.user)); 
+      console.log(user)
       setLoading(false);
       setRecaptchaVisible(false);
       toast.success("Login successful!");
       navigate('/profile');
-      setLoading(false);
     }).catch(err => {
       console.log(err);
       setLoading(false);

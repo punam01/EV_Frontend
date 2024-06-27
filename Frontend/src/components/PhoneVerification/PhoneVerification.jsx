@@ -9,11 +9,9 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { setUser, setSignupStatus } from '../../features/user/userSlice';
-
-import {auth} from '../../firebase.config'
+import { auth } from '../../firebase.config';
 
 function PhoneVerification({ onSuccess }) {
-  const auth = getAuth();
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
@@ -22,7 +20,7 @@ function PhoneVerification({ onSuccess }) {
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth,'recaptcha-container', {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
         size: 'invisible',
         callback: (response) => {
           onSignup();
@@ -53,12 +51,16 @@ function PhoneVerification({ onSuccess }) {
     setLoading(true);
     window.confirmationResult.confirm(otp).then(async (res) => {
       setLoading(false);
+      localStorage.setItem('customId',res.user.uid)
       dispatch(setUser({
         uid: res.user.uid,
         phoneNumber: res.user.phoneNumber,
       }));
       dispatch(setSignupStatus(true));
-      onSuccess(res.user);
+      onSuccess({
+        uid: res.user.uid,
+        phoneNumber: res.user.phoneNumber,
+      });
     }).catch(err => {
       console.log(err);
       setLoading(false);
