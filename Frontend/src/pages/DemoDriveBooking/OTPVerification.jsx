@@ -5,6 +5,7 @@ import OtpInput from 'react-otp-input';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { setUser, setSignupStatus } from '../../features/user/userSlice';
+import './OTPVerification.css'
 
 const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
     const [otp, setOtp] = useState('');
@@ -34,8 +35,7 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
     };
 
     return (
-        <div>
-            <GoShieldLock size={30} />
+        <div className='otp-verification-container'>
             <label htmlFor='otp'>Enter your OTP</label>
             <OtpInput
                 value={otp}

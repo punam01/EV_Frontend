@@ -31,10 +31,10 @@ export const fetchUserHistory = async (userId) => {
 
 export const cancelBooking = async (bookId) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}`, { bookId, bookStatus: 'cancelled' });
+        const response = await axios.post(`${API_BASE_URL}/cancel-booking`, { bookId });
         return response.data;
     } catch (error) {
-        console.error('Error canceling booking:', error);
-        throw error;
+        console.error('Error cancelling booking:', error);
+        throw error; 
     }
 };

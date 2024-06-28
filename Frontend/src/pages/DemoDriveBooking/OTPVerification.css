@@ -1,0 +1,67 @@
+.otp-verification-container {
+    margin-top: 1rem;
+}
+
+.otp-verification-container label {
+    font-size: 1rem;
+    color: gray;
+    margin: 1.5rem 0 0.5rem 0.5rem;
+}
+
+.otp-verification-container .otp-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.otp-verification-container .otp-input-container input {
+    width: 40px; 
+    height: 40px; 
+    font-size: 1.2rem;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 8px;
+    margin: 0 5px;
+    padding: 10px;
+    outline: none;
+}
+
+.otp-verification-container .otp-input-container input:focus {
+    border-color: black; 
+}
+
+.otp-verification-container button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px;
+    width: 90%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.otp-verification-container button:hover {
+    background-color: #333; 
+}
+
+.otp-verification-container button .animate-spin {
+    margin-right: 5px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.otp-verification-container button span {
+    display: inline-block;
+    vertical-align: middle;
+}

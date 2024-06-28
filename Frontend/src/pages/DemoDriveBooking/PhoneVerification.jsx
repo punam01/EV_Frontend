@@ -5,6 +5,7 @@ import { CgSpinner } from "react-icons/cg";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast from 'react-hot-toast';
 import { auth } from '../../firebase.config';
+import './PhoneVerification.css'
 
 const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, otpSent }) => {
     const onCaptchVerify = () => {

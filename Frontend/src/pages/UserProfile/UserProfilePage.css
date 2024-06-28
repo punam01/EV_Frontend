@@ -2,15 +2,18 @@
     width: 100%;
     margin: 0 auto;
     padding: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
-.tabs {
+.user-profile-page .tabs {
     text-align: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    height: 200px;
 }
 
-.tab-btn {
+.user-profile-page .tabs .tab-btn {
     padding: 10px 20px;
     cursor: pointer;
     background-color: var(--white-color);
@@ -18,17 +21,17 @@
     transition: background 0.3s;
 }
 
-.tab-btn.active {
-    font-weight: 300;
+.user-profile-page .tabs .tab-btn.active {
     border-bottom: 2px solid black;
+    height:200px;
 }
 
-.tab-content {
+.user-profile-page .tab-content {
     display: flex;
     flex-direction: column;
 }
 
-.profile-settings {
+.user-profile-page .profile-settings {
     padding: 2rem;
     width: 100%;
     display: flex;

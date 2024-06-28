@@ -352,7 +352,7 @@ function PurchaseHistory() {
     };
     console.log(purchaseHistory.length)
     return (
-        <div className="purchase-history">
+        <div id="purchase" className="purchase-history">
             {purchaseHistory.length === 0 ? (
                 <p>No purchase history available.</p>
             ) : (

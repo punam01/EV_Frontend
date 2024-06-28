@@ -5,9 +5,11 @@ import PhoneVerification from './PhoneVerification';
 import OTPVerification from './OTPVerification';
 import { getCarAvailabilityByPincode } from '../../services/locationServices';
 import { createDemoBooking } from '../../services/testRideService';
-import { registerUser } from '../../services/userServices'; 
+import { registerUser } from '../../services/userServices';
 import './DemoDriveBooking.css';
 import { useNavigate } from 'react-router-dom';
+import BookingSuccess from '../../components/BookingSuccess/BookingSuccess';
+import TimeContainer from '../../components/TimeContainer/TimeContainer';
 
 const DemoDriveBooking = () => {
     const [phone, setPhone] = useState('');
@@ -20,6 +22,7 @@ const DemoDriveBooking = () => {
     const [availableModels, setAvailableModels] = useState([]);
     const [selectedModel, setSelectedModel] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
+    const [availableTimes, setAvailableTimes] = useState([]);
     const [selectedTime, setSelectedTime] = useState('');
     const [bookingSubmitted, setBookingSubmitted] = useState(false);
     const [userData, setUserData] = useState({ name: '', email: '', zipCode: '' });
@@ -29,6 +32,7 @@ const DemoDriveBooking = () => {
     const userFromLocalStorage = localStorage.getItem('USER');
     const [userId, setUserId] = useState('');
     const [zipCode, setZipCode] = useState('');
+    const name = localStorage.getItem("first_name") + ' ' + localStorage.getItem("last_name");
 
     useEffect(() => {
         if (userFromLocalStorage) {
@@ -49,11 +53,13 @@ const DemoDriveBooking = () => {
                 pincode: userData.zipCode,
                 contact: localStorage.getItem('phone').replace('+', '')
             });
+
             localStorage.setItem('USER', registeredUser._id);
             localStorage.setItem('zip', userData.zipCode);
             setUserId(registeredUser._id);
             fetchLocations(userData.zipCode);
             setShowUserDetails(false);
+            toast.success("User details saved");
         } catch (error) {
             console.error('Registration error:', error.message);
             toast.error('User with the same phone number already exists.');
@@ -69,9 +75,13 @@ const DemoDriveBooking = () => {
         }
     };
 
-    const handleModelChange = (e) => setSelectedModel(e.target.value);
+    const handleModelChange = (model) => {
+        setSelectedModel(model);
+        const times = selectedLocation.availability.find(a => a.carModel === model)?.availableTimes || [];
+        setAvailableTimes(times);
+    };
     const handleDateChange = (e) => setSelectedDate(e.target.value);
-    const handleTimeChange = (e) => setSelectedTime(e.target.value);
+    const handleTimeChange = (time) => setSelectedTime(time);
 
     const handleSubmit = async () => {
         try {
@@ -86,7 +96,13 @@ const DemoDriveBooking = () => {
             setBookingSubmitted(true);
         } catch (error) {
             console.error('Error creating demo booking:', error.message);
-            toast.error("Already booked 1 demo")
+            toast.error("Already booked 1 demo", {
+                duration: 3000,
+                onClose: () => {
+                    navigate('/profile');
+                },
+            });
+
         }
     };
 
@@ -103,16 +119,32 @@ const DemoDriveBooking = () => {
         setSelectedLocation(location);
         const models = location.availability.map(item => item.carModel);
         setAvailableModels(models);
+        setShowUserDetails(false); // Hide user details after location selection
     };
 
+    const formatTime = (time) => {
+        let [hours, minutes] = time.split('T')[1].split(':').slice(0, 2);
+        hours = parseInt(hours, 10);
+        const period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert to 12-hour format
+        return `${hours}:${minutes} ${period}`;
+    };
+
+    const homePageRedirect = () => {
+        navigate('/')
+    }
     return (
         <div className='demo-drive-page'>
-            <div className="demo-img-holder"></div>
+            <div className="demo-img-holder">
+                <img src="/assets/images/demoimg.jpg" alt="" />
+            </div>
             <div className="demo-booking-holder">
                 {!bookingSubmitted ? (
                     <>
                         {showUserDetails && !userFromLocalStorage ? (
                             <div className="demo-user-details">
+
+                                <h1>Schedule a DemoDrive</h1>
                                 <div id="recaptcha-container"></div>
                                 <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
                                 <PhoneVerification
@@ -132,18 +164,18 @@ const DemoDriveBooking = () => {
                                 {otpVerified && (
                                     <>
                                         <div className="user-details">
-                                            <div>
+                                            <div className='user-details-item'>
                                                 <label>Name:</label>
                                                 <input type="text" name="name" value={userData.name} onChange={handleChange} />
                                             </div>
-                                            <div>
+                                            <div className='user-details-item'>
                                                 <label>Email:</label>
                                                 <input type="email" name="email" value={userData.email} onChange={handleChange} />
                                             </div>
-                                            <div>
+                                            {/*<div className='user-details-item'>
                                                 <label>Zip Code:</label>
                                                 <input type="text" name="zipCode" value={userData.zipCode} onChange={handleChange} />
-                                            </div>
+                                            </div>-->*/}
                                             <button onClick={handleRegister}>Register and Next</button>
                                         </div>
                                     </>
@@ -151,16 +183,19 @@ const DemoDriveBooking = () => {
                             </div>
                         ) : (
                             <div className="demo-booking-details">
-                                    <div className="zip-code-input">
-                                        <label>Enter Zip Code:</label>
-                                        <input type="text" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
-                                        <button onClick={handleFetchLocations}>Find Locations</button>
-                                    </div>
-                                <div className="locations">
-                                    <h3>Select Location</h3>
-                                    <div className="location-container">
-                                        {locations.length > 0 ? (
-                                            locations.map(location => (
+
+
+                                <h1>Welcome back<br /></h1>
+                                <div className="zip-code-input">
+                                    <label>Enter Zip Code:</label>
+                                    <input type="text" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                                    <button onClick={handleFetchLocations}>Find Locations</button>
+                                </div>
+                                {locations.length > 0 && (
+                                    <div className="locations">
+                                        <h3>Select Location</h3>
+                                        <div className="location-container">
+                                            {locations.map(location => (
                                                 <div
                                                     key={location._id}
                                                     className={`location-card ${selectedLocation === location ? 'active' : ''}`}
@@ -173,27 +208,24 @@ const DemoDriveBooking = () => {
                                                         {location.address}, {location.contact}
                                                     </span>
                                                 </div>
-                                            ))
-                                        ) : (
-                                            <div>No locations found</div>
-                                        )}
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                                 {selectedLocation && (
                                     <div className="models">
                                         <h3>Select Model</h3>
-                                        <select
-                                            name="models"
-                                            id="models"
-                                            value={selectedModel}
-                                            onChange={handleModelChange}
-                                            style={{display:"block"}}
-                                        >
-                                            <option value="">Select a model</option>
+                                        <div className="model-container">
                                             {availableModels.map((model, index) => (
-                                                <option key={index} value={model}>{model}</option>
+                                                <div
+                                                    key={index}
+                                                    className={`model-card ${selectedModel === model ? 'active' : ''}`}
+                                                    onClick={() => handleModelChange(model)}
+                                                >
+                                                    <p>{model}</p>
+                                                </div>
                                             ))}
-                                        </select>
+                                        </div>
                                     </div>
                                 )}
                                 {selectedModel && (
@@ -206,23 +238,8 @@ const DemoDriveBooking = () => {
                                         />
                                     </div>
                                 )}
-                                {selectedDate && (
-                                    <div className="time">
-                                        <h3>Select Time</h3>
-                                        <select
-                                            name="times"
-                                            id="times"
-                                            value={selectedTime}
-                                            onChange={handleTimeChange}
-                                            style={{display:"block"}}
-                                        >
-                                            <option value="">Select a time</option>
-                                            {selectedLocation.availability.find(a => a.carModel === selectedModel)?.availableTimes.map((time, index) => (
-                                                <option key={index} value={time}>{time}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                )}
+                                {selectedDate && availableTimes.length > 0 && <TimeContainer selectedTime={selectedTime} availableTimes={availableTimes} handleTimeChange={handleTimeChange} />
+                                }
                                 {selectedTime && (
                                     <div className="book-button">
                                         <button onClick={handleSubmit}>Book Demo Drive</button>
@@ -232,17 +249,7 @@ const DemoDriveBooking = () => {
                         )}
                     </>
                 ) : (
-                    <div className="congratulations-message">
-                        <h2>Congratulations!</h2>
-                        <p>Your test drive has been booked successfully.</p>
-                        <div className="booking-details">
-                            <p><strong>Location:</strong> {selectedLocation.name}, {selectedLocation.city}, {selectedLocation.state}</p>
-                            <p><strong>Model:</strong> {selectedModel}</p>
-                            <p><strong>Date:</strong> {selectedDate}</p>
-                            <p><strong>Time:</strong> {selectedTime}</p>
-                            <p><strong>Contact:</strong> {phone}</p>
-                        </div>
-                    </div>
+                    <BookingSuccess locationName={selectedLocation.name} locationCity={selectedLocation.city} locationState={selectedLocation.state} selectedModel={selectedModel} selectedDate={selectedDate} selectedTime={selectedTime} homePageRedirect={homePageRedirect} />
                 )}
             </div>
         </div>
