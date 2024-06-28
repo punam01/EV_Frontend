@@ -17,7 +17,9 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
             setLoading(false);
             setOtpVerified(true);
             setOtpSent(true);
+            console.log('setting userid:',res.user.uid)
             localStorage.setItem('customId', res.user.uid)
+            localStorage.setItem('phone', res.user.phoneNumber)
             dispatch(setUser({
                 uid: res.user.uid,
                 phoneNumber: res.user.phoneNumber,

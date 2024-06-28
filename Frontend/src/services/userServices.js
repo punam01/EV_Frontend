@@ -78,3 +78,12 @@ export const updateUser = async (customId, userData) => {
         throw error;
     }
 };
+
+export const checkUserExists = async (phone) => {
+  try {
+      const response = await axios.get(`${API_BASE_URL}/user/check?phone=${phone}`);
+      return response.data;
+  } catch (error) {
+      throw new Error('Error checking user existence:', error.message);
+  }
+};

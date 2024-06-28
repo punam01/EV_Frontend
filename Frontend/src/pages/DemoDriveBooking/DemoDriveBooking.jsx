@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 import PhoneVerification from './PhoneVerification';
 import OTPVerification from './OTPVerification';
-import UserData from './UserData';
 import { getCarAvailabilityByPincode } from '../../services/locationServices';
 import { createDemoBooking } from '../../services/testRideService';
+import { registerUser } from '../../services/userServices'; 
 import './DemoDriveBooking.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,26 +22,48 @@ const DemoDriveBooking = () => {
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
     const [bookingSubmitted, setBookingSubmitted] = useState(false);
-    const [userData, setUserData] = useState(null); // Updated to check localStorage
+    const [userData, setUserData] = useState({ name: '', email: '', zipCode: '' });
     const [bookingDetails, setBookingDetails] = useState(null);
-    const [showBooking, setShowBooking] = useState(false);
-    const [showLocationSelection, setShowLocationSelection] = useState(false);
-    const navigate=useNavigate()
+    const [showUserDetails, setShowUserDetails] = useState(true);
+    const navigate = useNavigate();
+    const userFromLocalStorage = localStorage.getItem('USER');
+    const [userId, setUserId] = useState('');
+    const [zipCode, setZipCode] = useState('');
+
     useEffect(() => {
-        const userFromLocalStorage = localStorage.getItem('USER');
         if (userFromLocalStorage) {
-            // User is logged in, fetch only zipcode
-            const zip=localStorage.getItem('zip')
-            setUserData(zip);
-            fetchLocations(zip);
+            const user = userFromLocalStorage;
+            setUserId(user);
+            if (localStorage.getItem('zip')) {
+                fetchLocations(localStorage.getItem('zip'));
+            }
         }
-    }, []);
+    }, [userFromLocalStorage]);
+
+    const handleRegister = async () => {
+        try {
+            const registeredUser = await registerUser({
+                custom_id: localStorage.getItem('customId'),
+                first_name: userData.name,
+                email: userData.email,
+                pincode: userData.zipCode,
+                contact: localStorage.getItem('phone').replace('+', '')
+            });
+            localStorage.setItem('USER', registeredUser._id);
+            localStorage.setItem('zip', userData.zipCode);
+            setUserId(registeredUser._id);
+            fetchLocations(userData.zipCode);
+            setShowUserDetails(false);
+        } catch (error) {
+            console.error('Registration error:', error.message);
+            toast.error('User with the same phone number already exists.');
+        }
+    };
 
     const fetchLocations = async (zipCode) => {
         try {
             const data = await getCarAvailabilityByPincode(zipCode);
             setLocations(data);
-            setShowLocationSelection(true);
         } catch (error) {
             console.error('Error fetching locations:', error.message);
         }
@@ -52,33 +74,29 @@ const DemoDriveBooking = () => {
     const handleTimeChange = (e) => setSelectedTime(e.target.value);
 
     const handleSubmit = async () => {
-    try {
-        const bookingResponse = await createDemoBooking(
-            localStorage.getItem('email'),
-            selectedLocation._id,
-            selectedModel,
-            selectedTime,
-            localStorage.getItem('phone')
-        );
-        setBookingDetails(bookingResponse);
-        setBookingSubmitted(true);
-    } catch (error) {
-        console.error('Error creating demo booking:', error.message);
-        
-            toast.error('You can only book one test drive.');
-            navigate('/profile')
-        
-    }
-};
-
+        try {
+            const bookingResponse = await createDemoBooking(
+                localStorage.getItem('USER'),
+                selectedLocation._id,
+                selectedModel,
+                selectedTime,
+                localStorage.getItem('phone')
+            );
+            setBookingDetails(bookingResponse);
+            setBookingSubmitted(true);
+        } catch (error) {
+            console.error('Error creating demo booking:', error.message);
+            toast.error("Already booked 1 demo")
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData(prevState => ({ ...prevState, [name]: value }));
     };
 
-    const handleFetchLocations = async () => {
-        await fetchLocations(userData.zipCode);
+    const handleFetchLocations = () => {
+        fetchLocations(zipCode);
     };
 
     const handleLocationSelect = (location) => {
@@ -93,7 +111,7 @@ const DemoDriveBooking = () => {
             <div className="demo-booking-holder">
                 {!bookingSubmitted ? (
                     <>
-                        {!userData ? ( // Show initial user details if not logged in
+                        {showUserDetails && !userFromLocalStorage ? (
                             <div className="demo-user-details">
                                 <div id="recaptcha-container"></div>
                                 <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
@@ -113,16 +131,31 @@ const DemoDriveBooking = () => {
                                 )}
                                 {otpVerified && (
                                     <>
-                                        <div className="zip-code">
-                                            <label>Zip Code:</label>
-                                            <input type="text" name="zipCode" value={userData?.zipCode || ''} onChange={handleChange} />
+                                        <div className="user-details">
+                                            <div>
+                                                <label>Name:</label>
+                                                <input type="text" name="name" value={userData.name} onChange={handleChange} />
+                                            </div>
+                                            <div>
+                                                <label>Email:</label>
+                                                <input type="email" name="email" value={userData.email} onChange={handleChange} />
+                                            </div>
+                                            <div>
+                                                <label>Zip Code:</label>
+                                                <input type="text" name="zipCode" value={userData.zipCode} onChange={handleChange} />
+                                            </div>
+                                            <button onClick={handleRegister}>Register and Next</button>
                                         </div>
-                                        <button onClick={handleFetchLocations}>Find Locations</button>
                                     </>
                                 )}
                             </div>
                         ) : (
                             <div className="demo-booking-details">
+                                    <div className="zip-code-input">
+                                        <label>Enter Zip Code:</label>
+                                        <input type="text" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                                        <button onClick={handleFetchLocations}>Find Locations</button>
+                                    </div>
                                 <div className="locations">
                                     <h3>Select Location</h3>
                                     <div className="location-container">
