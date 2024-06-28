@@ -19,7 +19,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   return (
     <div className="App"> 
-    <ToastContainer position="top-center" autoClose={3000} />     
+    <ToastContainer position="top-center" autoClose={3000} />
+    <Navbar/>     
       <Routes >
         <Route path="/testride" element={<TestRide />} />
         <Route path="/showroom" element={<DigitalShowroom />} />

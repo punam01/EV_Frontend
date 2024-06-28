@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css'
-import { FaRegUserCircle } from "react-icons/fa";
+import './Navbar.css';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,76 +15,32 @@ const Navbar = () => {
   };
 
   const toggleMenu = () => {
-    console.log(menuOpen)
     setMenuOpen(!menuOpen);
   };
+
   return (
     <>
-      <nav className={menuOpen ? 'active' : ''}>
-        <img src="https://th.bing.com/th?id=OIP.7zE0FSzeF1sz-8_t_IkQIgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="logo" className='logo' />
-        <button className="menu-btn" onClick={toggleMenu}>Menu</button>
-        <ul className={`nav-items ${menuOpen ? 'active' : ''}`}>
-          <li className='nav-links'><Link className='nav-items' to="/" onClick={()=>handleNavClick('home')}>Home</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="/showroom" onClick={()=>handleNavClick('showroom')}>Digital Showroom</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="/cars" onClick={()=>handleNavClick('vehicles')}>Vehicles</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="/blogs" onClick={()=>handleNavClick('blog')}>Blog</Link></li>
-          <li className='nav-links'><Link className='nav-items' to="/" onClick={()=>handleNavClick('routePlanner')}>Route Planner</Link></li>
+      <nav className={`navbar ${menuOpen ? 'navbar--active' : ''}`}>
+        <img src="https://th.bing.com/th?id=OIP.7zE0FSzeF1sz-8_t_IkQIgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="logo" className='navbar__logo' />
+        <button className="navbar__menu-btn" onClick={toggleMenu}>Menu</button>
+        <ul className={`navbar__items ${menuOpen ? 'navbar__items--active' : ''}`}>
+          <li className='navbar__item'><Link className='navbar__link' to="/" onClick={() => handleNavClick('home')}>Home</Link></li>
+          <li className='navbar__item'><Link className='navbar__link' to="/showroom" onClick={() => handleNavClick('showroom')}>Digital Showroom</Link></li>
+          <li className='navbar__item'><Link className='navbar__link' to="/cars" onClick={() => handleNavClick('vehicles')}>Vehicles</Link></li>
+          <li className='navbar__item'><Link className='navbar__link' to="/blogs" onClick={() => handleNavClick('blog')}>Blog</Link></li>
+          <li className='navbar__item'><Link className='navbar__link' to="/demodrive" onClick={() => handleNavClick('demodrive')}>Demo Drive</Link></li>
         </ul>
-        <div className=''>
-        <Link className='nav-items' to="/profile" ><FaRegUserCircle className='profile' /></Link>
-          
+        <div className='navbar__profile'>
+          <Link className='navbar__link' to="/profile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+            </svg>
+          </Link>
         </div>
       </nav>
-      {vehiclesMenuOpen && <div className='nav-sub-item-list'>
-        <div className="vehicle-sub-list">
-          <section className="left">
-            <ul className="vehicle-list">
-              <li>
-                <div className="vechicle-list-item">
-                  <img src='https://th.bing.com/th?id=OIP.ZsPLFCxDQewrzKRkU-XuJwHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2' alt='' />
-                  <h3>ModelA</h3>
-                  <div className="vechicle-list-item-links">
-                    <Link className='link' to="/">Learn More</Link>
-                    <Link className='link' to="/">Demo Drive</Link>
-                  </div>
-                </div>
-              </li>
-              <div className="vechicle-list-item">
-                <img src='https://th.bing.com/th?id=OIP.ZsPLFCxDQewrzKRkU-XuJwHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2' alt='' />
-                <h3>ModelA</h3>
-                <div className="vechicle-list-item-links">
-                  <Link className='link' to="/">Learn More</Link>
-                  <Link className='link' to="/">Demo Drive</Link>
-                </div>
-              </div><div className="vechicle-list-item">
-                <img src='https://th.bing.com/th?id=OIP.ZsPLFCxDQewrzKRkU-XuJwHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2' alt='' />
-                <h3>ModelA</h3>
-                <div className="vechicle-list-item-links">
-                  <Link className='link' to="/">Learn More</Link>
-                  <Link className='link' to="/">Demo Drive</Link>
-                </div>
-              </div><div className="vechicle-list-item">
-                <img src='https://th.bing.com/th?id=OIP.ZsPLFCxDQewrzKRkU-XuJwHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2' alt='' />
-                <h3>ModelA</h3>
-                <div className="vechicle-list-item-links">
-                  <Link className='link' to="/">Learn More</Link>
-                  <Link className='link' to="/">Demo Drive</Link>
-                </div>
-              </div>
-            </ul>
-          </section>
-          <section className="right">
-            <ul className='vehicle-quick-links'>
-              <li><Link className='link' to="/products">Inventory</Link></li>
-              <li><Link className='link' to="/">Demo Drive</Link></li>
-              <li><Link className='link' to="/">Trade In</Link></li>
-              <li><Link className='link' to="/">Compare</Link></li>
-            </ul>
-          </section>
-        </div>
-      </div>}
     </>
-  )
+  );
 };
 
 export default Navbar;

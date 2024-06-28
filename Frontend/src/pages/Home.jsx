@@ -83,7 +83,7 @@ const Home = () => {
   return (
     <>
       <div className='home-container'>
-        <header>
+       {/* <header>
           <span className='year'>2018-2023</span>
           <a href='' className='logo'>
             BMW
@@ -91,7 +91,7 @@ const Home = () => {
           <a href="/" className='menu' onClick={toggleMenu}>
             <CiMenuFries className='icon' />
           </a>
-        </header>
+        </header>*/}
         <div className="banner">
           <ul className="nav">
             <li><Link to='/'>HOME</Link></li>

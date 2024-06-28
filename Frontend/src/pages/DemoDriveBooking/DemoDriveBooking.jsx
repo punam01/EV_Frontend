@@ -10,6 +10,10 @@ import './DemoDriveBooking.css';
 import { useNavigate } from 'react-router-dom';
 import BookingSuccess from '../../components/BookingSuccess/BookingSuccess';
 import TimeContainer from '../../components/TimeContainer/TimeContainer';
+import LocationContainer from '../../components/LocationContainer/LocationContainer';
+import ModelContainer from '../../components/ModelContainer/ModelContainer';
+import DateContainer from '../../components/DateContainer/DateContainer';
+import Button from '../../components/Button/Button';
 
 const DemoDriveBooking = () => {
     const [phone, setPhone] = useState('');
@@ -112,7 +116,11 @@ const DemoDriveBooking = () => {
     };
 
     const handleFetchLocations = () => {
-        fetchLocations(zipCode);
+        fetchLocations(zipCode).then((locations) => {
+            if (locations.length === 0) {
+              toast.error('No locations found. Please try another ZIP code.');
+            }
+          });
     };
 
     const handleLocationSelect = (location) => {
@@ -183,67 +191,35 @@ const DemoDriveBooking = () => {
                             </div>
                         ) : (
                             <div className="demo-booking-details">
-
-
                                 <h1>Welcome back<br /></h1>
-                                <div className="zip-code-input">
-                                    <label>Enter Zip Code:</label>
-                                    <input type="text" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
-                                    <button onClick={handleFetchLocations}>Find Locations</button>
+                                <div className="demo-booking-details__zip-code-input">
+                                    <label className="demo-booking-details__label">Enter Zip Code:</label>
+                                    <input
+                                        type="text"
+                                        className="demo-booking-details__input"
+                                        value={zipCode}
+                                        onChange={(e) => setZipCode(e.target.value)}
+                                    />
+                                    <button
+                                        className="demo-booking-details__button"
+                                        onClick={handleFetchLocations}
+                                    >
+                                        Find Locations
+                                    </button>
                                 </div>
                                 {locations.length > 0 && (
-                                    <div className="locations">
-                                        <h3>Select Location</h3>
-                                        <div className="location-container">
-                                            {locations.map(location => (
-                                                <div
-                                                    key={location._id}
-                                                    className={`location-card ${selectedLocation === location ? 'active' : ''}`}
-                                                    onClick={() => handleLocationSelect(location)}
-                                                >
-                                                    <p className="location-name">
-                                                        {location.name}, {location.city}, {location.state}
-                                                    </p>
-                                                    <span className="location-address">
-                                                        {location.address}, {location.contact}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                    <LocationContainer locations={locations} selectedLocation={selectedLocation} handleLocationSelect={handleLocationSelect}/>
                                 )}
                                 {selectedLocation && (
-                                    <div className="models">
-                                        <h3>Select Model</h3>
-                                        <div className="model-container">
-                                            {availableModels.map((model, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={`model-card ${selectedModel === model ? 'active' : ''}`}
-                                                    onClick={() => handleModelChange(model)}
-                                                >
-                                                    <p>{model}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                    <ModelContainer availableModels={availableModels} selectedModel={selectedModel} handleModelChange={handleModelChange}/>
                                 )}
                                 {selectedModel && (
-                                    <div className="date">
-                                        <h3>Select Date</h3>
-                                        <input
-                                            type="date"
-                                            value={selectedDate}
-                                            onChange={handleDateChange}
-                                        />
-                                    </div>
+                                    <DateContainer selectedDate={selectedDate} handleDateChange={handleDateChange}/>
                                 )}
                                 {selectedDate && availableTimes.length > 0 && <TimeContainer selectedTime={selectedTime} availableTimes={availableTimes} handleTimeChange={handleTimeChange} />
                                 }
                                 {selectedTime && (
-                                    <div className="book-button">
-                                        <button onClick={handleSubmit}>Book Demo Drive</button>
-                                    </div>
+                                    <Button handleBtnClick={handleSubmit} btnText={'Book Demo Drive'}/>
                                 )}
                             </div>
                         )}
@@ -252,7 +228,7 @@ const DemoDriveBooking = () => {
                     <BookingSuccess locationName={selectedLocation.name} locationCity={selectedLocation.city} locationState={selectedLocation.state} selectedModel={selectedModel} selectedDate={selectedDate} selectedTime={selectedTime} homePageRedirect={homePageRedirect} />
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 
