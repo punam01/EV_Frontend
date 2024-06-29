@@ -8,6 +8,7 @@ import { auth } from '../../firebase.config';
 import './PhoneVerification.css'
 
 const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, otpSent }) => {
+    
     const onCaptchVerify = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
@@ -30,6 +31,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
                 setLoading(false);
                 setShowOtp(true);
                 toast.success("OTP sent successfully!");
+                
             }).catch((error) => {
                 console.log(error);
                 setLoading(false);
@@ -45,6 +47,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
                 value={phone}
                 onChange={setPhone}
                 id='phone'
+                disabled={otpSent}
             />
             {!otpSent && (
                 <button className="phone-verification-container__btn" onClick={onSignup} disabled={loading}>

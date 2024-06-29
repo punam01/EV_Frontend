@@ -15,6 +15,7 @@ import PreBooking from './pages/PreBooking/PreBooking'
 import DemoDriveBooking from './pages/DemoDriveBooking/DemoDriveBooking';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PreBookingPage from './pages/PreBookingPage/PreBookingPage';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/blogs" element={<Blogs />} />
         <Route path='/prebooking/:id' element={<PreBooking />} />
         <Route path='/demodrive' element={<DemoDriveBooking/>}/>
+        <Route path='/pre' element={<PreBookingPage />}/>
       </Routes>
     </div>
   );

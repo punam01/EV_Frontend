@@ -9,7 +9,7 @@
   background-color: white;
   z-index: 10000;
   font-family: "Poppins", sans-serif;
-  border-bottom: 0.5px solid gray
+  border-bottom: 0.5px solid #CCCBCB;
 }
 
 .navbar__logo {

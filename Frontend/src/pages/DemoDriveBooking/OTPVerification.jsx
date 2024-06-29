@@ -11,9 +11,10 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
     const [otp, setOtp] = useState('');
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-
+    
     const onOTPVerify = () => {
         setLoading(true);
+        console.log('verifying')
         window.confirmationResult.confirm(otp).then(async (res) => {
             setLoading(false);
             setOtpVerified(true);
