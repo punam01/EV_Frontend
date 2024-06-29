@@ -69,7 +69,7 @@ function PhoneVerification({ onSuccess }) {
   }
 
   return (
-    <section className='phone-verification'>
+    <section className='phone-verification-container'>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
       <div id="recaptcha-container"></div>
       <div className='verify-container'>
@@ -94,16 +94,16 @@ function PhoneVerification({ onSuccess }) {
           </div>
         ) : (
           <div>
-            <label htmlFor='phone'>Verify your phone number</label>
+            <label htmlFor='phone-verification-container__title'>Verify your phone number</label>
             <PhoneInput
               country={'in'}
               value={phone}
               onChange={setPhone}
               id='phone'
             />
-            <button onClick={onSignup} disabled={loading}>
-              {loading && <CgSpinner className='animate-spin' />}
-              <span>Send code via SMS</span>
+            <button className='phone-verification-container__btn' onClick={onSignup} disabled={loading} >
+              {loading && <CgSpinner />}
+              <span style={{backgroundColor:'pink'}}>Send code via SMS</span>
             </button>
           </div>
         )}

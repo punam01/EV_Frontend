@@ -14,6 +14,8 @@ import LocationContainer from '../../components/LocationContainer/LocationContai
 import ModelContainer from '../../components/ModelContainer/ModelContainer';
 import DateContainer from '../../components/DateContainer/DateContainer';
 import Button from '../../components/Button/Button';
+import ZipcodeContainer from '../../components/ZipcodeContainer/ZipcodeContainer';
+import PersonalDetails from '../../components/PersonalDetailsContainer/PersonalDetails';
 
 const DemoDriveBooking = () => {
     const [phone, setPhone] = useState('');
@@ -130,14 +132,6 @@ const DemoDriveBooking = () => {
         setShowUserDetails(false); // Hide user details after location selection
     };
 
-    const formatTime = (time) => {
-        let [hours, minutes] = time.split('T')[1].split(':').slice(0, 2);
-        hours = parseInt(hours, 10);
-        const period = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12; // Convert to 12-hour format
-        return `${hours}:${minutes} ${period}`;
-    };
-
     const homePageRedirect = () => {
         navigate('/')
     }
@@ -151,18 +145,17 @@ const DemoDriveBooking = () => {
                     <>
                         {showUserDetails && !userFromLocalStorage ? (
                             <div className="demo-user-details">
-
                                 <h1>Schedule a DemoDrive</h1>
                                 <div id="recaptcha-container"></div>
                                 <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
-                                <PhoneVerification
+                                {!otpVerified && <PhoneVerification
                                     phone={phone}
                                     setPhone={setPhone}
                                     setShowOtp={setShowOtp}
                                     loading={loading}
                                     setLoading={setLoading}
                                     otpSent={otpSent}
-                                />
+                                />}
                                 {showOtp && !otpVerified && (
                                     <OTPVerification
                                         setOtpVerified={setOtpVerified}
@@ -170,43 +163,13 @@ const DemoDriveBooking = () => {
                                     />
                                 )}
                                 {otpVerified && (
-                                    <>
-                                        <div className="user-details">
-                                            <div className='user-details-item'>
-                                                <label>Name:</label>
-                                                <input type="text" name="name" value={userData.name} onChange={handleChange} />
-                                            </div>
-                                            <div className='user-details-item'>
-                                                <label>Email:</label>
-                                                <input type="email" name="email" value={userData.email} onChange={handleChange} />
-                                            </div>
-                                            {/*<div className='user-details-item'>
-                                                <label>Zip Code:</label>
-                                                <input type="text" name="zipCode" value={userData.zipCode} onChange={handleChange} />
-                                            </div>-->*/}
-                                            <button onClick={handleRegister}>Register and Next</button>
-                                        </div>
-                                    </>
+                                    <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister}/>
                                 )}
                             </div>
                         ) : (
                             <div className="demo-booking-details">
                                 <h1>Welcome back<br /></h1>
-                                <div className="demo-booking-details__zip-code-input">
-                                    <label className="demo-booking-details__label">Enter Zip Code:</label>
-                                    <input
-                                        type="text"
-                                        className="demo-booking-details__input"
-                                        value={zipCode}
-                                        onChange={(e) => setZipCode(e.target.value)}
-                                    />
-                                    <button
-                                        className="demo-booking-details__button"
-                                        onClick={handleFetchLocations}
-                                    >
-                                        Find Locations
-                                    </button>
-                                </div>
+                                <ZipcodeContainer zipCode={zipCode} setZipCode={setZipCode} handleFetchLocations={handleFetchLocations}/>
                                 {locations.length > 0 && (
                                     <LocationContainer locations={locations} selectedLocation={selectedLocation} handleLocationSelect={handleLocationSelect}/>
                                 )}

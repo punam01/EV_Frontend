@@ -1,65 +1,88 @@
-.contact {
-    margin-top: 1rem;
-}
-
-.contact label {
-    font-size: 1rem;
-    color: gray;
-    padding: 1.5rem 0 1.5rem 0;
-    
-}
-
-.contact .phone-input-container {
-    position: relative; 
-    left: 5rem;
-    
-}
-
-.contact .phone-input-container .PhoneInput {
+.phone-verification-container {
     width: 100%;
-    border: 1px solid gray;
+    height: fit-content;
+}
+
+.phone-verification-container__title {
+    color:#555454;
+    font-size: 13px;
+    padding: 2px;
+}
+.phone-verification-container__btn{
+    width:100%;
     border-radius: 30px;
-    padding: 15px;
-    font-size: 1rem;
-    outline: none;
-    margin-left: 1rem;
-    
+    background-color: #00D5E5;
+    font-family: 'Poppins',sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.phone-verification-container__btn span{
+    color:black;
 }
 
-.contact .phone-input-container .PhoneInputInput {
-    height: auto !important; 
-}
-
-.contact button {
-    background-color: black;
-    color: white;
+.react-tel-input {
+    width:100%;
+    border-radius: 30px;
+    font-family: 'Poppins',sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  /*
+  .react-tel-input::placeholder{
     border: none;
-    border-radius: 30px;
-    padding: 15px;
-    width: 90%;
+  }
+  .react-tel-input .flag-dropdown {
+    border: 1px solid #666;
+    border-radius: 35px;
+    width: fit-content;
+    text-align: center;
+    background-color: transparent; 
+  }
+  .react-tel-input .flag-dropdown:hover{
+    background-color: transparent;
+  }
+  .react-tel-input .form-control {
+   
+    margin-left:2rem;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    background-color: transparent;
+  }
+  
+  .react-tel-input .selected-flag {
+    transform: translate(15%,0);
+    padding: 0;
+  }
+  
+  .react-tel-input .country-list {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff; /* White background for dropdown 
+  }
+  
+  .react-tel-input .country {
+    padding: 10px;
     cursor: pointer;
-    margin: 1rem 0 2rem 0;
-    transition: background-color 0.3s ease;
-}
-
-.contact button:hover {
-    background-color: black;
-}
-
-.contact button .animate-spin {
-    margin-right: 5px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-.contact button span {
-    display: inline-block;
-    vertical-align: middle;
-}
+  }
+  */
+  
+  .react-tel-input .country:hover {
+    background-color: #e8e9e8; /* Light grey background on hover */
+  }
+  
+  .react-tel-input .country .dial-code {
+    margin-left: 5px;
+    color: #666;
+  }
+  
+  .react-tel-input .country.highlight {
+    background-color: #00D5E5; /* Highlighted background */
+    color: #fff; /* White text for highlighted country */
+  }
+  

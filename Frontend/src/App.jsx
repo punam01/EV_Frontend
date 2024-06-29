@@ -5,7 +5,7 @@ import './App.css';
 import SignUp from './components/SignUp/SignUp';
 import Login from './components/Login/Login';
 import UserProfilePage from './pages/UserProfile/UserProfilePage';
-import TestRide from './pages/TestRide/TestRide';
+
 import DigitalShowroom from './pages/DigitalShowroom/DigitalShowroom';
 import Home from './pages/Home';
 import PLP from './pages/PLP/PLP';
@@ -22,7 +22,6 @@ const App = () => {
     <ToastContainer position="top-center" autoClose={3000} />
     <Navbar/>     
       <Routes >
-        <Route path="/testride" element={<TestRide />} />
         <Route path="/showroom" element={<DigitalShowroom />} />
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<PLP />} />

@@ -1,0 +1,22 @@
+.zipcode-container{
+    width:100%;
+    height: fit-content;
+}
+.zipcode-container__title{
+    color:#555454;
+    font-size: 15px;
+    padding: 2px;
+}
+.zipcode-container::placeholder,
+.zipcode-container__input{
+    width:100%;
+    border-radius: 30px;
+    font-family: 'Poppins',sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 1rem;
+}
+.zipcode-container::placeholder{
+    color:#555454;
+    padding:1rem;
+}

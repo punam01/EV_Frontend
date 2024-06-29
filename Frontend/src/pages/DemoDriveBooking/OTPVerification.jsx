@@ -18,7 +18,7 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
             setLoading(false);
             setOtpVerified(true);
             setOtpSent(true);
-            console.log('setting userid:',res.user.uid)
+            console.log('setting userid:', res.user.uid)
             localStorage.setItem('customId', res.user.uid)
             localStorage.setItem('phone', res.user.phoneNumber)
             dispatch(setUser({
@@ -36,15 +36,16 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
 
     return (
         <div className='otp-verification-container'>
-            <label htmlFor='otp'>Enter your OTP</label>
+            <label className="otp-verification-container__title" htmlFor='otp'>Enter your OTP</label>
             <OtpInput
+                className="otp-verification-container__holder"
                 value={otp}
                 onChange={setOtp}
                 numInputs={6}
-                renderSeparator={<span>-</span>}
+                renderSeparator={<span className="otp-separator">-</span>}
                 renderInput={(props) => <input {...props} />}
             />
-            <button onClick={onOTPVerify} disabled={loading}>
+            <button className="otp-verification-container__btn" onClick={onOTPVerify} disabled={loading}>
                 {loading && <CgSpinner className='animate-spin' />}
                 <span>Verify OTP</span>
             </button>

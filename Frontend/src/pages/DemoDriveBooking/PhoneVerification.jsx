@@ -38,8 +38,8 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
     };
 
     return (
-        <div className="contact">
-            <label htmlFor='phone'>Verify your phone number</label>
+        <div className="phone-verification-container">
+            <label className="phone-verification-container__title" htmlFor='phone'>Verify your phone number</label>
             <PhoneInput
                 country={'in'}
                 value={phone}
@@ -47,7 +47,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
                 id='phone'
             />
             {!otpSent && (
-                <button onClick={onSignup} disabled={loading}>
+                <button className="phone-verification-container__btn" onClick={onSignup} disabled={loading}>
                     {loading && <CgSpinner className='animate-spin' />}
                     <span>Send code via SMS</span>
                 </button>
