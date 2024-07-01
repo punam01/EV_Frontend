@@ -7,6 +7,7 @@ import OTPVerification from '../DemoDriveBooking/OTPVerification';
 import { Toaster } from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import { registerUser } from '../../services/userServices';
+import { getAllCars } from '../../services/carServices';
 
 const PreBookingPage = () => {
   const [latitude, setLatitude] = useState(null);
@@ -21,16 +22,32 @@ const PreBookingPage = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [userData, setUserData] = useState({ name: '', email: '', zipCode: '' });
   const [step, setStep] = useState(1);
-  const [selectedModel, setSelectedModel] = useState(''); // Selected model
-  const [availableLocations, setAvailableLocations] = useState([]); // Available locations
+  const [selectedModel, setSelectedModel] = useState(''); 
+  const [carDetails, setCarDetails] = useState(null); 
+  const [availableLocations, setAvailableLocations] = useState([]); 
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [cars, setCars] = useState([]); 
+  const [selectedColors, setSelectedColors] = useState({});
 
-  // Check if USER is in localStorage and directly set step to 2 if found
   useEffect(() => {
     if (localStorage.getItem('USER')) {
       setStep(2);
     }
   }, []);
 
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const carList = await getAllCars();
+        setCars(carList);
+      } catch (error) {
+        toast.error('Error fetching cars');
+      }
+    };
+    console.log(cars)
+    fetchCars();
+  }, []);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData(prevState => ({ ...prevState, [name]: value }));
@@ -84,13 +101,13 @@ const PreBookingPage = () => {
   };
 
   const fetchNearestLocations = async (lat, lon) => {
-    console.log(lon, lat);
+    console.log(lon, lat, selectedModel);
     try {
       const response = await axios.get('http://localhost:5000/api/location/locations', {
         params: {
           latitude: lat,
           longitude: lon,
-          modelId: selectedModel // Use the selected model ID
+          modelId: selectedModel || undefined // Make modelId optional
         }
       });
       console.log(response);
@@ -107,14 +124,34 @@ const PreBookingPage = () => {
     }
   };
 
-  const handleModelClick = (modelName) => {
+
+  const handleModelClick = (modelName, carDetails) => {
     setSelectedModel(modelName);
+    setCarDetails(carDetails);
+    if (!selectedColors[modelName]) {
+      const initialColor = carDetails.color[0];
+      setSelectedColors((prevColors) => ({ ...prevColors, [modelName]: initialColor }));
+    }
     console.log(`Selected model: ${modelName}`);
+    console.log(`Car details: ${JSON.stringify(carDetails)}`);
+  };
+
+  const handleColorClick = (modelName, color) => {
+    setSelectedColors((prevColors) => ({ ...prevColors, [modelName]: color }));
+  };
+
+  const handleLocationClick = (location) => {
+    setSelectedLocation(location);
+    console.log(`Selected location: ${JSON.stringify(location)}`);
   };
 
   const handleNextStep = () => {
     if (!selectedModel) {
       toast.error('Please choose a car model.');
+      return;
+    }
+    if (!selectedLocation) {
+      toast.error('Please select a location.');
       return;
     }
     setStep(3);
@@ -176,13 +213,13 @@ const PreBookingPage = () => {
       </div>
       <div className="available-locations">
         {availableLocations.length > 0 && (
-          <ul>
+          <ul className="pre-booking-page__step__1__ul">
             {availableLocations.map(location => (
-              <li key={location._id}>
+              <li key={location._id} className={`pre-booking-page__step__1_item ${selectedLocation && selectedLocation._id === location._id ? 'active' : ''}`} onClick={() => handleLocationClick(location)}>
                 <p><strong>{location.name}</strong></p>
                 <p>{location.address}</p>
                 <p>{location.city}, {location.state} - {location.pincode}</p>
-                <p>Distance: {Math.round(location.distance)} meters</p>
+                <p>Distance: {Math.round(location.distance)/1000} kms</p>
               </li>
             ))}
           </ul>
@@ -191,7 +228,8 @@ const PreBookingPage = () => {
       {availableLocations.length > 0 && <button
         className="pre-booking-page__step__1__btn"
         onClick={handleNextStep}
-        disabled={availableLocations.length === 0}
+        /*disabled={availableLocations.length === 0}*/
+        disabled={!selectedLocation}
       >
         Next
       </button>}
@@ -201,86 +239,113 @@ const PreBookingPage = () => {
   const renderStep3 = () => (
     <div className="pre-booking-page__step__3">
       <span className='pre-booking-page__step__1__span'>Step 3 of 3</span>
-      <h1>Review and Confirm</h1>
-      {/* Render the review and confirmation details here */}
-      <button onClick={() => toast.success('Booking confirmed!')}>Confirm Booking</button>
+      <h1 className='pre-booking-page__step__1__h1'>Booking Summary</h1>
+      <p className='pre-booking-page__step__1__p'>You can configure the srevices at the time of purchase</p>
+      <div className="pre-booking-page__step__1__booking__summary">
+        <div className="pre-booking-page__step__1__booking__summary__name">
+          {carDetails ? carDetails.modelId : ''}
+        </div>
+        <div className="pre-booking-page__step__1__booking__summary__name">
+          $499/-
+        </div>
+      </div>
+      <div className="pre-booking-page__step__1__booking__summary">
+        <div className="pre-booking-page__step__1__booking__summary__span">
+          Estimated Delivery time 2 months
+        </div>
+        <div className="pre-booking-page__step__1__booking__summary__span">
+          Fully refundable
+        </div>
+      </div>
+      <p>Registered as</p>
+      <div className="pre-booking-page__booking__summary__dets">
+      <div className="pre-booking-page__booking_summary__item">
+        <div className="pre-booking-page__label">
+          Name
+        </div>
+        <div className="pre-booking-page__label">
+          {localStorage.getItem('name')}
+        </div>
+      </div>
+      <div className="pre-booking-page__booking_summary__item">
+        <div className="pre-booking-page__label">
+          Email Id
+        </div>
+        <div className="pre-booking-page__label">
+          {localStorage.getItem('email')}
+        </div>
+      </div>
+      <div className="pre-booking-page__booking_summary__item">
+        <div className="pre-booking-page__label">
+          Phone Number
+        </div>
+        <div className="pre-booking-page__label">
+          {localStorage.getItem('phone')}
+        </div>
+      </div>
+      </div>
+      
+      <button className="pre-booking-page__step__1__btn" onClick={() => toast.success('Booking confirmed!')}>Confirm Booking</button>
     </div>
   );
 
   return (
+
     <div className="pre-booking-page">
       <div className="pre-booking-page__model-list">
-        <div className={`pre-booking-page__model-item ${selectedModel === 'ModelX' ? 'active' : ''}`} onClick={() => handleModelClick('ModelX')}>
-          <div className="pre-booking-page__model-img">
-            <img src="/assets/images/car_3d_t.png" alt="model" />
-          </div>
-          <div className="pre-booking-page__model-details">
-            <div className="pre-booking-page__model-name">
-              <h2>Model 1</h2>
 
-              <div className="pre-booking-page__price">
-                <h3>$ 8,000</h3>
-                <p>Starting price</p>
-              </div>
-            </div>
-            <div className="pre-booking-page__model-color-swatch">
-              <div className={`color-swatch cream `}></div>
-              <div className={`color-swatch olive `}></div>
-              <div className={`color-swatch gray `}></div>
-              <div className={`color-swatch blue `}></div>
-              <div className={`color-swatch white `}></div>
-            </div>
-            <div className="pre-booking-page__model__info">
-              <div className='pre-booking-page__model__data'>
-                <p className="pre-booking-page__label">Range</p>
-                <h5 className="pre-booking-page__value">85<sup>KMS</sup></h5>
-              </div>
-              <div className='pre-booking-page__model__data'>
-                <p className="pre-booking-page__label">Power</p>
-                <h5 className="pre-booking-page__value">140 HP</h5>
-              </div>
-              <div className='pre-booking-page__model__data'>
-                <p className="pre-booking-page__label">Acceleration</p>
-                <h5 className="pre-booking-page__value">5 sec</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={`pre-booking-page__model-item ${selectedModel === 'Model_Y' ? 'active' : ''}`} onClick={() => handleModelClick('Model_Y')}>
-          <div className="pre-booking-page__model-img">
-            <img src="/assets/images/car_3d_t.png" alt="model" />
-          </div>
-          <div className="pre-booking-page__model-details">
-            <div className="pre-booking-page__model-name">
-              <h2>Model 2</h2>
-              <div className="pre-booking-page__price">
-                <h3>$ 8,500</h3>
-                <p>Starting price</p>
-              </div>
-            </div>
-            <div className="pre-booking-page__model-color-swatch">
-              <div className={`color-swatch cream `}></div>
-              <div className={`color-swatch olive `}></div>
-              <div className={`color-swatch gray `}></div>
-              <div className={`color-swatch blue `}></div>
-              <div className={`color-swatch white `}></div>
-            </div>
-            <div className="pre-booking-page__model__info">
-              <div className='pre-booking-page__model__data'>
-                <p className="pre-booking-page__label">Range</p>
-                <h5 className="pre-booking-page__value">90<sup>KMS</sup></h5>
-              </div>
-              <div className='pre-booking-page__model__data'>
-                <p className="pre-booking-page__label">Power</p>
-                <h5 className="pre-booking-page__value">150 HP</h5>
-              </div>
-              <div className='pre-booking-page__model__data'>
-                <p className="pre-booking-page__label">Acceleration</p>
-                <h5 className="pre-booking-page__value">4.5 sec</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+        {cars.map(car=>(
+           <div className={`pre-booking-page__model-item ${selectedModel === car.modelId ? 'active' : ''}`} onClick={() => handleModelClick(car.modelId, car)}>
+           <div className="pre-booking-page__model-img">
+             <img src="/assets/images/car_3d_t.png" alt={car.modelName} />
+           </div>
+           <div className="pre-booking-page__model-details">
+             <div className="pre-booking-page__model-name">
+               <h2>{car.modelId}</h2>
+ 
+               <div className="pre-booking-page__price">
+                 <h3>${car.basePrice}</h3>
+                 <p>Starting price</p>
+               </div>
+             </div>
+             <div className="pre-booking-page__model-color-swatch">
+             {car.color.map(color => (
+                  <div
+                    key={color}
+                    className={`color-swatch ${color} ${selectedColors[car.modelId] === color ? 'selected' : ''}`}
+                    onClick={() => handleColorClick(car.modelId, color)}
+                    style={{ backgroundImage:color}}
+                  ></div>
+                ))}
+             </div>
+             <div className="pre-booking-page__model__info">
+               <div className='pre-booking-page__model__data'>
+                 <p className="pre-booking-page__label">Range</p>
+                 <h5 className="pre-booking-page__value">{car.range}</h5>
+                 <span className="pre-booking-page__span">Miles</span>
+               </div>
+               <div className='pre-booking-page__model__data'>
+                 <p className="pre-booking-page__label">Top Speed</p>
+                 <h5 className="pre-booking-page__value">{car.topSpeed}</h5>
+                 <span className="pre-booking-page__span">mph</span>
+               </div>
+               <div className='pre-booking-page__model__data'>
+                 <p className="pre-booking-page__label">Acceleration</p>
+                 <h5 className="pre-booking-page__value">{car.acceleration}</h5>
+                 <span className="pre-booking-page__span">0 to 60mph</span>
+               </div>
+               <div className='pre-booking-page__model__data'>
+                 <p className="pre-booking-page__label">Capacity</p>
+                 <h5 className="pre-booking-page__value">{car.seatingCapacity}</h5>
+                 <span className="pre-booking-page__span">people</span>
+               </div>
+             </div>
+           </div>
+         </div>
+        ))}
+         
+        
+        
       </div>
       <div className="pre-booking-page__booking-steps">
         {step === 1 && renderStep1()}

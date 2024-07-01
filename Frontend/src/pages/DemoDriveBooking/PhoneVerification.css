@@ -32,6 +32,24 @@
     display: flex;
     justify-content: space-between;
   }
+  .phone-verification-container__btn .animate-spin {
+    margin-right: 5px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.phone-verification-container__btn span {
+    display: inline-block;
+    vertical-align: middle;
+}
   /*
   .react-tel-input::placeholder{
     border: none;
