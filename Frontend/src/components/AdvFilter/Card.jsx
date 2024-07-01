@@ -4,9 +4,9 @@ import { AiFillStar } from 'react-icons/ai';
 
 const Card = ({ img, title, star, reviews, prevPrice, id }) => {
   const navigate = useNavigate();
-  
+  console.log(id)
 
-  const handleViewDetails = () => {
+  const handleViewDetails = (id) => {
     navigate(`/cars/${id}`);
   };
 

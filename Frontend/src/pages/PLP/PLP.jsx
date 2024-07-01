@@ -1,10 +1,11 @@
+// src/pages/PLP/PLP.jsx
 import React, { useEffect, useState } from 'react';
 import transition from '../../transition';
 import './PLP.css';
-import Vehicles from '../Vehicles/Vehicles';
 import Recommended from '../../components/Recommended/Recommended';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { getAllCars } from '../../services/carServices';
+import VariantCard from '../../components/VariantCard/VariantCard';
 
 const PLP = () => {
   const [cars, setCars] = useState([]);
@@ -111,7 +112,17 @@ const PLP = () => {
             cars={cars}
           />
         )}
-        <Vehicles cars={result} />
+        <div className="vehicles-container">
+          {result.map((car) => (
+            <div key={car._id} className="car-card">
+              <ul className='car-card__ul'>
+                {car.variants && car.variants.map((variant, index) => (
+                  <VariantCard key={index} variant={variant} modelId={car.modelId} car={car} id={car._id}/>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

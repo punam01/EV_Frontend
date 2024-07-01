@@ -73,3 +73,8 @@
     font-weight: bold; 
   }
   
+  .car-card__ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
