@@ -53,6 +53,12 @@ const PreBookingPage = () => {
     setUserData(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const handleBookingConfirmation = () => {
+    if (!selectedModel) {
+      alert('Please select a car model.');
+      return;
+    }
+  }
   const handleRegister = async () => {
     try {
       const registeredUser = await registerUser({
@@ -78,6 +84,7 @@ const PreBookingPage = () => {
     if (navigator.geolocation) {
       setLoading(true);
       console.log('Searching');
+      handleBookingConfirmation();
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;

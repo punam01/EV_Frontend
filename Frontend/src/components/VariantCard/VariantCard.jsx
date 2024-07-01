@@ -3,6 +3,7 @@ import React from 'react';
 import './VariantCard.css'
 import Button from '../Button/Button'
 import { useNavigate } from 'react-router-dom';
+import CarouselComponent from '../Carousel/CarouselComponent';
 const VariantCard = ({ variant, modelId, car }) => {
     const navigate = useNavigate();
 

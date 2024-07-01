@@ -1,0 +1,87 @@
+.pdp-container{
+    display: flex;
+    overflow-y: hidden;
+}
+.pdp-container__left__section {
+    width: 60%;
+    height: auto;
+    overflow-y:hidden;
+}
+.pdp-container__right__section{
+    padding:5rem 5rem;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: hidden;
+    font-family: 'Poppins',sans-serif;
+}
+.pdp-container__right__section__h1{
+    margin: 3rem 0; 
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+.pdp-container__right__section__h3{
+    margin:0 0 2rem 0;
+    font-size: 15px;
+}
+.pdp-container__right__section__h5{
+    margin-left: 0;
+    color:#FF5919;
+}
+.pdp-container__item__model-price{
+    margin-top: 2rem;
+    font-size:25px;
+    font-weight: 600;
+}
+.pdp-container__item__model-price-info{
+    width:fit-content;
+    text-align: center;
+    padding: 1rem;
+    margin: 0 1rem 2rem;
+    background-color: #FF5919;
+    color:white;
+    border-radius: 30px;
+}
+.pdp-container__right__section__ul{
+    display: flex;
+    width:70%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    list-style-type: disc;
+}
+.pdp-container__right__section__li{
+    font-size: 18px;
+    font-weight: 400;   
+    padding:0.5rem;
+}
+.pdp-container__right__section__li svg{
+    margin-right:10px;
+}
+.pdp-container__right__section__book-now{
+    text-align: center;
+    width:300px;
+    border-radius: 30px;
+    background-color: #00D5E5;
+    font-family: 'Poppins',sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 1rem;
+    margin: 2rem 0;
+}
+.pdp-container__btn-grp{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 0;
+}
+.pdp-container__btn{
+    border-radius: 50%;
+    height: 50px;
+    width:50px;
+    border: 1px solid black;
+    background-color: transparent;
+    margin: 3px;
+}

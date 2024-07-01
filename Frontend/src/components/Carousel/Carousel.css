@@ -1,0 +1,35 @@
+.carousel-container {
+    width: 60%;
+    height: 400px;
+    margin: 10rem 3rem;
+    position: fixed;
+    
+}
+
+.carousel__item {
+    width: 100%;
+    margin: auto;
+}
+
+.carousel__item__img {
+    object-fit: cover;
+    width: 80%;
+}
+
+.carousel .slider-wrapper {
+    width: 100%;
+    height: fit-content;
+}
+
+.carousel .thumb {
+    display: none;
+}
+
+.carousel .control-dots {
+    position: absolute;
+    bottom: 0; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px; 
+}

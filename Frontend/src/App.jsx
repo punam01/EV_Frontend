@@ -9,7 +9,7 @@ import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import DigitalShowroom from './pages/DigitalShowroom/DigitalShowroom';
 import Home from './pages/Home';
 import PLP from './pages/PLP/PLP';
-import PDP from './pages/PDP';
+import PDP from './pages/PDP/PDP';
 import Blogs from './pages/Blogs/Blogs';
 import PreBooking from './pages/PreBooking/PreBooking'
 import DemoDriveBooking from './pages/DemoDriveBooking/DemoDriveBooking';

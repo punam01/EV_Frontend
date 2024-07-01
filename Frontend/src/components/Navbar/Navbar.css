@@ -10,6 +10,7 @@
   z-index: 10000;
   font-family: "Poppins", sans-serif;
   border-bottom: 0.5px solid #CCCBCB;
+  position: fixed;
 }
 
 .navbar__logo {
