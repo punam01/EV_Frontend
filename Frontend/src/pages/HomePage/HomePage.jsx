@@ -30,6 +30,9 @@ const HomePage = () => {
   const handleDemoDrive = (car) => {
     navigate('/demodrive', { state: { car } });
   }
+  const handleBookNow = (car) => {
+    navigate('/noconfig', { state: { car } });
+  }
 
 
   return (
@@ -44,6 +47,9 @@ const HomePage = () => {
           </button>
           <button className="home-page-container__showroom-button" onClick={() => handleDemoDrive(car)}>
             Demo Drive
+          </button>
+          <button className="home-page-container__showroom-button" onClick={() => handleBookNow(car)}>
+            Book Now
           </button>
         </div>
       </>

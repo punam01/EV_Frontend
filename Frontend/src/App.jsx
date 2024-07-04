@@ -20,6 +20,7 @@ import CompareCars from './pages/CompareCars/CompareCars';
 import HomePage from './pages/HomePage/HomePage';
 import CarDetailsPage from './pages/CarDetailsPage/CarDetailsPage';
 import Checkout from './pages/Checkout/Checkout';
+import PreBookingWithoutConfig from './pages/PreBookingWithoutConfig/PreBookingWithoutConfig';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
         <Route path='/prebooking-dets' element={<PreBooking />}/>
         <Route path='/compare' element={<CompareCars />}/>
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/noconfig" element={<PreBookingWithoutConfig />} />
       </Routes>
     </div>
   );

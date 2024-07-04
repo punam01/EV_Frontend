@@ -34,7 +34,7 @@ const DemoDriveBooking = () => {
     const [availableTimes, setAvailableTimes] = useState([]);
     const [selectedTime, setSelectedTime] = useState('');
     const [bookingSubmitted, setBookingSubmitted] = useState(false);
-    const [userData, setUserData] = useState({ name: '', email: '', zipCode: '' });
+    const [userData, setUserData] = useState({ first_name: '',last_name:'', email: '', zipCode: '' });
     const [bookingDetails, setBookingDetails] = useState(null);
     const [showUserDetails, setShowUserDetails] = useState(true);
     const navigate = useNavigate();
@@ -65,7 +65,8 @@ const DemoDriveBooking = () => {
         try {
             const registeredUser = await registerUser({
                 custom_id: localStorage.getItem('customId'),
-                first_name: userData.name,
+                first_name: userData.first_name,
+                last_name:userData.last_name,
                 email: userData.email,
                 pincode: userData.zipCode,
                 contact: localStorage.getItem('phone').replace('+', '')
@@ -130,6 +131,7 @@ const DemoDriveBooking = () => {
     };
 
     const handleFetchLocations = () => {
+        console.log("dd:",zipCode)
         fetchLocations(zipCode).then((locations) => {
             if (locations && locations.length === 0) {
                 toast.error('No locations found. Please try another ZIP code.');
@@ -166,17 +168,16 @@ const DemoDriveBooking = () => {
                     <>
                         {showUserDetails && !userFromLocalStorage ? (
                             <div className="demo-user-details">
-                                <h1>Schedule a DemoDrive</h1>
+                                <h1>Book <span>{car && car.name}</span></h1>
                                 <div id="recaptcha-container"></div>
                                 <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
-                                {!otpVerified && <PhoneVerification
+                                <PhoneVerification
                                     phone={phone}
                                     setPhone={setPhone}
                                     setShowOtp={setShowOtp}
                                     loading={loading}
                                     setLoading={setLoading}
-                                    otpSent={otpSent}
-                                />}
+                                    otpSent={otpSent}/>
 
                                 {showOtp && !otpVerified && (
                                     <OTPVerification
@@ -184,14 +185,12 @@ const DemoDriveBooking = () => {
                                         setOtpSent={setOtpSent}
                                     />
                                 )}
-                                {otpVerified && (
-                                    <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} />
-                                )}
+                                <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} disabled={!otpVerified} />
                             </div>
                         ) : (
                             <div className="demo-booking-details">
                                 <h1>Book <span>{car && car.name}</span></h1>
-                                <ZipcodeContainer zipCode={zipCode} setZipCode={setZipCode} handleFetchLocations={handleFetchLocations} />
+                                <ZipcodeContainer zipCode={zipCode} setZipCode={setZipCode} handleFetchLocations={handleFetchLocations} userData={userData}/>
                                 <LocationContainer locations={locations} selectedLocation={selectedLocation} handleLocationSelect={handleLocationSelect} disabled={!zipCode} />
                                 {!car && <ModelContainer availableModels={availableModels} selectedModel={selectedModel} handleModelChange={handleModelChange} disabled={!selectedLocation} />}
                                 <DateContainer selectedDate={selectedDate} handleDateChange={handleDateChange} disabled={!selectedModel} />

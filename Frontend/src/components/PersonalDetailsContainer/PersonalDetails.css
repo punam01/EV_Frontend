@@ -1,30 +1,79 @@
-.personal-details-container{
-    width:100%;
-    height: fit-content;
+.personal-details-container {
+    background-color: #F7F7F7;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    height: auto;
+    margin: 2rem 0;
 }
-.personal-details-container__title{
-    color:#555454;
-    font-size: 13px;
-    padding: 2px;
-}
-.personal-details-container__input{
-    width:100%;
-    border-radius: 30px;
-    font-family: 'Poppins',sans-serif;
-    font-size: 13px;
-    padding: 1rem;
-}
-.personal-details-container::placeholder{
-    color:#555454;
-    padding:1rem;
-}
-.personal-details-container__btn{
-    width:100%;
-    border-radius: 30px;
-    background-color: #00D5E5;
-    font-family: 'Poppins',sans-serif;
+
+.personal-details-container__title {
+    color: #555454;
     font-size: 15px;
-    font-weight: 500;
+    padding: 2px;
+    margin-bottom: 0;
+}
+.personal-details-container__email{
+    display: flex;
+    flex-direction: column;
+    width:90%;
+}
+.personal-details-container .personal-details-container__email input,
+.personal-details-container__userdets .personal-details-container__item input {
+    padding: 0 0 0 4rem;
+    border: none;
+    background-color: white;
+    border-radius: 10px;
+    margin:0.5rem 0;
+    font-family: 'Poppins',sans-serif;
+}
+
+.personal-details-container__userdets .personal-details-container__item input{
+    width:80%;
+}
+.personal-details-container .personal-details-container__email input:focus,
+.personal-details-container__item input:focus {
+    border: 2px solid #31A93E;
+    background-color: #E6F4E7;
+}
+.personal-details-container .personal-details-container__email input:disabled,
+.personal-details-container__item input:disabled{
+    background-color: #E6F4E7;
+}
+
+.personal-details-container__userdets {
+    display: flex;
+    justify-content: space-between;
+}
+
+.personal-details-container::placeholder {
+    color: #555454;
     padding: 1rem;
-    margin-bottom: 1rem;
+}
+
+.personal-details-container__btn {
+    width: 95%; 
+    margin-left: 1rem;
+    padding: 1rem; 
+    color: white;
+    background-color: #000000; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+.personal-details-container__btn-container{
+    margin: 0; 
+    display: flex;
+    background-color: #F3F3F3;
+    flex-direction: column; 
+    justify-content: flex-end;
+    position: fixed; 
+    bottom: 0; 
+    right: 0; 
+    width: 60%; 
+    z-index: 1000; 
+    height: 20%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
+    padding:1rem;
 }

@@ -1,106 +1,62 @@
 .phone-verification-container {
-    width: 100%;
-    height: fit-content;
+  width: 100%;
+  height: fit-content;
 }
 
 .phone-verification-container__title {
-    color:#555454;
-    font-size: 13px;
+  color: #555454;
+    font-size: 15px;
     padding: 2px;
 }
-.phone-verification-container__btn{
-    width:100%;
-    border-radius: 30px;
-    background-color: #00D5E5;
-    font-family: 'Poppins',sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-.phone-verification-container__btn span{
-    color:black;
-}
 
-.react-tel-input {
-    width:100%;
-    border-radius: 30px;
-    font-family: 'Poppins',sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    margin: 1rem 0;
-    display: flex;
-    justify-content: space-between;
-  }
-  .phone-verification-container__btn .animate-spin {
-    margin-right: 5px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.phone-verification-container__btn {
+    width: 99%; 
+    padding: 1rem; 
+    background-color: #000000; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
 }
 
 .phone-verification-container__btn span {
-    display: inline-block;
-    vertical-align: middle;
+  color: white;
 }
-  /*
-  .react-tel-input::placeholder{
-    border: none;
+
+.phone-verification-container__btn .animate-spin {
+  margin-right: 5px;
+  animation: spin 1s linear infinite;
+}
+.phone-verification-container .phoneInput{
+  margin:1rem 0;
+}
+
+.phone-verification-container .phoneInput input{
+  padding:0 0 0 4rem ;
+  width:90%;
+  border: none;
+  background-color: white;
+  border-radius: 10px;
+  font-family: 'Poppins',sans-serif;
+}
+.phone-verification-container .phoneInput input:focus{
+  border:2px solid #31A93E;
+  background-color :#E6F4E7;
+}
+.phone-verification-container__note{
+  font-size: 13px;
+  color:#555454;
+}
+.phone-verification-container__note span{
+  font-weight: bold;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  .react-tel-input .flag-dropdown {
-    border: 1px solid #666;
-    border-radius: 35px;
-    width: fit-content;
-    text-align: center;
-    background-color: transparent; 
+
+  to {
+    transform: rotate(360deg);
   }
-  .react-tel-input .flag-dropdown:hover{
-    background-color: transparent;
-  }
-  .react-tel-input .form-control {
-   
-    margin-left:2rem;
-    border: none;
-    outline: none;
-    font-size: 13px;
-    background-color: transparent;
-  }
-  
-  .react-tel-input .selected-flag {
-    transform: translate(15%,0);
-    padding: 0;
-  }
-  
-  .react-tel-input .country-list {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff; /* White background for dropdown 
-  }
-  
-  .react-tel-input .country {
-    padding: 10px;
-    cursor: pointer;
-  }
-  */
-  
-  .react-tel-input .country:hover {
-    background-color: #e8e9e8; /* Light grey background on hover */
-  }
-  
-  .react-tel-input .country .dial-code {
-    margin-left: 5px;
-    color: #666;
-  }
-  
-  .react-tel-input .country.highlight {
-    background-color: #00D5E5; /* Highlighted background */
-    color: #fff; /* White text for highlighted country */
-  }
-  
+}
+

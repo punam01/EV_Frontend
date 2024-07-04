@@ -17,10 +17,10 @@
 }
 .demo-user-details h1,
 .demo-booking-details h1{
-    margin: 0.5rem 0 1.5rem 0;
-    font-size: 3rem;
-    font-family: 'Poppins',sans-serif;
-    font-weight:500 ;
+        margin: 0.5rem 0 1.5rem 0;
+        font-size: 3rem;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
 }
 .demo-booking-details__label{
     color:#555454;
@@ -63,4 +63,39 @@
     height: auto; 
     display: block; 
     height: 100vh;
+}
+@media (max-width: 768px) {
+    .demo-drive-page {
+        flex-direction: column;
+    }
+
+    .demo-booking-holder {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .demo-img-holder {
+        display: none; /* Hide the image on smaller screens */
+    }
+    
+    .demo-booking-holder {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .demo-user-details h1,
+    .demo-booking-details h1 {
+        font-size: 2rem; /* Smaller font size for smaller screens */
+    }
+    
+    .demo-booking-details__button {
+        font-size: 14px; /* Adjust button text size */
+        padding: 0.5rem 1rem; /* Adjust button padding */
+    }
+    
+    .demo-booking-details__input {
+        font-size: 12px; /* Adjust input text size */
+    }
 }

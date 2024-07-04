@@ -1,6 +1,6 @@
 import React from 'react';
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+//import 'react-phone-input-2/lib/style.css';
 import { CgSpinner } from "react-icons/cg";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast from 'react-hot-toast';
@@ -43,12 +43,14 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
         <div className="phone-verification-container">
             <label className="phone-verification-container__title" htmlFor='phone'>Verify your phone number</label>
             <PhoneInput
+                className="phoneInput"
                 country={'in'}
                 value={phone}
                 onChange={setPhone}
                 id='phone'
                 disabled={otpSent}
             />
+            <p className='phone-verification-container__note'><span>Note:</span> Please use your active Phone number.</p>
             {!otpSent && (
                 <button className="phone-verification-container__btn" onClick={onSignup} disabled={loading}>
                     {loading && <CgSpinner className='animate-spin' />}

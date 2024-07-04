@@ -2,12 +2,11 @@ import React from 'react'
 import './LocationContainer.css'
 
 const LocationContainer = ({ locations, selectedLocation, handleLocationSelect }) => {
-    console.log(locations)
     return (
         <div className="location-container">
             <h3 className='location-container__title'>Select demo ride location</h3>
             <div className="location-container__item">
-                {locations? locations.map(location => (
+                {locations.length!==0? locations.map(location => (
                     <div
                         key={location._id}
                         className={`location-container__card ${selectedLocation === location ? 'location-container__card--active' : ''}`}
@@ -23,9 +22,9 @@ const LocationContainer = ({ locations, selectedLocation, handleLocationSelect }
                         </p>
                     </div>
                 )):
-                (<div className="error">
+                <div className="error">
                     No location found!
-                </div>) }
+                </div> }
             </div>
         </div>
     )

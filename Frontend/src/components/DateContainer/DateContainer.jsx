@@ -8,12 +8,12 @@ const DateContainer = ({ selectedDate, handleDateChange }) => {
         const getNext7Days = () => {
             const days = [];
             const today = new Date();
-            for (let i = 0; i < 7; i++) {
+            for (let i = 1; i < 7; i++) {
                 const date = new Date(today);
                 date.setDate(today.getDate() + i);
                 days.push({
                     date: date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short',year:"numeric" }), // Format: 04 July
-                    label: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : date.toLocaleDateString('en-US', { weekday: 'short' })
+                    label : i === 1 ? 'Tomorrow' : date.toLocaleDateString('en-US', { weekday: 'short' })
                 });
                 console.log(days)
             }

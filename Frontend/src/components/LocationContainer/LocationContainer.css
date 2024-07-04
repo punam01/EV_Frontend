@@ -8,11 +8,6 @@
     font-size: 15px;
     padding: 2px;
 }
-.location-container__title{
-    color: #555454;
-    font-size: 15px;
-    padding: 2px;
-}
 .location-container__search {
     display: flex;
     justify-content: flex-start;
@@ -64,3 +59,6 @@
     padding: 4px;
 }
 
+.error{
+    color: #31A93E;
+}
