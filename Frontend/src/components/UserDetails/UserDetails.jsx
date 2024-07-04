@@ -20,6 +20,8 @@ const UserDetailsForm = ({user}) => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+
+
   useEffect(() => {
     if (user) {
       setUserDetails((prevDetails) => ({
@@ -82,7 +84,12 @@ const UserDetailsForm = ({user}) => {
   };
   
   console.log('Current user data:', user);
-  //localStorage.setItem('USER',user._id)
+  localStorage.setItem('USER',user._id)
+  localStorage.setItem('customId',user.uid)
+  localStorage.setItem('phone',user.phoneNumber)
+  localStorage.setItem('name',userDetails.first_name)
+  localStorage.setItem('email',userDetails.email)
+
   return (
     <section>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />

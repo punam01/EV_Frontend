@@ -53,7 +53,7 @@ const BookingSuccess = ({locationName,locationCity,locationState,selectedModel,s
                             <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0" />
                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
                         </svg>
-                    </strong> {formatDate(selectedDate)}</div>
+                    </strong> {selectedDate}</div>
                 <div className="congratulations-message__booking-details__item">
                     <strong>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
@@ -61,7 +61,7 @@ const BookingSuccess = ({locationName,locationCity,locationState,selectedModel,s
                             <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z" />
                             <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5" />
                         </svg>
-                    </strong> {formatTime(selectedTime)}</div>
+                    </strong> {selectedTime}</div>
                 <div className='congratulations-message__text'>The same information is sent to your registered email.</div>
                 <Button btnText='Go to Home' handleBtnClick={homePageRedirect}/>
             </div>

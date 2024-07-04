@@ -41,6 +41,15 @@ export const getDesiredVariant = async (queryParams) => {
     throw error;
   }
 };
+export const getConfigurableOptions = async (modelId) => {
+  try {
+      const response = await axios.get(`${API_BASE_URL}/car/configurable-options/${modelId}`);
+      return response.data;
+  } catch (error) {
+      console.error('Error fetching configurable options:', error);
+      throw error;
+  }
+};  
 
 export const compareCars = async (model1,model2) => {
   try {

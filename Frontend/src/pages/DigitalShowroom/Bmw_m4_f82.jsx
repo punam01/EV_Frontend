@@ -17,7 +17,7 @@ const Bmw_m4_f82 = ({ props, exteriorColor,interiorColor,rimColor,windowGlass}) 
 
   const { nodes, materials } = useGLTF('../../public/assets/models/bmw_m4_f82.glb')
   const rimMaterial = new THREE.MeshStandardMaterial({ color: rimColor });
-  console.log("MATERIALS",materials)
+ // console.log("MATERIALS",materials)
 
   if (materials.ARm4_m_bmw_logo) {
     materials.ARm4_m_bmw_logo.visible = false;
@@ -25,14 +25,14 @@ const Bmw_m4_f82 = ({ props, exteriorColor,interiorColor,rimColor,windowGlass}) 
   
   useMemo(() => {
     if (materials.ARm4_main) {
-      console.log(exteriorColor);
+      //console.log(exteriorColor);
       materials.ARm4_main.color.set(exteriorColor);
     }
   }, [exteriorColor, materials]);
 
   useMemo(() => {
     if (materials && materials.ARm4_color_interior) {
-      console.log('Changing interior color to:', interiorColor);
+      //console.log('Changing interior color to:', interiorColor);
       materials.ARm4_color_interior.color.set(interiorColor);
     }
   }, [interiorColor, materials]);

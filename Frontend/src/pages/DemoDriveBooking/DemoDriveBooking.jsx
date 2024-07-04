@@ -7,7 +7,7 @@ import { getCarAvailabilityByPincode } from '../../services/locationServices';
 import { createDemoBooking } from '../../services/testRideService';
 import { registerUser } from '../../services/userServices';
 import './DemoDriveBooking.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BookingSuccess from '../../components/BookingSuccess/BookingSuccess';
 import TimeContainer from '../../components/TimeContainer/TimeContainer';
 import LocationContainer from '../../components/LocationContainer/LocationContainer';
@@ -16,8 +16,11 @@ import DateContainer from '../../components/DateContainer/DateContainer';
 import Button from '../../components/Button/Button';
 import ZipcodeContainer from '../../components/ZipcodeContainer/ZipcodeContainer';
 import PersonalDetails from '../../components/PersonalDetailsContainer/PersonalDetails';
+import BookingSummary from '../../components/BookingSummary/BookingSummary';
 
 const DemoDriveBooking = () => {
+    const location = useLocation();
+    const { car } = location.state || {};
     const [phone, setPhone] = useState('');
     const [showOtp, setShowOtp] = useState(false);
     const [otpVerified, setOtpVerified] = useState(false);
@@ -38,7 +41,6 @@ const DemoDriveBooking = () => {
     const userFromLocalStorage = localStorage.getItem('USER');
     const [userId, setUserId] = useState('');
     const [zipCode, setZipCode] = useState('');
-    const name = localStorage.getItem("first_name") + ' ' + localStorage.getItem("last_name");
 
     useEffect(() => {
         if (userFromLocalStorage) {
@@ -49,6 +51,15 @@ const DemoDriveBooking = () => {
             }
         }
     }, [userFromLocalStorage]);
+
+    useEffect(() => {
+        if (car && selectedLocation) {
+            const model = availableModels.find(m => m === car.modelId);
+            if (model) {
+                setSelectedModel(model);
+            }
+        }
+    }, [car, selectedLocation, availableModels]);
 
     const handleRegister = async () => {
         try {
@@ -78,14 +89,16 @@ const DemoDriveBooking = () => {
             setLocations(data);
         } catch (error) {
             console.error('Error fetching locations:', error.message);
+            setLocations([]);
         }
     };
 
     const handleModelChange = (model) => {
         setSelectedModel(model);
-        const times = selectedLocation.availability.find(a => a.carModel === model)?.availableTimes || [];
+        const times = selectedLocation?.availability.find(a => a.carModel === model)?.availableTimes || [];
         setAvailableTimes(times);
     };
+
     const handleDateChange = (e) => setSelectedDate(e.target.value);
     const handleTimeChange = (time) => setSelectedTime(time);
 
@@ -108,7 +121,6 @@ const DemoDriveBooking = () => {
                     navigate('/profile');
                 },
             });
-
         }
     };
 
@@ -119,10 +131,10 @@ const DemoDriveBooking = () => {
 
     const handleFetchLocations = () => {
         fetchLocations(zipCode).then((locations) => {
-            if (locations.length === 0) {
-              toast.error('No locations found. Please try another ZIP code.');
+            if (locations && locations.length === 0) {
+                toast.error('No locations found. Please try another ZIP code.');
             }
-          });
+        });
     };
 
     const handleLocationSelect = (location) => {
@@ -130,15 +142,24 @@ const DemoDriveBooking = () => {
         const models = location.availability.map(item => item.carModel);
         setAvailableModels(models);
         setShowUserDetails(false); // Hide user details after location selection
+
+        if (car) {
+            setSelectedModel(car.modelId);
+        }
+    };
+
+    const isFormValid = () => {
+        return selectedLocation && selectedModel && selectedDate && selectedTime;
     };
 
     const homePageRedirect = () => {
-        navigate('/')
-    }
+        navigate('/');
+    };
+
     return (
         <div className='demo-drive-page'>
             <div className="demo-img-holder">
-                <img src="/assets/images/demoimg.jpg" alt="" />
+                <video src="/assets/images/bmw_video.mp4" autoPlay muted loop></video>
             </div>
             <div className="demo-booking-holder">
                 {!bookingSubmitted ? (
@@ -164,35 +185,46 @@ const DemoDriveBooking = () => {
                                     />
                                 )}
                                 {otpVerified && (
-                                    <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister}/>
+                                    <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} />
                                 )}
                             </div>
                         ) : (
                             <div className="demo-booking-details">
-                                <h1>Welcome back<br /></h1>
-                                <ZipcodeContainer zipCode={zipCode} setZipCode={setZipCode} handleFetchLocations={handleFetchLocations}/>
-                                {locations.length > 0 && (
-                                    <LocationContainer locations={locations} selectedLocation={selectedLocation} handleLocationSelect={handleLocationSelect}/>
+                                <h1>Book <span>{car && car.name}</span></h1>
+                                <ZipcodeContainer zipCode={zipCode} setZipCode={setZipCode} handleFetchLocations={handleFetchLocations} />
+                                <LocationContainer locations={locations} selectedLocation={selectedLocation} handleLocationSelect={handleLocationSelect} disabled={!zipCode} />
+                                {!car && <ModelContainer availableModels={availableModels} selectedModel={selectedModel} handleModelChange={handleModelChange} disabled={!selectedLocation} />}
+                                <DateContainer selectedDate={selectedDate} handleDateChange={handleDateChange} disabled={!selectedModel} />
+                                <TimeContainer selectedTime={selectedTime} availableTimes={availableTimes} handleTimeChange={handleTimeChange} disabled={!selectedDate} />
+                                {isFormValid() && (
+                                    <BookingSummary
+                                        locationName={selectedLocation.name}
+                                        locationCity={selectedLocation.city}
+                                        locationState={selectedLocation.state}
+                                        selectedModel={selectedModel}
+                                        selectedDate={selectedDate}
+                                        selectedTime={selectedTime}
+                                    />
                                 )}
-                                {selectedLocation && (
-                                    <ModelContainer availableModels={availableModels} selectedModel={selectedModel} handleModelChange={handleModelChange}/>
-                                )}
-                                {selectedModel && (
-                                    <DateContainer selectedDate={selectedDate} handleDateChange={handleDateChange}/>
-                                )}
-                                {selectedDate && availableTimes.length > 0 && <TimeContainer selectedTime={selectedTime} availableTimes={availableTimes} handleTimeChange={handleTimeChange} />
-                                }
-                                {selectedTime && (
-                                    <Button handleBtnClick={handleSubmit} btnText={'Book Demo Drive'}/>
-                                )}
+                                <Button handleBtnClick={handleSubmit} btnText={'Book Demo Drive'} disabled={!isFormValid()} />
                             </div>
                         )}
                     </>
                 ) : (
-                    <BookingSuccess locationName={selectedLocation.name} locationCity={selectedLocation.city} locationState={selectedLocation.state} selectedModel={selectedModel} selectedDate={selectedDate} selectedTime={selectedTime} homePageRedirect={homePageRedirect} />
+                    selectedLocation && selectedDate && selectedTime && selectedModel && (
+                        <BookingSuccess
+                            locationName={selectedLocation.name}
+                            locationCity={selectedLocation.city}
+                            locationState={selectedLocation.state}
+                            selectedModel={selectedModel}
+                            selectedDate={selectedDate}
+                            selectedTime={selectedTime}
+                            homePageRedirect={homePageRedirect}
+                        />
+                    )
                 )}
             </div>
-        </div >
+        </div>
     );
 };
 

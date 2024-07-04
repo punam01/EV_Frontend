@@ -20,7 +20,7 @@ const DigitalShowroom = () => {
   };
 
   return (
-    <div className="carousel-container">
+    <div className="showroom-container">
       <div
         className="carousel-content"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}

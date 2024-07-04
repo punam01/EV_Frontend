@@ -1,32 +1,30 @@
-import React from 'react'
-import './TimeContainer.css'
+import React from 'react';
+import './TimeContainer.css';
 
-const TimeContainer = ({ selectedTime, availableTimes, handleTimeChange }) => {
-    const formatTime = (time) => {
-        let [hours, minutes] = time.split('T')[1].split(':').slice(0, 2);
-        hours = parseInt(hours, 10);
-        const period = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12;
-        return `${hours}:${minutes} ${period}`;
-    };
+const TimeContainer = ({ selectedTime, handleTimeChange }) => {
+    const timeSlots = [
+        { label: 'Morning', range: '10am - 1pm' },
+        { label: 'Afternoon', range: '2pm - 5pm' },
+        { label: 'Evening', range: '5pm - 8pm' },
+    ];
 
     return (
         <div className="time-container">
             <h3 className="time-container__title">Select Time</h3>
             <div className="time-container__item">
-                {availableTimes.map((time, index) => (
+                {timeSlots.map((slot, index) => (
                     <div
                         key={index}
-                        className={`time-container__card ${selectedTime === time ? 'demo-booking-details__time-card--active' : ''}`}
-                        onClick={() => handleTimeChange(time)}
+                        className={`time-container__card ${selectedTime === slot.range ? 'demo-booking-details__time-card--active' : ''}`}
+                        onClick={() => handleTimeChange(slot.range)}
                     >
-                        <p className="time-container__text">{formatTime(time)}</p>
+                        <p className="time-container__text">{slot.label}</p>
+                        <p className="time-container__range">{slot.range}</p>
                     </div>
                 ))}
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default TimeContainer
+export default TimeContainer;

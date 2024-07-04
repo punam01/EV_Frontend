@@ -1,22 +1,63 @@
-.zipcode-container{
-    width:100%;
+.zipcode-container {
+    width: 100%;
     height: fit-content;
 }
-.zipcode-container__title{
-    color:#555454;
+
+.zipcode-container__title {
+    color: #555454;
     font-size: 15px;
     padding: 2px;
 }
-.zipcode-container::placeholder,
-.zipcode-container__input{
-    width:100%;
+
+.zipcode-container__input-container {
+    position: relative;
+    width: 100%;
+}
+
+.zipcode-container__input {
+    width: 100%;
     border-radius: 30px;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 15px;
     font-weight: 500;
     padding: 1rem;
+    background-color: white;
+    border: 1px solid #ccc; /* Default border color */
+    box-sizing: border-box; /* Ensures padding does not affect width */
 }
-.zipcode-container::placeholder{
-    color:#555454;
-    padding:1rem;
+
+.zipcode-container__input--invalid {
+    border: 1px solid #e74c3c; /* Border color for invalid input */
+}
+
+.zipcode-container__input::placeholder {
+    color: #555454;
+}
+
+.zipcode-container__button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    z-index: 1; /* Ensures button is clickable over the input */
+}
+
+.zipcode-container__button svg {
+    width: 16px;
+    height: 16px;
+    fill: #555454; /* Button icon color */
+}
+
+.zipcode-container__button:hover {
+    background-color: #f0f0f0; /* Button hover background */
+}
+
+.zipcode-container__button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6; /* Makes button appear disabled */
 }

@@ -1,45 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Configurator.css';
 
 const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSelectWinGlass }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const carData = location.state?.car;
+  console.log(carData)
   const [selectedOptions, setSelectedOptions] = useState({
-    exteriorColor: null,
-    interiorColor: null,
-    wheel: null,
-    glass: null,
+    exteriorColor: carData?.customizableOptions?.find(option => option.name === "Exterior Color")?.options[0]?.code || null,
+    interiorColor: carData?.customizableOptions?.find(option => option.name === "Interior Color")?.options[0]?.code || null,
+    wheel: carData?.customizableOptions?.find(option => option.name === "Wheels")?.options[0]?.code || null,
+    glass: carData?.customizableOptions?.find(option => option.name === "Glass")?.options[0]?.code || null,
+    range: 'mr', // Default to a valid range option
+    chargerType: '3.3 kw ac charger box' // Default to a valid charger type
   });
 
-  const prices = {
-    exteriorColors: {
-      '#D9D9D9': 1000,
-      '#68736B': 1200,
-      '#333333': 1500,
-      '#001A4D': 1800,
-      '#F1F1F1': 2000,
-    },
-    interiorColors: {
-      '#F5A777': 800,
-      '#730721': 900,
-      '#070707': 1000,
-      '#F1F1F1': 1100,
-    },
-    wheels: {
-      'gray': 2500,
-      'black': 2700,
-    },
-    glass: {
-      'tintedGlass': 300,
-      'temperedGlass': 400,
-      'laminatedGlass': 500,
-    },
-  };
+  const [prices, setPrices] = useState({
+    exteriorColors: {},
+    interiorColors: {},
+    wheels: {},
+    glass: {},
+    ranges: { 'mr': 0, 'lr': 2000 }, // Example prices, update as needed
+    chargerTypes: { '3.3 kw ac charger box': 500, '7.2 kw ac fast charger box': 1000 } // Example prices, update as needed
+  });
+
+  useEffect(() => {
+    if (carData) {
+      const extractPrices = (options) => {
+        return options.reduce((acc, opt) => {
+          const price = Number(opt.price.$numberInt || opt.price || 0);
+          return { ...acc, [opt.code || opt.name]: price };
+        }, {});
+      };
+
+      setPrices({
+        exteriorColors: extractPrices(carData.customizableOptions.find(option => option.name === "Exterior Color")?.options || []),
+        interiorColors: extractPrices(carData.customizableOptions.find(option => option.name === "Interior Color")?.options || []),
+        wheels: extractPrices(carData.customizableOptions.find(option => option.name === "Wheels")?.options || []),
+        glass: extractPrices(carData.customizableOptions.find(option => option.name === "Glass")?.options || []),
+        ranges: { 'mr': 0, 'lr': 2000 }, // Example range prices
+        chargerTypes: { '3.3 kw ac charger box': 500, '7.2 kw ac fast charger box': 1000 } // Example charger prices
+      });
+    }
+  }, [carData]);
 
   const calculateTotalPrice = () => {
-    const { exteriorColor, interiorColor, wheel, glass } = selectedOptions;
-    return (exteriorColor ? prices.exteriorColors[exteriorColor] : 0) +
-           (interiorColor ? prices.interiorColors[interiorColor] : 0) +
-           (wheel ? prices.wheels[wheel] : 0) +
-           (glass ? prices.glass[glass] : 0);
+    const { exteriorColor, interiorColor, wheel, glass, range, chargerType } = selectedOptions;
+    const total = (exteriorColor ? prices.exteriorColors[exteriorColor] || 0 : 0) +
+      (interiorColor ? prices.interiorColors[interiorColor] || 0 : 0) +
+      (wheel ? prices.wheels[wheel] || 0 : 0) +
+      (glass ? prices.glass[glass] || 0 : 0) +
+      (range ? prices.ranges[range] || 0 : 0) +
+      (chargerType ? prices.chargerTypes[chargerType] || 0 : 0);
+    return total;
   };
 
   const handleColorClick = (color) => {
@@ -56,23 +70,43 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
     setSelectedOptions(prev => ({ ...prev, interiorColor: color }));
   };
 
-  const handleWheelClick = (color) => {
+  const handleWheelClick = (wheel) => {
     if (onSelectWheel) {
-      onSelectWheel(color);
+      onSelectWheel(wheel);
     }
-    setSelectedOptions(prev => ({ ...prev, wheel: color }));
+    setSelectedOptions(prev => ({ ...prev, wheel }));
   };
 
-  const handleGlassClick = (color) => {
+  const handleGlassClick = (glass) => {
     if (onSelectWinGlass) {
-      onSelectWinGlass(color);
+      onSelectWinGlass(glass);
     }
-    setSelectedOptions(prev => ({ ...prev, glass: color }));
+    setSelectedOptions(prev => ({ ...prev, glass }));
+  };
+
+  const handleRangeChange = (event) => {
+    //console.log(event.target.value)
+    setSelectedOptions(prev => ({ ...prev, range: event.target.value }));
+  };
+
+  const handleChargerTypeChange = (event) => {
+    const { value } = event.target;
+    setSelectedOptions(prev => ({ ...prev, chargerType: value }));
+  };
+
+  const handleSubmit = () => {
+    navigate('/prebooking-dets', {
+      state: {
+        selectedOptions,
+        carData,
+        totalPrice: calculateTotalPrice()
+      }
+    });
   };
 
   return (
     <div className='config-container'>
-      <h1 className='car-name-container'>BMW m4 f82</h1>
+      <h1 className='car-name-container'>{carData?.name || 'BMW M4 2024'}</h1>
       <div className='configurator'>
         <div className="configurator-content">
           <div className="content-item">
@@ -81,15 +115,15 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               <tbody>
                 <tr>
                   <td>Max. Power</td>
-                  <td style={{ float: 'right' }}>379hp</td>
+                  <td style={{ float: 'right' }}>{carData?.power || '379hp'}</td>
                 </tr>
-                <tr>
+                {/*<tr>
                   <td>0-60mph</td>
-                  <td style={{ float: 'right' }}>4.0s</td>
-                </tr>
+                  <td style={{ float: 'right' }}>{carData?.acceleration || '4.0s'}</td>
+                </tr>*/}
                 <tr>
                   <td>Top track speed</td>
-                  <td style={{ float: 'right' }}>182mile/h</td>
+                  <td style={{ float: 'right' }}>{carData?.topSpeed || '182mph'}</td>
                 </tr>
               </tbody>
             </table>
@@ -98,43 +132,82 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
             <h3 className="content-heading">Paint Color</h3>
             <h4 className="content-sub-heading">Exterior Colors</h4>
             <div className="standard-color">
-              <div className={`color-swatch cream ${selectedOptions.exteriorColor === '#D9D9D9' ? 'selected' : ''}`} onClick={() => handleColorClick('#D9D9D9')}></div>
-              <div className={`color-swatch olive ${selectedOptions.exteriorColor === '#68736B' ? 'selected' : ''}`} onClick={() => handleColorClick('#68736B')}></div>
-              <div className={`color-swatch gray ${selectedOptions.exteriorColor === '#333333' ? 'selected' : ''}`} onClick={() => handleColorClick('#333333')}></div>
-              <div className={`color-swatch blue ${selectedOptions.exteriorColor === '#001A4D' ? 'selected' : ''}`} onClick={() => handleColorClick('#001A4D')}></div>
-              <div className={`color-swatch white ${selectedOptions.exteriorColor === '#F1F1F1' ? 'selected' : ''}`} onClick={() => handleColorClick('#F1F1F1')}></div>
+              {Object.keys(prices.exteriorColors).map(color => (
+                <div
+                  key={color}
+                  className={`color-swatch ${color} ${selectedOptions.exteriorColor === color ? 'selected' : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleColorClick(color)}
+                  data-tooltip={selectedOptions.exteriorColor}
+                ></div>
+              ))}
             </div>
             <h4 className="content-sub-heading">Interior Colors</h4>
             <div className="standard-color">
-              <div className={`color-swatch orange ${selectedOptions.interiorColor === '#F5A777' ? 'selected' : ''}`} onClick={() => handleIntColorClick('#F5A777')}></div>
-              <div className={`color-swatch maroon ${selectedOptions.interiorColor === '#730721' ? 'selected' : ''}`} onClick={() => handleIntColorClick('#730721')}></div>
-              <div className={`color-swatch black ${selectedOptions.interiorColor === '#070707' ? 'selected' : ''}`} onClick={() => handleIntColorClick('#070707')}></div>
-              <div className={`color-swatch whiteint ${selectedOptions.interiorColor === '#F1F1F1' ? 'selected' : ''}`} onClick={() => handleIntColorClick('#F1F1F1')}></div>
+              {Object.keys(prices.interiorColors).map(color => (
+                <div
+                  key={color}
+                  data-tooltip={color}
+                  className={`color-swatch ${color} ${selectedOptions.interiorColor === color ? 'selected' : ''}`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleIntColorClick(color)}
+                ></div>
+              ))}
             </div>
           </div>
           <div className="content-item">
             <h3 className="content-heading">Wheels</h3>
             <div className="wheel-selection">
-              <div className={`wheel-swatch ${selectedOptions.wheel === 'gray' ? 'selected' : ''}`}>
-                <img src='assets/images/rim_gray.webp' alt="Wheel 1" onClick={() => handleWheelClick("gray")} />
-              </div>
-              <div className={`wheel-swatch ${selectedOptions.wheel === 'black' ? 'selected' : ''}`}>
-                <img src='assets/images/rim_black.webp' alt="Wheel 2" onClick={() => handleWheelClick("black")} />
-              </div>
+              {Object.keys(prices.wheels).map(wheel => (
+                <div
+                  key={wheel}
+                  className={`wheel-swatch ${selectedOptions.wheel === wheel ? 'selected' : ''}`}
+                >
+                  <img
+                    src={`assets/images/rim_${wheel}.webp`}
+                    alt={`Wheel ${wheel}`}
+                    onClick={() => handleWheelClick(wheel)}
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className="content-item">
             <h3 className="content-heading">Glass</h3>
             <div className="standard-color">
-              <div className={`color-swatch tinted ${selectedOptions.glass === 'tintedGlass' ? 'selected' : ''}`} onClick={() => handleGlassClick('tintedGlass')}></div>
-              <div className={`color-swatch tempered ${selectedOptions.glass === 'temperedGlass' ? 'selected' : ''}`} onClick={() => handleGlassClick('temperedGlass')}></div>
-              <div className={`color-swatch laminated ${selectedOptions.glass === 'laminatedGlass' ? 'selected' : ''}`} onClick={() => handleGlassClick('laminatedGlass')}></div>
+              {Object.keys(prices.glass).map(type => (
+                <div
+                  key={type}
+                  className={`color-swatch ${type} ${selectedOptions.glass === type ? 'selected' : ''}`}
+                  onClick={() => handleGlassClick(type)}
+                  data-tooltip={type}
+                >
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="content-item">
+            <h3 className="content-heading">Range</h3>
+            <div className="range-selection">
+              {Object.keys(prices.ranges).map(range => (
+                <label key={range} className="range-option">
+                  <input
+                    type="radio"
+                    name="range"
+                    value={range}
+                    checked={selectedOptions.range === range}
+                    onChange={handleRangeChange}
+                  />
+                  <span className="custom-card">{range.toUpperCase()}</span>
+                </label>
+              ))}
             </div>
           </div>
           <div className="content-item">
             <h3 className="content-heading">Total Price</h3>
             <p className="total-price">${calculateTotalPrice()}</p>
           </div>
+          <button onClick={handleSubmit} className="btn-submit">NEXT</button>
         </div>
       </div>
     </div>

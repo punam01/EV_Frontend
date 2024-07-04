@@ -1,47 +1,49 @@
 .model-container {
-    width:100%;
-    height: fit-content;
-  }
-  
-  .model-container__title {
-    color:#555454;
-    font-size: 15px;
-    padding: 2px;
-  }
-  
-  .model-container__item {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-  
-  .model-container__card {
-    width:45%;
-    padding:1rem;
-    border: 1px solid #555454;
-    border-radius: 5px;
-    margin-right: 1rem;
-    color:#555454;
-    cursor: pointer;
-  }
-  
-  .model-container__card:hover {
-    border: 1.5px solid #00D5E5;
-    color: black;
-  }
-  
-  .model-container__card.demo-booking-details__model-card--active {
-    border: 1.5px solid #00D5E5;
-    color: black;
-  }
-  
-  .model-container__text {
-    font-family: 'Poppins',sans-serif;
-    font-size: 13px;
-    padding:4px ;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  
+  width: 100%;
+  height: fit-content;
+}
+
+.model-container__title {
+  color: #555454;
+  font-size: 15px;
+  padding: 2px;
+}
+
+.model-container__item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.model-container__card {
+  background-color: white;
+  width: 45%;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: #555454;
+  cursor: pointer;
+  transition: border 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
+  box-sizing: border-box; /* Ensures padding does not affect width */
+}
+
+.model-container__card:hover {
+  border: 1.5px solid #31A93E; /* Updated hover border color */
+  color: black;
+}
+
+.model-container__card.demo-booking-details__model-card--active {
+  border: 1.5px solid #31A93E; /* Updated active border color */
+  color: black;
+  background-color: #E6F4E7;
+}
+
+.model-container__text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  padding: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}

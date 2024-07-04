@@ -1,0 +1,29 @@
+.booking-summary {
+    width: 100%;
+    height: fit-content;
+}
+
+.booking-summary__title {
+    color: #555454;
+    font-size: 15px;
+    padding: 2px;
+}
+.booking-summary__details{
+    background-color: #E8EBEB;
+    margin:10px;
+    padding:1rem;
+    border-radius: 10px;
+}
+.booking-summary__date_time{
+    display: flex;
+    justify-content: space-between;
+    padding:0.5rem 1rem;
+    font-weight: 500;
+    font-size: 16px;
+}
+.booking-summary__address,
+.booking-summary__model{
+    padding:0.5rem 1rem;
+    font-weight: 500;
+    font-size: 16px;
+}

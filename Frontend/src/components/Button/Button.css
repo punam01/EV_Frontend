@@ -2,14 +2,17 @@
     width:100%;
 }
 .button-design__btn{
-    width:100%;
-    border-radius: 30px;
-    background-color: #00D5E5;
+    width:98%;
+    border-radius: 10px;
+    background-color: #000000;
     font-family: 'Poppins',sans-serif;
     font-size: 15px;
     font-weight: 500;
-    padding: 1rem;
+    padding: 1.5rem;
+    margin: 10px;
+    color:#CCCBCB;
 }
 .button-design__btn:hover{
-    background-color: #CCCBCB;
+    background-color: #E8EBEB;
+    color:#000000;
 }

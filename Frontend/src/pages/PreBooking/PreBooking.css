@@ -1,0 +1,28 @@
+.pre-booking-page{
+    display: flex;
+}
+.pre-booking-page__left{
+    width:70%;
+    padding: 1rem 1rem;
+}
+.pre-booking-page__right{
+    width:30%;
+    padding: 1rem 2rem;
+    overflow-y: auto;
+    right:0;
+}
+.pre-booking-page__right::-webkit-scrollbar{
+    display:none;
+}
+.pre-booking-page__right__cardetails{
+    overflow-y: auto;
+}
+.pre-booking-page__right__cardetails__item{
+    margin: 1rem;
+    padding: 2rem;
+    background-color: #D9D9D9; 
+}
+.pre-booking-page__right__cardetails__checkout{
+    width:100%;
+    background-color: white;
+}

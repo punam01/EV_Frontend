@@ -16,6 +16,10 @@ import DemoDriveBooking from './pages/DemoDriveBooking/DemoDriveBooking';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PreBookingPage from './pages/PreBookingPage/PreBookingPage';
+import CompareCars from './pages/CompareCars/CompareCars';
+import HomePage from './pages/HomePage/HomePage';
+import CarDetailsPage from './pages/CarDetailsPage/CarDetailsPage';
+import Checkout from './pages/Checkout/Checkout';
 
 const App = () => {
   return (
@@ -23,8 +27,9 @@ const App = () => {
     <ToastContainer position="top-center" autoClose={3000} />
     <Navbar/>     
       <Routes >
+        <Route path='/cardetails' element={<CarDetailsPage />}/>
         <Route path="/showroom" element={<DigitalShowroom />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/cars" element={<PLP />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
@@ -34,6 +39,9 @@ const App = () => {
         <Route path='/prebooking/:id' element={<PreBooking />} />
         <Route path='/demodrive' element={<DemoDriveBooking/>}/>
         <Route path='/pre' element={<PreBookingPage />}/>
+        <Route path='/prebooking-dets' element={<PreBooking />}/>
+        <Route path='/compare' element={<CompareCars />}/>
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );
