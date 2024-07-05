@@ -9,7 +9,6 @@ import 'jspdf-autotable';
 
 const Checkout = () => {
     const location = useLocation();
-    const navigate = useNavigate();
     const { selectedOptions, totalPrice, carData } = location.state || {};
     const [step, setStep] = useState(1);
     const [userDetails, setUserDetails] = useState({ pincode: '', name: '', email: '' });
@@ -87,12 +86,20 @@ const Checkout = () => {
                 glass: {
                     value: selectedOptions.glass,
                     price: selectedOptions.glassPrice
-                },
-                estimatedPrice: totalPrice
+                }
             },
-            location: selectedLocation
+            location: [ // Change from object to array
+                {
+                    pincode: selectedLocation.pincode,
+                    address: selectedLocation.address,
+                    city: selectedLocation.city,
+                    state: selectedLocation.state,
+                    name: selectedLocation.name
+                }
+            ],
+            estimatedPrice: totalPrice
         };
-
+        console.log(bookingData)
         try {
             const result = await bookCar(bookingData);
             console.log('Booking confirmed:', result);
