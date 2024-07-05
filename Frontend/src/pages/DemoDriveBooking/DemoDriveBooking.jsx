@@ -104,13 +104,23 @@ const DemoDriveBooking = () => {
     const handleTimeChange = (time) => setSelectedTime(time);
 
     const handleSubmit = async () => {
+        const user = localStorage.getItem('USER');
+        const phone = localStorage.getItem('phone');
+    
+        if (!user || !selectedLocation?._id || !selectedModel || !selectedTime || !phone) {
+            toast.error("All fields are required", {
+                duration: 3000,
+            });
+            return;
+        }
+    
         try {
             const bookingResponse = await createDemoBooking(
-                localStorage.getItem('USER'),
+                user,
                 selectedLocation._id,
                 selectedModel,
                 selectedTime,
-                localStorage.getItem('phone')
+                phone
             );
             setBookingDetails(bookingResponse);
             setBookingSubmitted(true);
@@ -124,6 +134,7 @@ const DemoDriveBooking = () => {
             });
         }
     };
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -143,7 +154,7 @@ const DemoDriveBooking = () => {
         setSelectedLocation(location);
         const models = location.availability.map(item => item.carModel);
         setAvailableModels(models);
-        setShowUserDetails(false); // Hide user details after location selection
+        setShowUserDetails(false); 
 
         if (car) {
             setSelectedModel(car.modelId);

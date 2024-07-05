@@ -16,7 +16,7 @@ const PreBookingWithoutConfig = () => {
             <div className="pre-book-no-config-page__image__holder">
                 <img src="/assets/images/bmw_no_config.jpg" alt="" />
             </div>
-            {null &&<div className="pre-book-no-config-page__booking__holder">
+            <div className="pre-book-no-config-page__booking__holder">
                 <h2 className='pre-book-no-config-page__booking__holder__title'>Book your {car?car.name:"Car"}</h2>
                 <div className="important">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -54,10 +54,7 @@ const PreBookingWithoutConfig = () => {
                         ))}
                     </div>
                 </div>
-            </div>}
-            {<div className="pre-book-no-config-page__user__holder">
-                <PersonalDetails />
-            </div>}
+            </div>
             {<div className="pre-book-no-config-page__fixed-bottom">
                         <div className="fixed-bottom-top">
                             <p>Booking amount</p>

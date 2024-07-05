@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000'; 
+const API_BASE_URL = 'http://localhost:5000/api/prebooking'; 
 export const bookCar = async (bookingData) => {
-  console.log("booking data",bookingData)
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/pre-bookings`, bookingData);
-    return response.data;
+      const response = await axios.post(`${API_BASE_URL}`, bookingData);
+      return response.data;
   } catch (error) {
-    throw error;
+      console.error('Error booking car:', error);
+      throw error;
   }
 };
 

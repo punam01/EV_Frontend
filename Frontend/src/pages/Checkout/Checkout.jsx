@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getCarAvailabilityByPincode } from '../../services/locationServices';
 import { bookCar } from '../../services/preBookingService';
 import './Checkout.css';
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
+
 
 const Checkout = () => {
     const location = useLocation();
@@ -61,11 +64,32 @@ const Checkout = () => {
         const bookingData = {
             userId: localStorage.getItem('USER'),
             carId: carData.carId,
+            bookingTime: new Date(), 
+            paymentMade: false, 
             contact: userDetails.email,
-            exteriorColor: selectedOptions.exteriorColor,
-            interiorColor: selectedOptions.interiorColor,
-            wheel: selectedOptions.wheel,
-            glass: selectedOptions.glass,
+            customization: {
+                exteriorColor: {
+                    value: selectedOptions.exteriorColor,
+                    price: selectedOptions.exteriorColorPrice
+                },
+                interiorColor: {
+                    value: selectedOptions.interiorColor,
+                    price: selectedOptions.interiorColorPrice
+                },
+                wheelColor: {
+                    value: selectedOptions.wheel,
+                    price: selectedOptions.wheelPrice
+                },
+                range: {
+                    value: selectedOptions.range,
+                    price: selectedOptions.rangePrice
+                },
+                glass: {
+                    value: selectedOptions.glass,
+                    price: selectedOptions.glassPrice
+                },
+                estimatedPrice: totalPrice
+            },
             location: selectedLocation
         };
 
@@ -85,12 +109,111 @@ const Checkout = () => {
         }
     };
 
-    const downloadInvoice = () => {
-        // Replace this URL with the actual endpoint to download the invoice
-        const invoiceUrl = '/path/to/your/invoice.pdf';
-        window.open(invoiceUrl, '_blank');
+    const handleDownloadInvoice = () => {
+        const doc = new jsPDF();
+        const title = "Invoice";
+        const padding = 20;
+        const titleWidth = doc.getTextWidth(title);
+        const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2);
+        doc.text(title, center, padding);
+    
+        // User Details
+        const userData = [
+            [userDetails.name, userDetails.email]
+        ];
+        doc.autoTable({
+            startY: padding + 10,
+            head: [['NAME','EMAIL']],
+            body: userData,
+            theme: 'grid',
+            styles: {
+                fontSize: 10,
+                cellPadding: 4,
+                halign: 'left',
+                valign: 'middle'
+            },
+            headStyles: {
+                fillColor: [0, 0, 255], 
+                textColor: [255, 255, 255], 
+                fontStyle: 'bold',
+                halign: 'center'
+            },
+            margin: { top: 10 },
+            showHead: 'firstPage',
+            columnStyles: {
+                0: { cellWidth: 60 },
+                1: { cellWidth: 130 }
+            }
+        });
+    
+        // Car Details
+        const carData = [
+            [ selectedOptions.exteriorColor, selectedOptions.interiorColor, selectedOptions.wheel, selectedOptions.glass, `$${totalPrice}`]
+        ];
+    
+        doc.autoTable({
+            startY: doc.previousAutoTable.finalY + 10,
+            head: [['EXTERIOR COLOR','INTERIOR COLOR','WHEEL','GLASS',"TOTAL PRICE"]],
+            body: carData,
+            theme: 'grid',
+            styles: {
+                fontSize: 10,
+                cellPadding: 4,
+                halign: 'left',
+                valign: 'middle'
+            },
+            headStyles: {
+                fillColor: [0, 123, 255], // Different blue
+                textColor: [255, 255, 255], // White text
+                fontStyle: 'bold',
+                halign: 'center'
+            },
+            margin: { top: 10 },
+            showHead: 'firstPage',
+            columnStyles: {
+                0: { cellWidth: 40 },
+                1: { cellWidth: 40 },
+                2: { cellWidth: 30 },
+                3: { cellWidth: 30 },
+                4: { cellWidth: 50 },
+            }
+        });
+    
+        // Location Details
+        const locationData = [
+            [selectedLocation.name, selectedLocation.address, selectedLocation.city, selectedLocation.state, selectedLocation.pincode]
+        ];
+    
+        doc.autoTable({
+            startY: doc.previousAutoTable.finalY + 10,
+            head: [['PLACE','ADDRESS','CITY','STATE','PINCODE']],
+            body: locationData,
+            theme: 'grid',
+            styles: {
+                fontSize: 10,
+                cellPadding: 4,
+                halign: 'left',
+                valign: 'middle'
+            },
+            headStyles: {
+                fillColor: [0, 153, 76], // Green color
+                textColor: [255, 255, 255], // White text
+                fontStyle: 'bold',
+                halign: 'center'
+            },
+            margin: { top: 10 },
+            showHead: 'firstPage',
+            columnStyles: {
+                0: { cellWidth: 40 },
+                1: { cellWidth: 40 },
+                2: { cellWidth: 40 },
+                3: { cellWidth: 20 },
+                4: { cellWidth: 40 },           }
+        });
+    
+        doc.save(`bmw_invoice_${userDetails.name}.pdf`);
     };
-
+    
     return (
         <div className="checkout-page">
             <section className="step-wizard">
@@ -166,7 +289,7 @@ const Checkout = () => {
                             <div className="confirmation-message">
                                 <h2>Congratulations!</h2>
                                 <p>Your booking has been confirmed successfully. An email has been sent to {userDetails.email} with the booking details.</p>
-                                <button onClick={downloadInvoice}>Download Invoice</button>
+                                <button onClick={handleDownloadInvoice}>Download Invoice</button>
                             </div>
                         ) : (
                             <>
