@@ -97,34 +97,6 @@ const UserDetailsForm = ({user}) => {
     <section className='user-deatils-container'>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
       <div>
-        {/*submitted ? (
-          <div>
-            <h2>Registration Success!!</h2>
-            <div>
-              <p>
-                <strong>UID_:</strong> {user._id}
-              </p>
-              <p>
-                <strong>UID:</strong> {user.uid}
-              </p>
-              <p>
-                <strong>Phone Number:</strong> {user.phoneNumber}
-              </p>
-              <p>
-                <strong>Name:</strong> {userDetails.first_name} {userDetails.last_name}
-              </p>
-              <p>
-                <strong>Email:</strong> {userDetails.email}
-              </p>
-              <p>
-                <strong>Address:</strong> {userDetails.address}
-              </p>
-              <p>
-                <strong>Pincode:</strong> {userDetails.pincode}
-              </p>
-            </div>
-          </div>
-        ) : */
           <form onSubmit={handleSubmit}>
             <div className="user-details-container__input-container">
               <label className="user-details-container__input__label" htmlFor="phone">Contact</label>
@@ -156,7 +128,6 @@ const UserDetailsForm = ({user}) => {
               <span>Submit Details</span>
             </button>
           </form>
-      }
       </div>
     </section>
   );

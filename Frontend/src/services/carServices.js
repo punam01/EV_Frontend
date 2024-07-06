@@ -12,6 +12,18 @@ export const getAllCars = async () => {
   }
 };
 
+export const getCarByModelId = async (modelId) => {
+  console.log(modelId)
+  try {
+      const response =await axios.post(`${API_BASE_URL}/car/getByModelId`, { modelId });
+      console.log("response from modelId",response.data)
+      return response.data;
+  } catch (error) {
+      console.error('Error fetching car details:', error);
+      throw error;
+  }
+};
+
 export const getCarById = async (id) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/car/${id}`);

@@ -12,3 +12,12 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
 }
+.signup-container__goto_login{
+    display: flex;
+    justify-content: flex-start;
+    padding: 2rem;
+}
+.signup-container__login-link{
+    color:#31A93E;
+    text-decoration: underline;
+}

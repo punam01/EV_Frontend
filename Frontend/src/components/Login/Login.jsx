@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../features/user/userSlice';
 import PhoneNumberInput from './PhoneNumberInput';
 import OtpVerification from './OtpVerification';
 import UserProfilePage from '../../pages/UserProfile/UserProfilePage';
+import PhoneVerification from '../../pages/DemoDriveBooking/PhoneVerification';
+import OTPVerification from '../../pages/DemoDriveBooking/OTPVerification';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,17 +18,17 @@ const Login = () => {
   const authInstance = getAuth();
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [recaptchaVisible, setRecaptchaVisible] = useState(true);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
 
   useEffect(() => {
     const unsubscribe = authInstance.onAuthStateChanged(user => {
       if (user) {
-        dispatch(setUser(user)); 
+        dispatch(setUser(user));
       } else {
-        dispatch(clearUser()); 
+        dispatch(clearUser());
       }
     });
 
@@ -55,41 +57,43 @@ const Login = () => {
         setLoading(false);
         setShowOtp(true);
         toast.success("OTP sent successfully!");
+        navigate('/')
+
       }).catch((error) => {
         console.log(error);
         setLoading(false);
       });
   }
 
-  function onOTPVerify() {
-    setLoading(true);
-    window.confirmationResult.confirm(otp).then((res) => {
-      dispatch(setUser(res.user)); 
-      console.log(user)
-      setLoading(false);
-      setRecaptchaVisible(false);
-      toast.success("Login successful!");
-      navigate('/profile');
-    }).catch(err => {
-      console.log(err);
-      setLoading(false);
-    });
-  }
 
   return (
     <>
-      {user ? (<UserProfilePage />) : (<section className='login-container'>
-        <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
-        {recaptchaVisible && <div id="recaptcha-container"></div>}
-        <div>
-          <div className='welcome'>WELCOME BACK!</div>
-          {showOtp ? (
-            <OtpVerification otp={otp} setOtp={setOtp} onOTPVerify={onOTPVerify} loading={loading} />
-          ) : (
-            <PhoneNumberInput phone={phone} setPhone={setPhone} onLogin={onLogin} loading={loading} />
-          )}
-        </div>
-      </section>)}
+      {!user ? (<UserProfilePage />) :
+        (
+          <div className='login-container'>
+            <h3 className='login-container__h3'>Login</h3>
+            <div id="recaptcha-container"></div>
+            <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
+            {!otpVerified && <PhoneVerification
+              phone={phone}
+              setPhone={setPhone}
+              setShowOtp={setShowOtp}
+              loading={loading}
+              setLoading={setLoading}
+              otpSent={otpSent}
+              setOtpSent={setOtpSent} />}
+            {showOtp && !otpVerified && (
+              <OTPVerification
+                setOtpVerified={setOtpVerified}
+                setOtpSent={setOtpSent}
+              />
+            )}
+            <div className="login-container__goto_signup">
+              <span>New here?</span>
+              <Link className="login-container__signup-link" to='/signup'>Create an account</Link>
+            </div>
+          </div>
+        )}
     </>
   );
 }

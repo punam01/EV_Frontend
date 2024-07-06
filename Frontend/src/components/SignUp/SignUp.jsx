@@ -7,6 +7,7 @@ import OTPVerification from '../../pages/DemoDriveBooking/OTPVerification';
 import { Toaster } from 'react-hot-toast';
 import { toast } from 'react-toastify';
 import './SignUp.css'
+import { Link } from 'react-router-dom';
 function SignUp() {
   const [phone, setPhone] = useState('');
   const [showOtp, setShowOtp] = useState(false);
@@ -25,11 +26,7 @@ function SignUp() {
     }
   }, [dispatch]);
 
-  const handlePhoneVerificationSuccess = (userData) => {
-    dispatch(setSignupStatus(true));
-    dispatch(setUser(userData));
-  };
-  const customId = localStorage.getItem('customId');
+  //const customId = localStorage.getItem('customId');
   return (
     <div className='signup-container'>
       <h3 className='signup-container__h3'>Sign Up</h3>
@@ -51,6 +48,10 @@ function SignUp() {
         />
       )}
       {otpVerified && <UserDetails user={user} />}
+      <div className="signup-container__goto_login">
+        <span>Already have an account?</span>
+        <Link className="signup-container__login-link" to='/login'>Login</Link>
+      </div>
     </div>
   );
 }

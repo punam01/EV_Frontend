@@ -83,9 +83,11 @@
 }
 .profile-page-container__button{
     background-color: black;
-    border-radius: 10px;
+    border-radius: 5px;
+    padding: 1rem;
     color:white;
     margin:0 1rem;
+    border: none;
 }
 .profile-page-container__button:hover{
     background-color: #31A93E;
@@ -150,4 +152,42 @@
 }
 .profile-page-container__card-right p:hover{
     color:#31A93E;
+}
+
+.info-icon {
+    margin-left: -20px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+}
+.info-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.tooltip {
+    visibility: hidden;
+    width:100px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -50px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
 }

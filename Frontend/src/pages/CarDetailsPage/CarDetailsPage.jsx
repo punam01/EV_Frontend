@@ -7,7 +7,7 @@ const CarDetailsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(null);
-
+  
   const handleColorSelect = (color) => {
       setSelectedColor(color);
   };
@@ -20,7 +20,7 @@ const CarDetailsPage = () => {
   }
 
   const handleBack = () => {
-    if (isLoggedIn || true) {
+    if (isLoggedIn) {
       navigate('/showroom', { state: { car } });
     } else {
       navigate('/signup');

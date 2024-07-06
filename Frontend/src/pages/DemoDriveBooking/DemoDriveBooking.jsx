@@ -188,7 +188,9 @@ const DemoDriveBooking = () => {
                                     setShowOtp={setShowOtp}
                                     loading={loading}
                                     setLoading={setLoading}
-                                    otpSent={otpSent}/>
+                                    otpSent={otpSent}
+                                    setOtpSent={setOtpSent}
+                                    />
 
                                 {showOtp && !otpVerified && (
                                     <OTPVerification
