@@ -459,7 +459,7 @@ const Checkout = () => {
 
                     </div>
                 )}
-                {step == 4 && bookingConfirmed && (<div className='content-confirmation-message'>
+                {step == 4 && bookingConfirmed && (<>
                     <div className="confirmation-message">
                         <h2>Congratulations!</h2>
                         <p>Your booking has been confirmed successfully.</p>
@@ -468,7 +468,7 @@ const Checkout = () => {
                             <button className="checkout-content__book__button" onClick={handleDownloadInvoice}>Download Invoice</button>
                             <button className="checkout-content__book__button" onClick={handleNavigate}>Go to Order History</button>
                         </div>
-                    </div></div>
+                    </div></>
                 )}
             </div>
         </div>

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { auth } from '../../firebase.config';
 import './PhoneVerification.css'
 
-const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, otpSent }) => {
+const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, otpSent ,setOtpSent}) => {
     
     const onCaptchVerify = () => {
         if (!window.recaptchaVerifier) {
@@ -30,6 +30,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
                 window.confirmationResult = confirmationResult;
                 setLoading(false);
                 setShowOtp(true);
+                setOtpSent(true); // Set otpSent to true
                 toast.success("OTP sent successfully!");
                 
             }).catch((error) => {
@@ -37,6 +38,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
                 setLoading(false);
                 toast.error("Failed to send OTP. Please try again.");
             });
+            setLoading(false)
     };
 
     return (

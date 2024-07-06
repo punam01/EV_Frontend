@@ -39,7 +39,7 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
         <div className='otp-verification-container'>
             <label className="otp-verification-container__title" htmlFor='otp'>Enter your OTP</label>
             <OtpInput
-                className="otp-verification-container__holder"
+                className="otpInput"
                 value={otp}
                 onChange={setOtp}
                 numInputs={6}

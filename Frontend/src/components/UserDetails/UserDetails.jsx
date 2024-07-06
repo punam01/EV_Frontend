@@ -4,12 +4,12 @@ import { registerUser } from '../../services/userServices';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../../features/user/userSlice';
-
+import './UserDetails.css'
+import { useNavigate } from 'react-router-dom';
 const UserDetailsForm = ({user}) => {
-  console.log(user)
+  const navigate=useNavigate();
   
   const dispatch = useDispatch();
-  //const user = useSelector(selectUser);
   const [userDetails, setUserDetails] = useState({
     first_name: '',
     last_name: '',
@@ -33,11 +33,14 @@ const UserDetailsForm = ({user}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    const pincodeRegex = /^\d{6}$/;
+    if (!pincodeRegex.test(userDetails.pincode)) {
+        toast.error('Pincode must be a 6-digit number.');
+        setLoading(false);
+        return;
+    }
     try {
-      // Print current user data before submitting
-
-      const response = await registerUser({
+        const response = await registerUser({
         custom_id: user.uid,
         first_name: userDetails.first_name,
         last_name: userDetails.last_name,
@@ -47,7 +50,6 @@ const UserDetailsForm = ({user}) => {
         contact: user.phoneNumber,
       });
 
-      // Print the response received from the server
       console.log('Response from server:', response);
 
       toast.success(response.msg);
@@ -65,14 +67,12 @@ const UserDetailsForm = ({user}) => {
         },
         phoneNumber: user.phoneNumber,
       }));
-
       setSubmitted(true);
+      navigate('/profile')
     } catch (error) {
       console.error('Failed to register user:', error);
       toast.error(error.message || 'Failed to register user.');
     }
-
-    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -89,12 +89,15 @@ const UserDetailsForm = ({user}) => {
   localStorage.setItem('phone',user.phoneNumber)
   localStorage.setItem('name',userDetails.first_name)
   localStorage.setItem('email',userDetails.email)
+  localStorage.setItem('last_name',userDetails.last_name)
+  localStorage.setItem('zip',userDetails.pincode)
+  localStorage.setItem('address',userDetails.address)
 
   return (
-    <section>
+    <section className='user-deatils-container'>
       <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
       <div>
-        {submitted ? (
+        {/*submitted ? (
           <div>
             <h2>Registration Success!!</h2>
             <div>
@@ -121,19 +124,39 @@ const UserDetailsForm = ({user}) => {
               </p>
             </div>
           </div>
-        ) : (
+        ) : */
           <form onSubmit={handleSubmit}>
-            <input type="text" name="first_name" placeholder="First Name" onChange={handleChange} required />
-            <input type="text" name="last_name" placeholder="Last Name" onChange={handleChange} required />
-            <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
-            <input type="text" name="address" placeholder="Address" onChange={handleChange} required />
-            <input type="text" name="pincode" placeholder="Pincode" onChange={handleChange} required />
-            <button type="submit">
+            <div className="user-details-container__input-container">
+              <label className="user-details-container__input__label" htmlFor="phone">Contact</label>
+              <input className="user-details-container__input_data" type="text" name="phone" placeholder={user.phoneNumber}/>
+            </div>
+            <div className="user-details-container__input-container">
+              <label className="user-details-container__input__label" htmlFor="first_name">First name</label>
+              <input type="text" name="first_name" placeholder="First Name" onChange={handleChange} required />
+            </div>
+            <div className="user-details-container__input-container">
+              <label className="user-details-container__input__label" htmlFor="last_name">Last name</label>
+              <input type="text" name="last_name" placeholder="Last Name" onChange={handleChange} required />
+            </div>
+            <div className="user-details-container__input-container">
+              <label className="user-details-container__input__label" htmlFor="email">Email</label>
+              <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+            </div>
+            <div className="user-details-container__input-container">
+              <label className="user-details-container__input__label" htmlFor="address">Address</label>
+              <input type="text" name="address" placeholder="Address" onChange={handleChange} required />
+            </div>
+            <div className="user-details-container__input-container">
+              <label className="user-details-container__input__label" htmlFor="pincode">Pincode</label>
+              <input type="text" name="pincode" placeholder="Pincode" onChange={handleChange} required />
+            </div>
+            
+            <button className="user-details-container__btn" type="submit">
               {loading && <CgSpinner className="animate-spin" />}
               <span>Submit Details</span>
             </button>
           </form>
-        )}
+      }
       </div>
     </section>
   );
