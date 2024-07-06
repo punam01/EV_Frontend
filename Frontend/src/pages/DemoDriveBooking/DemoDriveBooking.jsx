@@ -179,7 +179,7 @@ const DemoDriveBooking = () => {
                     <>
                         {showUserDetails && !userFromLocalStorage ? (
                             <div className="demo-user-details">
-                                <h1>Book <span>{car && car.name}</span></h1>
+                                <h1>Book <span>{car && car.name}</span> Demo Drive</h1>
                                 <div id="recaptcha-container"></div>
                                 <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
                                 <PhoneVerification
@@ -200,7 +200,7 @@ const DemoDriveBooking = () => {
                             </div>
                         ) : (
                             <div className="demo-booking-details">
-                                <h1>Book <span>{car && car.name}</span></h1>
+                                <h1>Book <span>{car && car.name}</span> Demo Drive</h1>
                                 <ZipcodeContainer zipCode={zipCode} setZipCode={setZipCode} handleFetchLocations={handleFetchLocations} userData={userData}/>
                                 <LocationContainer locations={locations} selectedLocation={selectedLocation} handleLocationSelect={handleLocationSelect} disabled={!zipCode} />
                                 {!car && <ModelContainer availableModels={availableModels} selectedModel={selectedModel} handleModelChange={handleModelChange} disabled={!selectedLocation} />}

@@ -7,10 +7,11 @@ import 'jspdf-autotable';
 import Confirmation from '../../components/Confirmation/Confirmation';
 
 const PreBookingWithoutConfig = () => {
+    const [confirmationMessage, setConfirmationMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const [bookingDetails,setBookingDetails]=useState(null)
+    const [bookingDetails,setBookingDetails]=useState('')
     const [selectedColor, setSelectedColor] = useState("");
     const [customization, setCustomization] = useState({
         interiorColor: {
@@ -40,7 +41,6 @@ const PreBookingWithoutConfig = () => {
     }
     
     const handleColorClick = (color) => {
-        // Find the selected color option and its price
         const colorOption = car.customizableOptions.find(option => 
             option.name === 'Exterior Color' && option.options.some(opt => opt.name === color)
         );
@@ -53,14 +53,13 @@ const PreBookingWithoutConfig = () => {
                 ...prev,
                 exteriorColor: { value: color, price: price }
             }));
-            
-            // Recalculate the estimated price
+
             const newEstimatedPrice = calculateEstimatedPrice({
                 ...customization, 
                 exteriorColor: { value: color, price: price }
             });
             setEstimatedPrice(newEstimatedPrice);
-            setSelectedColor(color); // Update selected color state
+            setSelectedColor(color); 
         } else {
             setCustomization(prev => ({
                 ...prev,
@@ -70,7 +69,7 @@ const PreBookingWithoutConfig = () => {
                 ...customization,
                 exteriorColor: { value: "", price: 0 }
             }));
-            setSelectedColor(""); // Reset selected color
+            setSelectedColor(""); 
         }
     }
     
@@ -165,7 +164,10 @@ const PreBookingWithoutConfig = () => {
         try {
             const response = await bookCar(bookingData);
             handleDownloadInvoice();
-            navigate('/profile');
+            setConfirmationMessage('Booking Confirmed! 🚗💨');
+            setTimeout(() => {
+                navigate('/profile');
+            }, 2000);
         } catch (error) {
             console.error('Error booking car:', error);
         }
@@ -217,7 +219,7 @@ const PreBookingWithoutConfig = () => {
             </div>
             <div className="pre-book-no-config-page__fixed-bottom">
                 <div className="fixed-bottom-top">
-                    <p>Booking amount</p>
+                    <p>Booking amount <span>₹ {estimatedPrice}</span></p>
                     <div className="fixed-bottom-right">
                         <span>Fully refundable</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -225,14 +227,12 @@ const PreBookingWithoutConfig = () => {
                         </svg>
                     </div>
                 </div>
-                <div className="fixed-bottom-price">
-                    <span>₹ {estimatedPrice}</span>
-                </div>
                 <div className="pre-book-no-config-page__fixed-bottom__next__btn" onClick={() => setShowPopup(true)}>
                     <span>Book Now</span>
                 </div>
                 {showPopup && (
                 <Confirmation
+                confirmationMessage={confirmationMessage}
                     handleBooking={handleNextClick}
                     bookingDetails={bookingDetails}
                     onClose={() => setShowPopup(false)} 

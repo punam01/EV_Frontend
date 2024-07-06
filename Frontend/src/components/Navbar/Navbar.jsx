@@ -25,8 +25,8 @@ const Navbar = () => {
         <button className="navbar__menu-btn" onClick={toggleMenu}>Menu</button>
         <ul className={`navbar__items ${menuOpen ? 'navbar__items--active' : ''}`}>
           <li className='navbar__item'><Link className='navbar__link' to="/" onClick={() => handleNavClick('home')}>Home</Link></li>
-          <li className='navbar__item'><Link className='navbar__link' to="/showroom" onClick={() => handleNavClick('showroom')}>Digital Showroom</Link></li>
-          <li className='navbar__item'><Link className='navbar__link' to="/cars" onClick={() => handleNavClick('vehicles')}>Vehicles</Link></li>
+          {        /* <li className='navbar__item'><Link className='navbar__link' to="/showroom" onClick={() => handleNavClick('showroom')}>Digital Showroom</Link></li>*/}
+{        /*  <li className='navbar__item'><Link className='navbar__link' to="/cars" onClick={() => handleNavClick('vehicles')}>Vehicles</Link></li>*/}
           <li className='navbar__item'><Link className='navbar__link' to="/blogs" onClick={() => handleNavClick('blog')}>Blog</Link></li>
           <li className='navbar__item'><Link className='navbar__link' to="/demodrive" onClick={() => handleNavClick('demodrive')}>Demo Drive</Link></li>
         </ul>

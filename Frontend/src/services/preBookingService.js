@@ -22,9 +22,9 @@ export const cancelBooking = async (bookingId) => {
 
 export const getBookingHistory = async (userId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/bookings/history/${userId}`);
-    return response.data;
+      const response = await axios.get(`${API_BASE_URL}/booking-history/${userId}`);
+      return response.data;
   } catch (error) {
-    throw error;
+      throw new Error('Error fetching booking history');
   }
 };

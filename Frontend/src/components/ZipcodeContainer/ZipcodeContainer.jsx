@@ -33,7 +33,7 @@ const ZipcodeContainer = ({ zipCode, setZipCode, handleFetchLocations, userData 
                 <input
                     type="text"
                     className={`zipcode-container__input ${!isValidPincode ? 'zipcode-container__input--invalid' : ''}`}
-                    value={zipCode}
+                    value={zipCode || localStorage.getItem('zip')}
                     placeholder='Enter Pincode'
                     disabled={!editZipCode}
                     onChange={handleInputChange}

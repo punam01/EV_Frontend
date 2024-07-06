@@ -191,6 +191,18 @@
     color: gray;
 }
 
+.pre-book-no-config-page__fixed-bottom__next__btn{
+    width:98%;
+    background-color: black;
+    padding: 1rem;
+    color:white;
+    margin:auto;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.pre-book-no-config-page__fixed-bottom__next__btn span{
+    color:white;
+}
 @media (max-width: 768px) {
     .pre-book-no-config-page{
         flex-direction: column;
@@ -211,6 +223,12 @@
     .pre-book-no-config-page__booking__holder {
         width:100%;
         overflow-y: scroll;
+    }
+    .pre-book-no-config-page__fixed-bottom__next__btn{
+        width:90%;
+        background-color: black;
+        padding: 1rem;
+        color:white;
     }
     
 }

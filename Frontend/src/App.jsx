@@ -21,6 +21,7 @@ import HomePage from './pages/HomePage/HomePage';
 import CarDetailsPage from './pages/CarDetailsPage/CarDetailsPage';
 import Checkout from './pages/Checkout/Checkout';
 import PreBookingWithoutConfig from './pages/PreBookingWithoutConfig/PreBookingWithoutConfig';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const App = () => {
   return (
@@ -35,7 +36,8 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cars/:id" element={<PDP />} />
-        <Route path="/profile" element={<UserProfilePage />} />
+        <Route path="/profile1" element={<UserProfilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path='/prebooking/:id' element={<PreBooking />} />
         <Route path='/demodrive' element={<DemoDriveBooking/>}/>

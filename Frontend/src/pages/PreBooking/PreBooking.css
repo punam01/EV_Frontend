@@ -10,6 +10,33 @@
     padding: 1rem 2rem;
     overflow-y: auto;
     right:0;
+    background-color: #F7F7F7;
+}
+.pre-booking-page__right__carname h1{
+    margin: 0.5rem 0 1.5rem 0;
+    font-size: 3rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+.pre-booking-page__right__carname__baseprice{
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+    font-family: 'Poppins',sans-serif;
+    font-weight: 500;
+    
+}
+
+.pre-booking-page__right__carname__baseprice p{
+    color: #4E4F50;
+}
+.pre-booking-page__right__carname__addprice{
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+}
+.pre-booking-page__right__carname__addprice p{
+    color: #000000;
 }
 .pre-booking-page__right::-webkit-scrollbar{
     display:none;
@@ -18,11 +45,36 @@
     overflow-y: auto;
 }
 .pre-booking-page__right__cardetails__item{
-    margin: 1rem;
-    padding: 2rem;
-    background-color: #D9D9D9; 
+    margin: 1rem 0;
+    padding: 1.5rem;
+    border: 1px solid black;
+    background-color: #fff; 
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.pre-booking-page__right__cardetails__item:hover{
+    background-color: #E6F4E7;
+    border: 2px solid #31A93E;
 }
 .pre-booking-page__right__cardetails__checkout{
     width:100%;
-    background-color: white;
+    background-color: black;
+    border-radius:5px ;
+    color:white;
 }
+.pre-booking-page__right__cardetails__checkout:hover{
+    background-color: #31A93E;
+}
+.pre-booking-page__right__cardetails__item-right,
+.pre-booking-page__right__cardetails__item-left{
+    display: flex;
+    align-items: center;
+}
+.pre-booking-page__right__cardetails__item-left svg,
+.pre-booking-page__right__cardetails__item-right svg{
+    margin-right: 5px;
+}
+

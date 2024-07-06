@@ -4,6 +4,7 @@
 .home-page-container {
     width: 100%;
     height: 200%;
+    z-index: -1;
     height: fit-content;
     background: rgb(42, 46, 56);
     background: linear-gradient(0deg, rgba(42, 46, 56, 1) 0%, rgba(0, 0, 0, 1) 93%, rgba(0, 0, 0, 1) 100%);
@@ -12,7 +13,8 @@
 .home-page-container__car-info {
     background: rgb(42, 46, 56);
     background: linear-gradient(0deg, rgba(42, 46, 56, 1) 0%, rgba(0, 0, 0, 1) 93%, rgba(0, 0, 0, 1) 100%);
-    padding: 3rem;
+    padding: 0 3rem;
+    margin-top:0;
 }
 
 .home-page-container__showroom-button {
@@ -20,12 +22,13 @@
 }
 
 .home-page-container__h2 {
-    margin: auto;
+    margin-top:100px;
     color: #3B3E4B;
     text-align: center;
     font-family: "Anton SC", sans-serif;
     font-weight: 400;
     font-size: 600px;
+    padding: 0;
 }
 
 .home-page-container__p {
@@ -39,7 +42,6 @@
 }
 .home-page-container__img{
     width:80%;
-    margin-top:-400px;
 }
 .home-page-container__showroom-button{
     background-color: pink;
