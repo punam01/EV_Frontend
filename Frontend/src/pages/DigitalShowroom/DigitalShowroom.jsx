@@ -8,7 +8,7 @@ const DigitalShowroom = () => {
   const [selectedColor, setSelectedColor] = useState('#333333'); // Default selected exterior color
   const [selectedIntColor, setSelectedIntColor] = useState('#333333'); // Default selected interior color
   const [selectedRim, setSelectedRim] = useState('black');
-  const [windowGlass,setWindowGlass]=useState()
+  const [windowGlass,setWindowGlass]=useState('tintedGlass')
   const slides = [
     { component: <Experience color={selectedColor} interiorColor={selectedIntColor} wheelColor={selectedRim} windowGlass={windowGlass} />, configurator: <ConfiguratorM4 onSelectColor={setSelectedColor} onSelectIntColor={setSelectedIntColor} onSelectWheel={setSelectedRim} onSelectWinGlass={setWindowGlass}/> },
     { component: <Experience color={selectedColor} interiorColor={selectedIntColor} wheelColor={selectedRim} windowGlass={windowGlass}/>, configurator: <ConfiguratorM4 onSelectColor={setSelectedColor} onSelectIntColor={setSelectedIntColor}  onSelectWheel={setSelectedRim} onSelectWinGlass={setWindowGlass}/> },

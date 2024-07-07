@@ -282,6 +282,23 @@ td {
     z-index: 1000; /* Ensure overlay is on top */
   }
   
+  .total-price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .total-price .content-heading {
+    margin-bottom: 10px;
+  }
+  
+  .total-price .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
   /* Overlay content */
   .overlay-content {
     background: white;

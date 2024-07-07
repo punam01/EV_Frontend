@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Import axios for making API requests
+import axios from 'axios';
 import './Configurator.css';
 
 const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSelectWinGlass }) => {
@@ -30,12 +30,12 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
       price: carData?.customizableOptions?.find(option => option.name === "Glass")?.options[0]?.price || null
     },
     range: {
-      value: 'mr', // Default to a valid range option
-      price: 2000 // Example price, update as needed
+      value: 'mr',
+      price: 2000
     },
     chargerType: {
-      value: '3.3 kw ac charger box', // Default to a valid charger type
-      price: 500 // Example price, update as needed
+      value: '3.3 kw ac charger box',
+      price: 500
     }
   });
 
@@ -44,8 +44,8 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
     interiorColors: {},
     wheels: {},
     glass: {},
-    ranges: { 'mr': 0, 'lr': 2000 }, // Example prices, update as needed
-    chargerTypes: { '3.3 kw ac charger box': 500, '7.2 kw ac fast charger box': 1000 } // Example prices, update as needed
+    ranges: { 'mr': 0, 'lr': 2000 },
+    chargerTypes: { '3.3 kw ac charger box': 500, '7.2 kw ac fast charger box': 1000 }
   });
 
   useEffect(() => {
@@ -62,8 +62,8 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
         interiorColors: extractPrices(carData.customizableOptions.find(option => option.name === "Interior Color")?.options || []),
         wheels: extractPrices(carData.customizableOptions.find(option => option.name === "Wheels")?.options || []),
         glass: extractPrices(carData.customizableOptions.find(option => option.name === "Glass")?.options || []),
-        ranges: { 'mr': 0, 'lr': 2000 }, // Example range prices
-        chargerTypes: { '3.3 kw ac charger box': 500, '7.2 kw ac fast charger box': 1000 } // Example charger prices
+        ranges: { 'mr': 0, 'lr': 2000 },
+        chargerTypes: { '3.3 kw ac charger box': 500, '7.2 kw ac fast charger box': 1000 }
       });
     }
   }, [carData]);
@@ -80,33 +80,39 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   };
 
   const handleColorClick = (color) => {
+    console.log(color)
     const colorDetails = carData.customizableOptions.find(option => option.name === "Exterior Color")?.options.find(opt => opt.code === color);
     if (onSelectColor) {
-      onSelectColor(colorDetails);
+      console.log(colorDetails)
+      onSelectColor(colorDetails.code);
     }
     setSelectedOptions(prev => ({ ...prev, exteriorColor: colorDetails }));
   };
 
   const handleIntColorClick = (color) => {
-    const colorDetails = carData.customizableOptions.find(option => option.name === "Interior Color")?.options.find(opt => opt.code === color);
+    const colorDetails = carData.customizableOptions.find(option => option.name === "Interior Color")?.options.find(opt => opt.name === color);
+    console.log(colorDetails)
     if (onSelectIntColor) {
-      onSelectIntColor(colorDetails);
+      onSelectIntColor(colorDetails.code);
     }
     setSelectedOptions(prev => ({ ...prev, interiorColor: colorDetails }));
   };
 
   const handleWheelClick = (wheel) => {
+    console.log(wheel)
     const wheelDetails = carData.customizableOptions.find(option => option.name === "Wheels")?.options.find(opt => opt.code === wheel);
     if (onSelectWheel) {
-      onSelectWheel(wheelDetails);
+      console.log(wheelDetails)
+      onSelectWheel(wheelDetails.code);
     }
     setSelectedOptions(prev => ({ ...prev, wheel: wheelDetails }));
   };
 
   const handleGlassClick = (glass) => {
+    console.log('glss',glass)
     const glassDetails = carData.customizableOptions.find(option => option.name === "Glass")?.options.find(opt => opt.code === glass);
     if (onSelectWinGlass) {
-      onSelectWinGlass(glassDetails);
+      onSelectWinGlass(glassDetails.code);
     }
     setSelectedOptions(prev => ({ ...prev, glass: glassDetails }));
   };
@@ -124,8 +130,8 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   };
 
   const handleSubmit = async () => {
-    const userId = localStorage.getItem('userId'); // Assume userId is stored in localStorage
-    const contact = localStorage.getItem('contact'); // Assume contact is stored in localStorage
+    const userId = localStorage.getItem('userId');
+    const contact = localStorage.getItem('contact');
 
     const customization = {
       exteriorColor: selectedOptions.exteriorColor,
@@ -140,8 +146,8 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
     const preBookingData = {
       userId,
       carId: carData._id,
-      bookingTime: new Date(), // Set the booking time to now
-      paymentMade: false, // Default to false, update as needed
+      bookingTime: new Date(),
+      paymentMade: false,
       contact,
       customization
     };
@@ -182,7 +188,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               {Object.keys(prices.exteriorColors).map(color => (
                 <div
                   key={color}
-                  className={`color-swatch ${color} ${selectedOptions.exteriorColor.code === color ? 'selected' : ''}`}
+                  className={`color-swatch ${selectedOptions.exteriorColor?.code === color ? 'selected' : ''}`}
                   style={{ backgroundColor: color }}
                   onClick={() => handleColorClick(color)}
                 ></div>
@@ -193,7 +199,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               {Object.keys(prices.interiorColors).map(color => (
                 <div
                   key={color}
-                  className={`color-swatch ${color} ${selectedOptions.interiorColor.code === color ? 'selected' : ''}`}
+                  className={`color-swatch ${selectedOptions.interiorColor?.code === color ? 'selected' : ''}`}
                   style={{ backgroundColor: color }}
                   onClick={() => handleIntColorClick(color)}
                 ></div>
@@ -202,29 +208,28 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
           </div>
           <div className="content-item">
             <h3 className="content-heading">Wheels</h3>
-            <div className="standard-wheel">
+            <div className="standard-color">
               {Object.keys(prices.wheels).map(wheel => (
                 <div
                   key={wheel}
-                  className={`wheel-option ${selectedOptions.wheel.code === wheel ? 'selected' : ''}`}
+                  className={`color-swatch ${selectedOptions.wheel?.code === wheel ? 'selected' : ''}`}
+                  style={{ backgroundColor: wheel }}
                   onClick={() => handleWheelClick(wheel)}
-                >
-                  {wheel}
-                </div>
+                ></div>
               ))}
             </div>
           </div>
           <div className="content-item">
             <h3 className="content-heading">Glass</h3>
-            <div className="standard-glass">
+            <div className="standard-color">
               {Object.keys(prices.glass).map(glass => (
+                console.log(glass) ||
                 <div
                   key={glass}
-                  className={`glass-option ${selectedOptions.glass.code === glass ? 'selected' : ''}`}
+                  className={`color-swatch ${glass} ${selectedOptions.glass?.code === glass ? 'selected' : ''}`}
+                  style={{ backgroundColor: glass }}
                   onClick={() => handleGlassClick(glass)}
-                >
-                  {glass}
-                </div>
+                ></div>
               ))}
             </div>
           </div>
@@ -237,7 +242,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                 checked={selectedOptions.range.value === 'mr'}
                 onChange={handleRangeChange}
               />
-              Medium Range (MR)
+              MR: Standard Range (390 mi)
             </label>
             <label>
               <input
@@ -246,7 +251,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                 checked={selectedOptions.range.value === 'lr'}
                 onChange={handleRangeChange}
               />
-              Long Range (LR)
+              LR: Long Range (520 mi)
             </label>
           </div>
           <div className="content-item">
@@ -270,22 +275,12 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               7.2 KW AC Fast Charger Box
             </label>
           </div>
-          <div className="summary-section">
-            <h3 className="summary-heading">Summary</h3>
-            <ul className="summary-list">
-              <li>Exterior Color: {selectedOptions.exteriorColor.name} - ${selectedOptions.exteriorColor.price}</li>
-              <li>Interior Color: {selectedOptions.interiorColor.name} - ${selectedOptions.interiorColor.price}</li>
-              <li>Wheels: {selectedOptions.wheel.name} - ${selectedOptions.wheel.price}</li>
-              <li>Glass: {selectedOptions.glass.name} - ${selectedOptions.glass.price}</li>
-              <li>Range: {selectedOptions.range.value} - ${selectedOptions.range.price}</li>
-              <li>Charger Type: {selectedOptions.chargerType.value} - ${selectedOptions.chargerType.price}</li>
-            </ul>
-            <div className="total-price">
-              Total Price: ${calculateTotalPrice()}
-            </div>
+          <div className="content-item">
+            <h3 className="content-heading">Total price</h3>
+            <label htmlFor="content-heading">${calculateTotalPrice()}</label>
+            <button onClick={handleSubmit}>Continue with Pre-Booking</button>
           </div>
         </div>
-        <button className="submit-btn" onClick={handleSubmit}>Proceed to Pre-Booking</button>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import { TextureLoader } from 'three';
 import { useLoader } from '@react-three/fiber';
 
 const Bmw_m4_f82 = ({ props, exteriorColor,interiorColor,rimColor,windowGlass}) => {
-
+  console.log("rimcolor",rimColor)
   const { nodes, materials } = useGLTF('../../public/assets/models/bmw_m4_f82.glb')
   const rimMaterial = new THREE.MeshStandardMaterial({ color: rimColor });
  // console.log("MATERIALS",materials)
