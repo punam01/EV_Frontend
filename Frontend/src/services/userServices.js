@@ -35,6 +35,7 @@ export const getUserByCustomId = async (customId) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/user/get/${customId}`);
         console.log(response.data)
+        localStorage.setItem('USER',response.data._id)
         return response.data;
     } catch (error) {
         throw error;

@@ -8,6 +8,7 @@ import { fetchUserHistory,cancelBooking } from '../../services/testRideService';
 const PurchaseHistory = () => {
     const user = useSelector(selectUser);
     const customId = localStorage.getItem('USER');
+    console.log(customId)
     const [purchaseHistory, setPurchaseHistory] = useState([]);
     console.log(user,customId)
     const [carDetails, setCarDetails] = useState({});

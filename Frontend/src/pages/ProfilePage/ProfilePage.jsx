@@ -5,6 +5,7 @@ import { getBookingHistory } from '../../services/preBookingService';
 import { getCarById } from '../../services/carServices';
 import PurchaseHistory from '../../components/PurchaseHistory/PurchaseHistory';
 import useAuth from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 const ProfilePage = () => {
     const [profile, setProfile] = useState(true);
     const [openViewDetails, setOpenViewDetails] = useState(false)
@@ -18,17 +19,15 @@ const ProfilePage = () => {
     const id = localStorage.getItem('USER');
     const [selectedCarId, setSelectedCarId] = useState(null);
     const { isLoggedIn, logout } = useAuth();
+    const [userName,setUserName]=useState('');
     useEffect(() => {
         if (customId) {
             fetchUserProfile(customId);
+            setUserName(userProfile.first_name)
         }
-    }, [customId]);
+    }, [customId,userName]);
 
-    useEffect(() => {
-        if (id) {
-            fetchBookingHistory(id);
-        }
-    }, [id]);
+    
 
     const handleViewDetails = (carId) => {
         setSelectedCarId(carId);
@@ -56,6 +55,7 @@ const ProfilePage = () => {
         try {
             const bookings = await getBookingHistory(customId);
             setBookings(bookings);
+            console.log(bookings)
         } catch (error) {
             console.error('Error fetching booking history:', error);
         }
@@ -73,13 +73,20 @@ const ProfilePage = () => {
             console.error('Error fetching car details:', error);
         }
     };
-
+    useEffect(() => {
+        if (id) {
+            fetchBookingHistory(id);
+        }
+        bookings.forEach(booking => {
+            fetchCarDetails(booking.carId._id);
+        });
+    }, [id,bookings]);
     useEffect(() => {
         bookings.forEach(booking => {
             fetchCarDetails(booking.carId._id);
         });
     }, [bookings]);
-
+    
     const handleEditClick = () => {
         setEditMode(true);
     };
@@ -121,167 +128,206 @@ const ProfilePage = () => {
     }
     return (
         <div className='profile-page-container'>
-            <div className="profile-page-container__sidebar-container">
-                <div>
-                    {isLoggedIn ? (
-                        <div>
-                            <p>Welcome, User!</p>
-                            <button onClick={logout}>Logout</button>
-                        </div>
-                    ) : (
-                        <p>Please log in.</p>
-                    )}
-                </div>
-                <ul className='profile-page-container__sidebar-ul'>
-                    <li className='profile-page-container__sidebar-li' onClick={handleClickProfile}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                            <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                        </svg>
-                        <span className='profile-page-container__sidebar-li-span'>Profile Settings</span>
-                    </li>
-                    <li className='profile-page-container__sidebar-li' onClick={handleClickOrder}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-ev-front-fill" viewBox="0 0 16 16">
-                            <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848Zm6.75.51a.186.186 0 0 0-.23.034L6.05 7.246a.188.188 0 0 0 .137.316h1.241l-.673 2.195a.19.19 0 0 0 .085.218c.075.043.17.03.23-.034l2.88-3.187a.188.188 0 0 0-.137-.316H8.572l.782-2.195a.19.19 0 0 0-.085-.218Z" />
-                        </svg>
-                        <span className='profile-page-container__sidebar-li-span'>Order History</span>
-                    </li>
-                    <li className='profile-page-container__sidebar-li' onClick={handleClickDemo}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-card-list" viewBox="0 0 16 16">
-                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
-                            <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-5 7a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                        </svg>
-                        <span className='profile-page-container__sidebar-li-span'>Demo Drive History</span>
-                    </li>
-                </ul>
-            </div>
-            <div className="profile-page-container__content-container">
-                {profile && (
-                    <div className='profile-page-container__sub-content-container'>
-                        <h1 className='profile-page-container__sub-content__h1'>Profile Settings</h1>
-                        <div className="profile-page-container__data">
-                            <div className="profile-page-container__data-item">
-                                <label className="profile-page-container__label">First name</label>
-                                <input
-                                    type="text"
-                                    name="first_name"
-                                    value={userProfile.first_name || ''}
-                                    onChange={handleChange}
-                                    disabled={!editMode}
-                                />
+            {isLoggedIn ? (<>
+                <div className="profile-page-container__sidebar-container">
+                    <div>
+                        {isLoggedIn ? (
+                            <div>
+                                <p>Welcome, </p>
                             </div>
-                            <div className="profile-page-container__data-item">
-                                <label className="profile-page-container__label">Last name</label>
-                                <input
-                                    type="text"
-                                    className="profile-page-container__input"
-                                    name="last_name"
-                                    value={userProfile.last_name || ''}
-                                    onChange={handleChange}
-                                    disabled={!editMode}
-                                />
-                            </div>
-                            <div className="profile-page-container__data-item">
-                                <label className="profile-page-container__label">Pincode</label>
-                                <input
-                                    type="text"
-                                    className="profile-page-container__input"
-                                    name="pincode"
-                                    value={userProfile.pincode || ''}
-                                    onChange={handleChange}
-                                    disabled={!editMode}
-                                />
-                            </div>
-                            <div className="profile-page-container__data-item">
-                                <label className="profile-page-container__label">Email</label>
-                                <input
-                                    type="text"
-                                    className="profile-page-container__input"
-                                    name="email"
-                                    value={userProfile.email || ''}
-                                    onChange={handleChange}
-                                    disabled={!editMode}
-                                />
-                            </div>
-                            <div className="profile-page-container__data-item">
-                                <label className="profile-page-container__label">Contact</label>
-                                <input
-                                    type="text"
-                                    className="profile-page-container__input"
-                                    name="contact"
-                                    value={userProfile.contact || ''}
-                                    disabled={true}
-                                />
-                                <div className="info-icon">
-                                    <i>ℹ️</i>
-                                    <div className="tooltip">Mobile number is not editable</div>
-                                </div>
-                            </div>
-                        </div>
-                        {!editMode ? (
-                            <button className="profile-page-container__button" onClick={handleEditClick}>Edit Profile</button>
                         ) : (
-                            <button className="profile-page-container__button" onClick={handleSaveClick}>Save Profile</button>
+                            <p>Please log in.</p>
                         )}
                     </div>
-                )}
-                {!openViewDetails && orderHistory && (
-                    <div className='profile-page-container__order-history'>
+                    <ul className='profile-page-container__sidebar-ul'>
+                        <li className='profile-page-container__sidebar-li' onClick={handleClickProfile}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                            </svg>
+                            <span className='profile-page-container__sidebar-li-span'>Profile Settings</span>
+                        </li>
+                        <li className='profile-page-container__sidebar-li' onClick={handleClickOrder}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-ev-front-fill" viewBox="0 0 16 16">
+                                <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848Zm6.75.51a.186.186 0 0 0-.23.034L6.05 7.246a.188.188 0 0 0 .137.316h1.241l-.673 2.195a.19.19 0 0 0 .085.218c.075.043.17.03.23-.034l2.88-3.187a.188.188 0 0 0-.137-.316H8.572l.782-2.195a.19.19 0 0 0-.085-.218Z" />
+                            </svg>
+                            <span className='profile-page-container__sidebar-li-span'>Order History</span>
+                        </li>
+                        <li className='profile-page-container__sidebar-li' onClick={handleClickDemo}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-card-list" viewBox="0 0 16 16">
+                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
+                                <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-5 7a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                            </svg>
+                            <span className='profile-page-container__sidebar-li-span'>Demo Drive History</span>
+                        </li>
+                        <li className='profile-page-container__sidebar-li' onClick={logout}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-card-list" viewBox="0 0 16 16">
+                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
+                                <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-5 7a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                            </svg>
+                            <span className='profile-page-container__sidebar-li-span'>Sign Out</span>
+                        </li>
+                    </ul>
+                </div>
+                <div className="profile-page-container__content-container">
+                    {profile && (
                         <div className='profile-page-container__sub-content-container'>
-                            <h1 className='profile-page-container__sub-content__h1'>Order History</h1>
-                            {bookings.length > 0 ? (
-                                <div className="profile-page-container__data">
-                                    {bookings.map((booking) => {
-                                        const car = carDetails[booking.carId._id];
-                                        return (
-                                            <div key={booking._id} className="profile-page-container__card-item">
-                                                <div className="profile-page-container__card-img">
-                                                    <img src='/assets/images/bmw_no_config.jpg' alt="Car" />
-                                                </div>
-                                                <div className="profile-page-container__card-dets">
-                                                    <div className="profile-page-container__card-left">
-                                                        <p className='profile-page-container__card__p'>{car?.name || 'Car Name'}</p>
-                                                        <span className='profile-page-container__card-span' onClick={() => handleViewDetails(booking.carId._id)}>View details</span>
-                                                    </div>
-                                                    <div className="profile-page-container__card-right">
-                                                        <p>Download Invoice</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
+                            <h1 className='profile-page-container__sub-content__h1'>Profile Settings</h1>
+                            <div className="profile-page-container__data">
+                                <div className="profile-page-container__data-item">
+                                    <label className="profile-page-container__label">First name</label>
+                                    <input
+                                        type="text"
+                                        name="first_name"
+                                        value={userProfile.first_name || ''}
+                                        onChange={handleChange}
+                                        disabled={!editMode}
+                                    />
                                 </div>
+                                <div className="profile-page-container__data-item">
+                                    <label className="profile-page-container__label">Last name</label>
+                                    <input
+                                        type="text"
+                                        className="profile-page-container__input"
+                                        name="last_name"
+                                        value={userProfile.last_name || ''}
+                                        onChange={handleChange}
+                                        disabled={!editMode}
+                                    />
+                                </div>
+                                <div className="profile-page-container__data-item">
+                                    <label className="profile-page-container__label">Pincode</label>
+                                    <input
+                                        type="text"
+                                        className="profile-page-container__input"
+                                        name="pincode"
+                                        value={userProfile.pincode || ''}
+                                        onChange={handleChange}
+                                        disabled={!editMode}
+                                    />
+                                </div>
+                                <div className="profile-page-container__data-item">
+                                    <label className="profile-page-container__label">Email</label>
+                                    <input
+                                        type="text"
+                                        className="profile-page-container__input"
+                                        name="email"
+                                        value={userProfile.email || ''}
+                                        onChange={handleChange}
+                                        disabled={!editMode}
+                                    />
+                                </div>
+                                <div className="profile-page-container__data-item">
+                                    <label className="profile-page-container__label">Contact</label>
+                                    <input
+                                        type="text"
+                                        className="profile-page-container__input"
+                                        name="contact"
+                                        value={userProfile.contact || ''}
+                                        disabled={true}
+                                    />
+                                    <div className="info-icon">
+                                        <i>ℹ️</i>
+                                        <div className="tooltip">Mobile number is not editable</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {!editMode ? (
+                                <button className="profile-page-container__button" onClick={handleEditClick}>Edit Profile</button>
                             ) : (
-                                <p>No bookings found</p>
+                                <button className="profile-page-container__button" onClick={handleSaveClick}>Save Profile</button>
                             )}
                         </div>
-                    </div>
-                )}
-                {openViewDetails && selectedCarId && (
-                    <div className="car-details">
-                        <h2>Car Details</h2>
-                        {carDetails[selectedCarId] ? (
-                            <div>
-                                <p><strong>Car Name:</strong> {carDetails[selectedCarId].name}</p>
-                                <p><strong>Car Model:</strong> {carDetails[selectedCarId].model}</p>
-                                <p><strong>Car Color:</strong> {carDetails[selectedCarId].color}</p>
-                                {/* Add other car details as needed */}
+                    )}
+                    {!openViewDetails && orderHistory && (
+                        <div className='profile-page-container__order-history'>
+                            <div className='profile-page-container__sub-content-container'>
+                                <h1 className='profile-page-container__sub-content__h1'>Order History</h1>
+                                {bookings.length > 0 ? (
+                                    <div className="profile-page-container__data">
+                                        {
+                                        bookings?.map((booking) => {
+                                            console.log("Booking dets",booking)
+                                            const car = carDetails[booking.carId._id];
+                                            console.log("Booked car dets",car)
+                                            return (
+                                                <div key={booking._id} className="profile-page-container__card-item">
+                                                    <div className="profile-page-container__card-img">
+                                                        <img src='/assets/images/bmw_no_config.jpg' alt="Car" />
+                                                    </div>
+                                                    <div className="profile-page-container__card-dets">
+                                                        <div className="profile-page-container__card-left">
+                                                            <p className='profile-page-container__card__p'>{car?.name || 'Car Name'}</p>
+                                                            <span className='profile-page-container__card-span' onClick={() => handleViewDetails(booking.carId._id)}>View details</span>
+                                                        </div>
+                                                        <div className="profile-page-container__card-right">
+                                                            <p>Download Invoice</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <p>No bookings found</p>
+                                )}
                             </div>
-                        ) : (
-                            <p>Loading car details...</p>
-                        )}
-                        <button onClick={() => setOpenViewDetails(false)}>Close</button>
-                    </div>
-                )}
-                {demoDriveHistory && (
-                    <div className='profile-page-container__order-history'>
-                        <div className='profile-page-container__sub-content-container'>
-                            <h1 className='profile-page-container__sub-content__h1'>Demo Drive History</h1>
-                            <PurchaseHistory />
                         </div>
+                    )}
+                    {openViewDetails && selectedCarId && (
+                        <div className="car-details">
+                            <h2>Car Details</h2>
+                            {carDetails[selectedCarId] ? (
+                                <div>
+                                    <p><strong>Car Name:</strong> {carDetails[selectedCarId].name}</p>
+                                    <p><strong>Car Model:</strong> {carDetails[selectedCarId].model}</p>
+                                    <p><strong>Car Color:</strong> {carDetails[selectedCarId].color}</p>
+                                    {/* Add other car details as needed */}
+                                </div>
+                            ) : (
+                                <p>Loading car details...</p>
+                            )}
+                            <button onClick={() => setOpenViewDetails(false)}>Close</button>
+                        </div>
+                    )}
+                    {demoDriveHistory && (
+                        <div className='profile-page-container__order-history'>
+                            <div className='profile-page-container__sub-content-container'>
+                                <h1 className='profile-page-container__sub-content__h1'>Demo Drive History</h1>
+                                <PurchaseHistory />
+                            </div>
+                        </div>
+                    )}
+                </div></>) :
+                <div className='welcome-profile-page-container'>
+                    <h1 className='welcome-profile-page-container__h1'>Welcome to BMW</h1>
+                    <p className='welcome-profile-page-container__p'>Register and take advantage of the benefits:</p>
+                    <ul className='welcome-profile-page-container__ul'>
+                        <li className='welcome-profile-page-container__li'>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+                                </svg>
+                                <span>Configure Your BMW</span>
+                            </div>
+                        </li>
+                        <li className='welcome-profile-page-container__li'>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+                                </svg>
+                                <span>Book Online</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div className="welcome-profile-page-container__link-container">
+                        <Link className="welcome-profile-page-container__link" to="/signup">Signup</Link>
+                        <Link className='welcome-profile-page-container__link' to="/login">Login</Link>
                     </div>
-                )}
-            </div>
+                </div>
+            }
         </div>
     );
 };

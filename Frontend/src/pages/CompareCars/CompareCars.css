@@ -1,0 +1,137 @@
+.car-compare-container{
+    font-family: 'Poppins',sans-serif;
+    width: 100%;
+    height: fit-content;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.car-compare-container__header{
+    font-size: 4rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    padding: 3rem 2rem 1rem 0;
+}
+.car-compare-container__link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.car-compare-container__link-link{
+    padding:1rem;
+    font-family: 'Poppins',sans-serif;
+    font-size: 20px;
+    color: #31A93E;
+    text-decoration: underline;
+}
+.car-compare-container__link-link:hover{
+    font-weight: 500;
+}
+.car-compare-container__result,
+.car-compare-container__select-models{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.car-compare-container__select-select{
+    width:500px;
+    margin:2rem;
+    border: 1px solid #31A93E;
+}
+.car-compare-container__select-select::selection{
+    border: 2px solid #31A93E;
+}
+.compare-container__select-select option{
+    font-size: 18px;
+}
+.car-compare-container__select-btn{
+    width:fit-content;
+    height: fit-content;
+    margin: 28px;
+    padding: 1rem;
+    background-color: black;
+    border:none;
+    color:white;
+    cursor: pointer;
+}
+.car-compare-container__select-btn:hover{
+    background-color: #31A93E;
+}
+.car-compare-container__select__left,
+.car-compare-container__select__right{
+    width:45%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center ;
+    align-items:center ;
+}
+
+.car-compare-container__result__item-item{
+    margin:2rem 0 0 0;
+    padding:1rem;
+    height: fit-content;
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    width:100%;
+}
+.car-compare-container__result__item-item-col{
+    margin:2rem 0 0 0;
+    padding:1rem;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content:center ;
+    align-items: center;
+    width:100%;
+}
+.car-compare-container__result__item-item-col svg{
+    margin:20px;
+}
+.car-compare-container__result__item-item-col p{
+    font-family: 'Poppins',sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 3rem;
+}
+.car-compare-container__result__item-item img{
+    width:100%;
+    object-fit:cover ;
+}
+.car-compare-container__standard-color{
+    padding: 2rem 0 4rem 0;
+    display: flex;
+    justify-content: center;
+    gap:10px;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid gray;
+}
+.car-compare-container__standard-color .color-swatch{
+    border: 0.5px solid gray;
+    width:35px;
+    height:35px;
+}
+.car-compare-container__standard-color .color-swatch:hover{
+    padding:1rem;
+    border: 2px solid #31A93E;
+
+}
+.car-compare-container__result__item__basePrice{
+    font-family: 'Poppins',sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+.car-compare-container__result__item-link{
+    color:white;
+    padding:1rem;
+    margin-bottom: 1rem;
+    border-radius: 30px;
+    background-color: #31A93E;
+}
+.car-compare-container__result__item-link-nobg{
+    color:#31A93E;
+    text-decoration: underline;
+}

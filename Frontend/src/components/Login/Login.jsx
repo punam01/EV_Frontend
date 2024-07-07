@@ -5,11 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../features/user/userSlice';
-import PhoneNumberInput from './PhoneNumberInput';
-import OtpVerification from './OtpVerification';
 import UserProfilePage from '../../pages/UserProfile/UserProfilePage';
 import PhoneVerification from '../../pages/DemoDriveBooking/PhoneVerification';
 import OTPVerification from '../../pages/DemoDriveBooking/OTPVerification';
+import { getUserByCustomId } from '../../services/userServices';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -46,6 +45,14 @@ const Login = () => {
     }
   }
 
+  const getUser = async (id) => {
+    const res = await getUserByCustomId(id);
+    if (res && res.data) {
+      const userData = res.data;
+      dispatch(setUser(userData));
+      localStorage.setItem('user', JSON.stringify(userData));
+    }
+  };
   function onLogin() {
     setLoading(true);
     onCaptchVerify();
@@ -56,9 +63,17 @@ const Login = () => {
         window.confirmationResult = confirmationResult;
         setLoading(false);
         setShowOtp(true);
-        toast.success("OTP sent successfully!");
-        navigate('/')
-
+        const user = authInstance.currentUser;
+      if (user && user.uid) {
+        getUser(user.uid)
+          .then(() => {
+            toast.success("OTP sent successfully!");
+            navigate('/profile');
+          })
+          .catch((error) => {
+            console.error('Error getting user data:', error);
+          });
+      }
       }).catch((error) => {
         console.log(error);
         setLoading(false);
