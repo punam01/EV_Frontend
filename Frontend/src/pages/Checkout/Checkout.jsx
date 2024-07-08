@@ -6,6 +6,7 @@ import './Checkout.css';
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import Confetti from 'react-confetti'
+import SendEmailComponent from '../../components/SendEmailComponent/SendEmailComponent';
 
 const Checkout = () => {
     const navigate=useNavigate();
@@ -19,6 +20,7 @@ const Checkout = () => {
     console.log("selected :", selectedOptions)
     console.log("totalPrice :", totalPrice)
     console.log("carData :", carData)
+    const [bookingData,setBookingData]=useState()
     useEffect(() => {
         setUserDetails({
             pincode: localStorage.getItem('zip') || '',
@@ -100,7 +102,7 @@ const Checkout = () => {
                     price: selectedOptions.glass.price
                 }
             },
-            location: [
+            location: 
                 {
                     pincode: selectedLocation.pincode,
                     address: selectedLocation.address,
@@ -108,12 +110,15 @@ const Checkout = () => {
                     state: selectedLocation.state,
                     name: selectedLocation.name
                 }
-            ],
+            ,
             estimatedPrice: totalPrice
         };
         console.log(bookingData)
+        setBookingData(bookingData);
         try {
             const result = await bookCar(bookingData);
+            setBookingData(result)
+            console.log("Result",result)
             console.log('Booking confirmed:', result);
             setBookingConfirmed(true);
             setStep(4);
@@ -460,7 +465,9 @@ const Checkout = () => {
                     </div>
                 )}
                 {step == 4 && bookingConfirmed && (<>
+
                     <div className="confirmation-message">
+                    <SendEmailComponent bookingData={bookingData} />
                         <h2>Congratulations!</h2>
                         <p>Your booking has been confirmed successfully.</p>
                         <p>An email has been sent to {" "}<b>{userDetails.email}</b> {" "}with the booking details.</p>

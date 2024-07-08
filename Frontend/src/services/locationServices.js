@@ -2,6 +2,15 @@ import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
+export const getLocationById = async (locationId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/location/${locationId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching location details:', error);
+        throw error;
+    }
+};
 export const getCarAvailabilityByPincode = async (pincode) => {
     try {
         const response = await fetch(`${API_BASE_URL}/location/availability?pincode=${pincode}`);

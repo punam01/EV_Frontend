@@ -1,0 +1,61 @@
+.purchase-history-container{
+    padding: 2rem;
+}
+.purchase-history-container__image-holder{
+    display: flex;
+    height:auto;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.purchase-history-container__img-container{
+    padding: 1rem;
+    width:400px;
+    border: 1px solid #EAEEF0;
+    border-radius: 20px;
+}
+.purchase-history-container__img-container img{
+    width:100%;
+    height: auto;
+}
+.purchase-history-container__image-holder__status{
+    padding: 0.5rem 2rem;
+    border: 1px solid #31A93E;
+    background-color: #E6F4E7;
+    border-radius: 30px;
+}   
+.purchase-history-container__orderid-holder{
+    display:flex ;
+    flex-direction: column;
+}
+.purchase-history-container__orderid-holder h3{
+    font-family: 'Poppins',sans-serif;
+    font-weight:500;
+    font-size: 30px;
+}
+.purchase-history-container__orderid-details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.purchase-history-container__orderid-details__data{
+    display: flex;
+    flex-direction: column;
+    width: 50%;    
+    margin-bottom: 1rem;
+}
+.purchase-history-container__orderid-details__data span{
+    display: flex;
+}
+.purchase-history-container__orderid-details__data span svg{
+    margin: 5px;
+}
+.purchase-history-container__orderid-details__data span p{
+    font-family: 'Poppins',sans-serif;
+    color:gray;
+}
+.purchase-history-container__orderid-details__data p{
+    color:black;
+    font-family: 'Poppins',sans-serif;
+    padding-left: 5px;
+    font-size: 15px;
+}

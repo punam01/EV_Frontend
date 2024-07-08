@@ -1,0 +1,32 @@
+.send-email-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .send-email-container h2 {
+    margin-bottom: 15px;
+  }
+  
+  .send-email-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .send-email-container button:disabled {
+    background-color: #ccc;
+  }
+  
+  .send-email-container .error {
+    color: red;
+    margin-bottom: 15px;
+  }
+  

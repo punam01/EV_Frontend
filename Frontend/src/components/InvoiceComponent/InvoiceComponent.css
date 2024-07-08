@@ -1,0 +1,8 @@
+.invoice-container button{
+    background-color: transparent;
+    border:none;
+    color: #31A93E;
+    text-decoration: underline;
+    font-family: 'Poppins',sans-serif;
+    cursor: pointer;
+}

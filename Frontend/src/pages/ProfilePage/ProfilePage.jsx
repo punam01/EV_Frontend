@@ -6,6 +6,8 @@ import { getCarById } from '../../services/carServices';
 import PurchaseHistory from '../../components/PurchaseHistory/PurchaseHistory';
 import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import BookedCarDetails from '../../components/BookedCarDetails/BookedCarDetails';
+import InvoiceComponent from '../../components/InvoiceComponent/InvoiceComponent';
 const ProfilePage = () => {
     const [profile, setProfile] = useState(true);
     const [openViewDetails, setOpenViewDetails] = useState(false)
@@ -14,6 +16,7 @@ const ProfilePage = () => {
     const [userProfile, setUserProfile] = useState({});
     const [editMode, setEditMode] = useState(false);
     const [bookings, setBookings] = useState([]);
+    const [bookingData, setBookingData] = useState({});
     const [carDetails, setCarDetails] = useState({});
     const customId = localStorage.getItem('customId');
     const id = localStorage.getItem('USER');
@@ -26,8 +29,14 @@ const ProfilePage = () => {
             setUserName(userProfile.first_name)
         }
     }, [customId,userName]);
-
     
+    const findBookingDetails=(carId)=>{
+        bookings?.map(booking=>{
+            if(booking.carId._id===carId){
+                setBookingData(booking);
+            }
+        })
+    }
 
     const handleViewDetails = (carId) => {
         setSelectedCarId(carId);
@@ -55,7 +64,6 @@ const ProfilePage = () => {
         try {
             const bookings = await getBookingHistory(customId);
             setBookings(bookings);
-            console.log(bookings)
         } catch (error) {
             console.error('Error fetching booking history:', error);
         }
@@ -261,7 +269,7 @@ const ProfilePage = () => {
                                                             <span className='profile-page-container__card-span' onClick={() => handleViewDetails(booking.carId._id)}>View details</span>
                                                         </div>
                                                         <div className="profile-page-container__card-right">
-                                                            <p>Download Invoice</p>
+                                                            <InvoiceComponent bookingData={booking}/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -276,18 +284,13 @@ const ProfilePage = () => {
                     )}
                     {openViewDetails && selectedCarId && (
                         <div className="car-details">
-                            <h2>Car Details</h2>
-                            {carDetails[selectedCarId] ? (
-                                <div>
-                                    <p><strong>Car Name:</strong> {carDetails[selectedCarId].name}</p>
-                                    <p><strong>Car Model:</strong> {carDetails[selectedCarId].model}</p>
-                                    <p><strong>Car Color:</strong> {carDetails[selectedCarId].color}</p>
-                                    {/* Add other car details as needed */}
-                                </div>
+                            {
+                            carDetails[selectedCarId] && bookings ? (
+                                <BookedCarDetails carData={carDetails[selectedCarId]} bookingData={bookings} selectedCarId={selectedCarId} setOpenViewDetails={setOpenViewDetails}/>
                             ) : (
                                 <p>Loading car details...</p>
                             )}
-                            <button onClick={() => setOpenViewDetails(false)}>Close</button>
+
                         </div>
                     )}
                     {demoDriveHistory && (
