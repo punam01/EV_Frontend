@@ -1,19 +1,16 @@
 // src/components/VariantCard/VariantCard.jsx
 import React from 'react';
 import './VariantCard.css'
-import Button from '../Button/Button'
 import { useNavigate } from 'react-router-dom';
-import CarouselComponent from '../Carousel/CarouselComponent';
 const VariantCard = ({ variant, modelId, car }) => {
     const navigate = useNavigate();
 
     const handleViewDetails = () => {
-        navigate(`/cars/${car._id}`);
+        navigate(`/cardetails`,{ state: { car } });
     };
 
     const handleBookNow = () => {
-        localStorage.setItem('carId', id)
-        navigate(`/prebooking/${id}`);
+        navigate(`/noconfig`,{ state: { car } });
 
     };
 
@@ -82,9 +79,9 @@ const VariantCard = ({ variant, modelId, car }) => {
                     </ul>
                 </div>
             ))*/}
-            <div className="btn-group">
-                <button onClick={handleViewDetails}>View Details</button>
-                <button onClick={handleBookNow}>Book Now</button>
+            <div className="variant-card__btn-group">
+                <button className="variant-card__btn-group_btn" onClick={handleViewDetails}>View Details</button>
+                <button className="variant-card__btn-group_btn" onClick={handleBookNow}>Book Now</button>
             </div>
 
         </li>

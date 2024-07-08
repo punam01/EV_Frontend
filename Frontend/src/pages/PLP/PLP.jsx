@@ -35,6 +35,8 @@ const PLP = () => {
 
   const handleChange = (event) => {
     setSelectedModelId(event.target.value);
+    
+    console.log(selectedModelId)
   };
 
   const handleSteeringChange = (event) => {
@@ -67,6 +69,8 @@ const PLP = () => {
       filteredCars = filteredCars.filter((car) =>
         car.modelId === selectedModelId
       );
+      
+      console.log(filteredCars,selectedModelId)
     }
 
     if (selectedSteering) {
@@ -81,12 +85,12 @@ const PLP = () => {
       );
     }
 
-    if (selectedSeatingCapacity) {
+    /*if (selectedSeatingCapacity) {
       filteredCars = filteredCars.filter((car) =>
         car.seatingCapacity == selectedSeatingCapacity
       );
     }
-
+*/
     console.log("Filtered cars:", filteredCars);
 
     return filteredCars;
@@ -96,8 +100,8 @@ const PLP = () => {
   console.log("PLP result", result);
 
   return (
-    <>
-      <h1 className='page-heading'>
+    <div className='plp-page-container'>
+      <h1 className='plp-page-container__page-heading'>
         Inventory
       </h1>
 
@@ -116,15 +120,15 @@ const PLP = () => {
           {result.map((car) => (
             <div key={car._id} className="car-card">
               <ul className='car-card__ul'>
-                {car.variants && car.variants.map((variant, index) => (
-                  <VariantCard key={index} variant={variant} modelId={car.modelId} car={car} id={car._id}/>
-                ))}
+                {car && (
+                  <VariantCard key={car._id} variant={car.name} modelId={car.modelId} car={car} id={car._id}/>
+                )}
               </ul>
             </div>
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

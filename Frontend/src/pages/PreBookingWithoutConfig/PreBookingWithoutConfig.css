@@ -224,6 +224,16 @@
         width:100%;
         overflow-y: scroll;
     }
+    .pre-book-no-config-page__booking__label{
+        display: flex;
+        justify-content: space-between;
+
+    }
+    .pre-book-no-config-page__link{
+        color:#31A93E;
+        padding: 1rem;
+        text-decoration: underline;
+    }
     .pre-book-no-config-page__fixed-bottom__next__btn{
         width:90%;
         background-color: black;

@@ -1,23 +1,29 @@
-.plp-container{
+.plp-page-container{
     display: flex;
     flex-direction: column;
 }
-.page-heading{
-    background-color: white;
-    font-size: 3rem;
-    font-weight: 900;
-    padding: 2rem;
-    margin: 0;
+.plp-page-container__page-heading{
+    font-size: 4rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    padding: 3rem 2rem;
+    animation: appear_noscale  linear;
+    animation-timeline: view();
 }
+
 .card-container{
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row ;
     margin-left: 20rem;
     margin-top: 2rem;
     z-index: -2;
 }
-
+.vehicles-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between ;
+    align-items:center ;
+}
 .card{
     margin: 20px;
     border: 2px solid #ededed;
@@ -75,6 +81,7 @@
   
   .car-card__ul{
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }

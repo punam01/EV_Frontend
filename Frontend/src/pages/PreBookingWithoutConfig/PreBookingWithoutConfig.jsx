@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import './PreBookingWithoutConfig.css'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { bookCar } from '../../services/preBookingService';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable'; 
+import 'jspdf-autotable';
 import Confirmation from '../../components/Confirmation/Confirmation';
 
 const PreBookingWithoutConfig = () => {
@@ -11,7 +11,7 @@ const PreBookingWithoutConfig = () => {
     const [showPopup, setShowPopup] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const [bookingDetails,setBookingDetails]=useState('')
+    const [bookingDetails, setBookingDetails] = useState('')
     const [selectedColor, setSelectedColor] = useState("");
     const [customization, setCustomization] = useState({
         interiorColor: {
@@ -26,11 +26,11 @@ const PreBookingWithoutConfig = () => {
             price: 300,
             value: 'Tinted Glass'
         },
-        exteriorColor: {} 
+        exteriorColor: {}
     });
     const [estimatedPrice, setEstimatedPrice] = useState(0);
     const { car } = location.state || {};
-    
+
     const calculateEstimatedPrice = (customizations) => {
         return Object.values(customizations).reduce((total, option) => {
             if (option && option.price) {
@@ -39,27 +39,27 @@ const PreBookingWithoutConfig = () => {
             return total;
         }, 0);
     }
-    
+
     const handleColorClick = (color) => {
-        const colorOption = car.customizableOptions.find(option => 
+        const colorOption = car.customizableOptions.find(option =>
             option.name === 'Exterior Color' && option.options.some(opt => opt.name === color)
         );
-    
+
         if (colorOption) {
             const selectedOption = colorOption.options.find(opt => opt.name === color);
             const price = selectedOption.price;
-            
+
             setCustomization(prev => ({
                 ...prev,
                 exteriorColor: { value: color, price: price }
             }));
 
             const newEstimatedPrice = calculateEstimatedPrice({
-                ...customization, 
+                ...customization,
                 exteriorColor: { value: color, price: price }
             });
             setEstimatedPrice(newEstimatedPrice);
-            setSelectedColor(color); 
+            setSelectedColor(color);
         } else {
             setCustomization(prev => ({
                 ...prev,
@@ -69,10 +69,10 @@ const PreBookingWithoutConfig = () => {
                 ...customization,
                 exteriorColor: { value: "", price: 0 }
             }));
-            setSelectedColor(""); 
+            setSelectedColor("");
         }
     }
-    
+
     const handleDownloadInvoice = () => {
         const doc = new jsPDF();
         const title = "Invoice";
@@ -80,7 +80,7 @@ const PreBookingWithoutConfig = () => {
         const titleWidth = doc.getTextWidth(title);
         const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2);
         doc.text(title, center, padding);
-    
+
         const userData = [
             [localStorage.getItem("name"), localStorage.getItem("email"), localStorage.getItem("zip")]
         ];
@@ -96,8 +96,8 @@ const PreBookingWithoutConfig = () => {
                 valign: 'middle'
             },
             headStyles: {
-                fillColor: [0, 0, 255], 
-                textColor: [255, 255, 255], 
+                fillColor: [0, 0, 255],
+                textColor: [255, 255, 255],
                 fontStyle: 'bold',
                 halign: 'center'
             },
@@ -109,7 +109,7 @@ const PreBookingWithoutConfig = () => {
                 2: { cellWidth: 40 }
             }
         });
-    
+
         const carData = [
             [selectedColor || 'No Color Selected', 'Black', 'Black', 'Tinted', `$${estimatedPrice}`]
         ];
@@ -126,7 +126,7 @@ const PreBookingWithoutConfig = () => {
             },
             headStyles: {
                 fillColor: [0, 123, 255],
-                textColor: [255, 255, 255], 
+                textColor: [255, 255, 255],
                 fontStyle: 'bold',
                 halign: 'center'
             },
@@ -140,17 +140,17 @@ const PreBookingWithoutConfig = () => {
                 4: { cellWidth: 50 },
             }
         });
-    
+
         doc.save(`bmw_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
     };
-    
+
     const handleNextClick = async () => {
         const user = localStorage.getItem('USER');
         if (!user) {
             navigate('/signup');
             return;
         }
-    
+
         const bookingData = {
             userId: localStorage.getItem('USER'),
             carId: car.carId,
@@ -158,7 +158,7 @@ const PreBookingWithoutConfig = () => {
             contact: localStorage.getItem('email') || localStorage.getItem('phone'),
             customization: customization,
             pincode: car.pincode || localStorage.getItem('zip'),
-            estimatedPrice: estimatedPrice 
+            estimatedPrice: estimatedPrice
         };
         setBookingDetails(bookingData)
         try {
@@ -172,7 +172,7 @@ const PreBookingWithoutConfig = () => {
             console.error('Error booking car:', error);
         }
     };
-    
+
     return (
         <div className='pre-book-no-config-page'>
             <div className="pre-book-no-config-page__image__holder">
@@ -188,7 +188,10 @@ const PreBookingWithoutConfig = () => {
                 </div>
 
                 <div className="pre-book-no-config-page__booking__holder__cardets">
-                    <h3 className="pre-book-no-config-page__title">Pick your variant</h3>
+                    <div className="pre-book-no-config-page__booking__label">
+                        <h3 className="pre-book-no-config-page__title" style={{display:'inline-flex',padding:'1rem 0'}}>Selected Model</h3>
+                        <Link className="pre-book-no-config-page__link" to="/cars">Choose another model</Link>
+                    </div>
                     <div className="pre-book-no-config-page__selected_car">
                         <div className="pre-book-no-config-page__selected_car__left">
                             <h3>{car.modelId}</h3>
@@ -201,7 +204,7 @@ const PreBookingWithoutConfig = () => {
                 </div>
                 <div className="pre-book-no-config-page__color__holder">
                     <div className="pre-book-no-config-page__title__container">
-                        <h3 className="pre-book-no-config-page__title">Pick your variant</h3>
+                        <h3 className="pre-book-no-config-page__title">Pick your color</h3>
                         <span>{selectedColor}</span>
                     </div>
                     <div className="pre-book-no-config-page__title__standard-color">
@@ -219,7 +222,8 @@ const PreBookingWithoutConfig = () => {
             </div>
             <div className="pre-book-no-config-page__fixed-bottom">
                 <div className="fixed-bottom-top">
-                    <p>Booking amount <span>₹ {estimatedPrice}</span></p>
+                    <p>Booking Amount <span>₹ 999</span></p>
+                    <p>Estimated Price <span>₹ {estimatedPrice}</span></p>
                     <div className="fixed-bottom-right">
                         <span>Fully refundable</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -231,13 +235,13 @@ const PreBookingWithoutConfig = () => {
                     <span>Book Now</span>
                 </div>
                 {showPopup && (
-                <Confirmation
-                confirmationMessage={confirmationMessage}
-                    handleBooking={handleNextClick}
-                    bookingDetails={bookingDetails}
-                    onClose={() => setShowPopup(false)} 
-                />
-            )}
+                    <Confirmation
+                        confirmationMessage={confirmationMessage}
+                        handleBooking={handleNextClick}
+                        bookingDetails={bookingDetails}
+                        onClose={() => setShowPopup(false)}
+                    />
+                )}
             </div>
         </div>
     );

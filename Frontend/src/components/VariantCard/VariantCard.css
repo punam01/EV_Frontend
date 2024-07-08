@@ -2,9 +2,10 @@
     width:400px;
     height: auto;
     margin: 1rem;   
-    border: 1px solid #E6E5E5;
     border-radius: 10px;
     font-family: 'Poppins',sans-serif;
+    animation: appear_card linear;
+    animation-timeline: view();    
 }
 .variant-card__item__nameprice{
     display: flex;
@@ -128,13 +129,35 @@
     margin: 0 -0.3rem;
     border:1px solid #918F8F;
 }
-.btn-group{
+.variant-card__btn-group{
+    width:100%;
     display: flex;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    align-items: center;
+    padding: 2rem 2rem;
 }
-.btn-group button{
+.variant-card__btn-group_btn{
     width:45%;
-    background-color: #00D5E5;
+    padding: 1rem;
+    background-color: #000000;
+    color:white;
+    border: none;
+    cursor: pointer;
     border-radius: 30px;
+    font-family: "Poppins",sans-serif;
+}
+.variant-card__btn-group_btn:hover{
+    background-color: #31A93E;
+}
+
+@keyframes appear_card {
+    from {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(0.8);
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 0px 24px;
+    }
 }

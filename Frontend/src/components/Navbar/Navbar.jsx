@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [vehiclesMenuOpen, setVehiclesMenuOpen] = useState(false);
-
+  const navigate=useNavigate();
   const handleNavClick = (menuName) => {
     if (menuName === 'vehicles') {
       setVehiclesMenuOpen(true);
@@ -17,11 +17,13 @@ const Navbar = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
+  const homePage=()=>{
+    navigate('/')
+  }
   return (
     <>
       <nav className={`navbar ${menuOpen ? 'navbar--active' : ''}`}>
-        <img src="https://th.bing.com/th?id=OIP.7zE0FSzeF1sz-8_t_IkQIgHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="logo" className='navbar__logo' />
+        <img src="/assets/images/bmw_logo.png" alt="logo" className='navbar__logo' onClick={homePage}/>
         <button className="navbar__menu-btn" onClick={toggleMenu}>Menu</button>
         <ul className={`navbar__items ${menuOpen ? 'navbar__items--active' : ''}`}>
           <li className='navbar__item'><Link className='navbar__link' to="/" onClick={() => handleNavClick('home')}>Home</Link></li>

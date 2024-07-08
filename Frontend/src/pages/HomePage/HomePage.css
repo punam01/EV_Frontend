@@ -32,8 +32,9 @@
 
 .home-page-container__video-container {
     width: 100%;
-    height: fit-content;
-    margin-bottom:3rem;
+    height:100vh;
+    height: auto; /* Change to auto to maintain aspect ratio */
+    margin-bottom: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,10 +42,15 @@
     animation: appear linear;
     animation-timeline: view();
     background-color: transparent;
+    overflow: hidden; /* Add overflow hidden to prevent stretching */
 }
-.home-page-container__video-container video{
+
+.home-page-container__video-container video {
     border-radius: 30px;
-}   
+    width: 80%; /* Ensure the video scales with its container */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: cover;
+} 
 .home-page-container__car-info {
     background: rgb(42, 46, 56);
     background: linear-gradient(0deg, rgba(42, 46, 56, 1) 0%, rgba(0, 0, 0, 1) 93%, rgba(0, 0, 0, 1) 100%);
@@ -117,6 +123,7 @@
     text-decoration: underline;
     font-size: 1.5rem;
     display: flex;
+    color:#31A93E;
 }
 .home-page-container__model-hearder-section{
     background-color: transparent;

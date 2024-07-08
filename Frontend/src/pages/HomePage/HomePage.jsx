@@ -58,14 +58,14 @@ const HomePage = () => {
         </div>
       </div>
       <div className="home-page-container__video-container">
-        <video src="/assets/bmw1_medium.mp4" type="video/mp4" autoPlay loop muted />
+        <video src="/assets/videos/autumn_in.mp4" type="video/mp4" autoPlay loop muted preload="auto" controls/>
       </div>
       <div className="home-page-container__model-list" >
         <div className="home-page-container__model-hearder-section">
           <div className='model-list__title'>Explore the line-up.</div>
           <div className="model-list__link-container">
             <Link className='model-list__link' to='/compare'>Compare models</Link>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#039BE7" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#31A93E" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
             </svg>
           </div>
@@ -161,8 +161,8 @@ const HomePage = () => {
         <div className="home-page-container__model-hearder-section">
           <div className='model-list__title'>Find your BMW Car.</div>
           <div className="model-list__link-container">
-            <Link className='model-list__link' to='/compare'>Compare models</Link>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#039BE7" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+            {/*<Link className='model-list__link' to='/compare'>Compare models</Link>*/}
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#31A93E" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
             </svg>
           </div>
@@ -207,7 +207,7 @@ const HomePage = () => {
               <h3>Book a Test Drive</h3>
               <p>Book a test drive with us and get behind the wheel to feel the performance, comfort, and features firsthand.</p>
               <div className='home-page-container__find__card__link'>
-                <Link to='/cars'>
+                <Link to='/demodrive'>
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
                     <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
                   </svg>
