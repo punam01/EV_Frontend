@@ -27,7 +27,24 @@
     height: 100%;
     margin: 0.5rem;
 }
-
+.content-item-price{
+  padding: 15px;
+    background-color: white;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.content-item-price-button{
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  width:100px;
+  height:100px;
+}
 table {
     width: 100%;
     height:20px;
@@ -43,7 +60,7 @@ td {
 
 .content-heading {
     font-weight: 500;
-    font-size: 18px;
+    font-size: 17px;
     margin-top: 0;
 }
 .color-swatch.selected, .wheel-swatch.selected {
@@ -80,7 +97,7 @@ td {
     box-shadow: 0 0 0 3px #d9d9d9;
 }
 .color-swatch:hover::after {
-    content: attr(data-tooltip); /* Use the data-tooltip attribute as the tooltip content */
+  content: attr(data-tooltip);
     position: absolute;
     bottom: 125%; /* Adjust this value to move the tooltip above the element */
     left: 50%;
@@ -95,12 +112,7 @@ td {
     visibility: visible;
     transition: opacity 0.2s;
   }
-  
-  .color-swatch::after {
-    content: '';
-    opacity: 0;
-    visibility: hidden;
-  }
+
 .color-swatch.white {
     background-color: #f1f1f1;
 }
@@ -321,4 +333,17 @@ td {
   .overlay-content button {
     margin: 10px;
   }
-  
+  .radio-btn-label{
+    font-size: 13px;
+    color:black;
+    display: block;
+    cursor: pointer;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  .radio-btn-label:hover{
+    font-weight: bold;
+  }
+  .radio-btn-label::selection{
+    color:#31A93E;
+  }

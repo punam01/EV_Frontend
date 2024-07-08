@@ -7,7 +7,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   const location = useLocation();
   const navigate = useNavigate();
   const carData = location.state?.car;
-
+  console.log(carData)
   const [selectedOptions, setSelectedOptions] = useState({
     exteriorColor: {
       code: carData?.customizableOptions?.find(option => option.name === "Exterior Color")?.options[0]?.code || null,
@@ -90,8 +90,8 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   };
 
   const handleIntColorClick = (color) => {
-    const colorDetails = carData.customizableOptions.find(option => option.name === "Interior Color")?.options.find(opt => opt.name === color);
-    console.log(colorDetails)
+    const colorDetails = carData.customizableOptions.find(option => option.name === "Interior Color")?.options.find(opt => opt.code === color);
+    console.log("int col:::::",colorDetails)
     if (onSelectIntColor) {
       onSelectIntColor(colorDetails.code);
     }
@@ -191,6 +191,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                   className={`color-swatch ${selectedOptions.exteriorColor?.code === color ? 'selected' : ''}`}
                   style={{ backgroundColor: color }}
                   onClick={() => handleColorClick(color)}
+                  data-tooltip={selectedOptions.exteriorColor?.code === color ? selectedOptions.exteriorColor?.name : ''}
                 ></div>
               ))}
             </div>
@@ -202,6 +203,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                   className={`color-swatch ${selectedOptions.interiorColor?.code === color ? 'selected' : ''}`}
                   style={{ backgroundColor: color }}
                   onClick={() => handleIntColorClick(color)}
+                  data-tooltip={selectedOptions.interiorColor?.code === color ? selectedOptions.interiorColor?.name : ''}
                 ></div>
               ))}
             </div>
@@ -215,6 +217,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                   className={`color-swatch ${selectedOptions.wheel?.code === wheel ? 'selected' : ''}`}
                   style={{ backgroundColor: wheel }}
                   onClick={() => handleWheelClick(wheel)}
+                  data-tooltip={selectedOptions.wheel?.code === wheel ? selectedOptions.wheel.name : ''}
                 ></div>
               ))}
             </div>
@@ -229,14 +232,16 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                   className={`color-swatch ${glass} ${selectedOptions.glass?.code === glass ? 'selected' : ''}`}
                   style={{ backgroundColor: glass }}
                   onClick={() => handleGlassClick(glass)}
+                  data-tooltip={selectedOptions.glass?.code === glass ? selectedOptions.glass.name : ''}
                 ></div>
               ))}
             </div>
           </div>
           <div className="content-item">
             <h3 className="content-heading">Range</h3>
-            <label>
+            <label className='radio-btn-label'>
               <input
+                style={{display:'block'}}
                 type="radio"
                 value="mr"
                 checked={selectedOptions.range.value === 'mr'}
@@ -244,8 +249,9 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               />
               MR: Standard Range (390 mi)
             </label>
-            <label>
+            <label className='radio-btn-label'>
               <input
+                className='radio-btn'
                 type="radio"
                 value="lr"
                 checked={selectedOptions.range.value === 'lr'}
@@ -256,7 +262,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
           </div>
           <div className="content-item">
             <h3 className="content-heading">Charger Type</h3>
-            <label>
+            <label className='radio-btn-label'>
               <input
                 type="radio"
                 value="3.3 kw ac charger box"
@@ -265,7 +271,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               />
               3.3 KW AC Charger Box
             </label>
-            <label>
+            <label className='radio-btn-label'>
               <input
                 type="radio"
                 value="7.2 kw ac fast charger box"
@@ -275,10 +281,12 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
               7.2 KW AC Fast Charger Box
             </label>
           </div>
-          <div className="content-item">
-            <h3 className="content-heading">Total price</h3>
-            <label htmlFor="content-heading">${calculateTotalPrice()}</label>
-            <button onClick={handleSubmit}>Continue with Pre-Booking</button>
+          <div className="content-item-price">
+            <h3 className="content-heading">Total price ${calculateTotalPrice()}</h3>
+            <p>Base price ${carData.basePrice}</p>
+            <button className="content-item-price-button" onClick={handleSubmit}><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#31A93E" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+</svg></button>
           </div>
         </div>
       </div>

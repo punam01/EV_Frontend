@@ -4,8 +4,7 @@
     margin: 1rem;   
     border-radius: 10px;
     font-family: 'Poppins',sans-serif;
-    animation: appear_card linear;
-    animation-timeline: view();    
+    border:0.5px solid #F7F7F7;  
 }
 .variant-card__item__nameprice{
     display: flex;

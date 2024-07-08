@@ -88,7 +88,9 @@
     width:100%;
 }
 .car-compare-container__result__item-item-col svg{
-    margin:20px;
+    margin:20px;    
+    animation: appear linear;
+    animation-timeline: view();
 }
 .car-compare-container__result__item-item-col p{
     font-family: 'Poppins',sans-serif;
