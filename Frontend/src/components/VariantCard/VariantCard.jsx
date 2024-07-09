@@ -2,15 +2,21 @@
 import React from 'react';
 import './VariantCard.css'
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 const VariantCard = ({ variant, modelId, car }) => {
     const navigate = useNavigate();
 
     const handleViewDetails = () => {
         navigate(`/cardetails`,{ state: { car } });
     };
-
+    
+  const {isLoggedIn} = useAuth();
     const handleBookNow = () => {
-        navigate(`/noconfig`,{ state: { car } });
+        if (isLoggedIn ) {
+            navigate('/noconfig', { state: { car } });
+          } else {
+            navigate('/signup');
+          }
 
     };
 
@@ -22,7 +28,7 @@ const VariantCard = ({ variant, modelId, car }) => {
                     <p className='variant-card__item__carname__p'>{modelId}</p>
                 </div>
                 <div className="variant-card__carprice">
-                    <p style={{ color: "#FF5919" }}>${car.basePrice}</p>
+                    <p style={{ color: "#31A93E" }}>${car.basePrice}</p>
                     <p className='variant-card__item__carprice__p'>Starting Price</p>
                 </div>
             </div>

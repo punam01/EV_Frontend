@@ -107,7 +107,7 @@ const DemoDriveBooking = () => {
         const user = localStorage.getItem('USER');
         const phone = localStorage.getItem('phone');
     
-        if (!user || !selectedLocation?._id || !selectedModel || !selectedTime || !phone) {
+        if (!user || !selectedLocation?._id || !selectedModel || !selectedTime || !selectedDate || !phone) {
             toast.error("All fields are required", {
                 duration: 3000,
             });
@@ -120,6 +120,7 @@ const DemoDriveBooking = () => {
                 selectedLocation._id,
                 selectedModel,
                 selectedTime,
+                selectedDate,
                 phone
             );
             setBookingDetails(bookingResponse);

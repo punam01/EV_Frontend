@@ -14,7 +14,8 @@ const HomePage = () => {
     const fetchCars = async () => {
       try {
         const data = await getAllCars();
-        console.log("Car details:", data);
+        console.log("Car details:", data[0]);
+        localStorage.setItem("CAR",JSON.stringify(data[0]));
         setCars(data);
       } catch (error) {
         console.error("Error fetching cars:", error);
@@ -58,7 +59,7 @@ const HomePage = () => {
         </div>
       </div>
       <div className="home-page-container__video-container">
-        <video src="/assets/videos/autumn_in.mp4" type="video/mp4" autoPlay loop muted preload="auto" controls/>
+        <video src="/assets/videos/autumn_in.mp4" type="video/mp4" autoPlay loop muted preload="auto" />
       </div>
       <div className="home-page-container__model-list" >
         <div className="home-page-container__model-hearder-section">
@@ -89,7 +90,7 @@ const HomePage = () => {
                   </div>
                   <div className="home-page-container__explore-model-item__carName">{car.modelId}</div>
                   <div className="home-page-container__explore-model-item__carModel">The ultimate {car.name}.</div>
-                  <div className="home-page-container__explore-model-item__basePrice">Starting from ₹{car.basePrice}/-* onwards</div>
+                  <div className="home-page-container__explore-model-item__basePrice">Starting from ${car.basePrice}/-* onwards</div>
                   <div className="home-page-container__explore-model-item__btnGrp">
                     <button className="home-page-container__learnMore" onClick={() => handleBookCar(car)}>Learn More</button>
                     <div className="model-list__btn-container">
@@ -106,7 +107,7 @@ const HomePage = () => {
                       <path d="M2.5 1a.5.5 0 0 0-.5.5V5h-.5A1.5 1.5 0 0 0 0 6.5v7a1.5 1.5 0 0 0 1 1.415v.335a.75.75 0 0 0 1.5 0V15H4v-1H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V7h1v-.5A1.5 1.5 0 0 0 6.5 5H6V1.5a.5.5 0 0 0-.5-.5zM5 5H3V2h2z" />
                       <path d="M3 7.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0zM11 6a1.5 1.5 0 0 1 1.5 1.5V8h2A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 14.5v-5A1.5 1.5 0 0 1 6.5 8h2v-.5A1.5 1.5 0 0 1 10 6zM9.5 7.5V8h2v-.5A.5.5 0 0 0 11 7h-1a.5.5 0 0 0-.5.5M6 9.5v5a.5.5 0 0 0 .5.5H7V9h-.5a.5.5 0 0 0-.5.5m7 5.5V9H8v6zm1.5 0a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H14v6z" />
                     </svg>
-                    <span>Spacious cargo capacity of {car.cargoCapacity}</span>
+                    <span>Spacious cargo capacity of {car.cargoCapacity} cu. ft.  </span>
                   </div>
                   <div className="home-page-container__explore-model-item__seating-container">
                     <svg fill="#777779" height="40" width="40" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -142,30 +143,11 @@ const HomePage = () => {
               </div>
             ))}
           </div>
-          <div className='home-page-container__explore-section__control-btns'>
-            <div className="scroll-button scroll-button-left" onClick={scrollLeft} style={{backgroundColor:'pink',cursor:'pointer'}}>
-            <svg  xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-left-square-fill" viewBox="0 0 16 16">
-              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12" />
-            </svg>
-            </div>
-            <div className="scroll-button scroll-button-right" onClick={scrollRight}>
-            <svg  xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
-              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4z" />
-            </svg>
-            </div>
-            
-          </div>
         </div>
       </div>
       <div className="home-page-container__shopping-tools">
         <div className="home-page-container__model-hearder-section">
           <div className='model-list__title'>Find your BMW Car.</div>
-          <div className="model-list__link-container">
-            {/*<Link className='model-list__link' to='/compare'>Compare models</Link>*/}
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#31A93E" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
-            </svg>
-          </div>
         </div>
         <div className="home-page-container__find-section">
           <div className="home-page-container__find-model-list">
@@ -224,17 +206,3 @@ const HomePage = () => {
 
 export default HomePage;
 
-
-/*{/*<div key={car.id} className="home-page-container__car-info">
-        <h2 className='home-page-container__h2'>{car.name === "BMW" ? car.name : ''}</h2>
-        <p className='home-page-container__p'>Explore, test drive, configure and book your own BMW EV</p>
-        <button className="home-page-container__showroom-button" onClick={() => handleBookCar(car)}>
-          Configure and Book
-        </button>
-        <button className="home-page-container__showroom-button" onClick={() => handleDemoDrive(car)}>
-          Demo Drive
-        </button>
-        <button className="home-page-container__showroom-button" onClick={() => handleBookNow(car)}>
-          Book Now
-        </button>
-      </div*/

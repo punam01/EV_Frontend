@@ -22,6 +22,7 @@ import CarDetailsPage from './pages/CarDetailsPage/CarDetailsPage';
 import Checkout from './pages/Checkout/Checkout';
 import PreBookingWithoutConfig from './pages/PreBookingWithoutConfig/PreBookingWithoutConfig';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
   return (

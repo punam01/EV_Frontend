@@ -106,7 +106,7 @@ const PLP = () => {
       </h1>
 
       <div className="plp-container">
-        <Recommended handleClick={handleClick} />
+        {/*<Recommended handleClick={handleClick} />
         {cars.length > 0 && (
           <Sidebar
             handleChange={handleChange}
@@ -114,8 +114,8 @@ const PLP = () => {
             handleAutopilotChange={handleAutopilotChange}
             handleSeatingCapacityChange={handleSeatingCapacityChange}
             cars={cars}
-          />
-        )}
+          />*/}
+        
         <div className="vehicles-container">
           {result.map((car) => (
             <div key={car._id} className="car-card">

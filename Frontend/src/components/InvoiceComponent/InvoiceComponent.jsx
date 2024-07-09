@@ -35,6 +35,7 @@ const InvoiceComponent = ({bookingData}) => {
         
         // Car customization data
         const customization = bookingData.customization;
+        console.log("customizartion",customization)
         const carData = [
             ['Exterior Color', customization.exteriorColor.value || 'No Color Selected', `$${customization.exteriorColor.price || 0}`],
             ['Interior Color', customization.interiorColor.value || 'Black', `$${customization.interiorColor.price || 0}`],

@@ -59,3 +59,11 @@
     padding-left: 5px;
     font-size: 15px;
 }
+.purchase-history-container__cancel{
+    color: #31A93E;
+    font-family: 'Poppins',sans-serif;
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}

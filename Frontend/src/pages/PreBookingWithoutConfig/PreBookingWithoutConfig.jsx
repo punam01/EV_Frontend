@@ -5,14 +5,19 @@ import { bookCar } from '../../services/preBookingService';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Confirmation from '../../components/Confirmation/Confirmation';
+import useAuth from '../../hooks/useAuth';
 
 const PreBookingWithoutConfig = () => {
     const [confirmationMessage, setConfirmationMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+    const { isLoggedIn, logout } = useAuth();
     const [bookingDetails, setBookingDetails] = useState('')
     const [selectedColor, setSelectedColor] = useState("");
+    const [selectedIntColor, setSelectedIntColor] = useState("");
+    const [selectedWheelColor,setSelectedWheelColor] = useState('');
+    const [selectedGlassColor,setSelectedGlassColor] = useState('');
     const [customization, setCustomization] = useState({
         interiorColor: {
             price: 1500,
@@ -169,7 +174,17 @@ const PreBookingWithoutConfig = () => {
                 navigate('/profile');
             }, 2000);
         } catch (error) {
-            console.error('Error booking car:', error);
+            if (error.code === 11000) {
+                alert('You have already booked a similar car within the last 24 hours. Please try again later.');
+                //setShowPopup(true);
+            } else {
+                console.error('Error booking car:', error);
+                alert('You have already booked a similar car within the last 24 hours. Please try again later.');
+                //setShowPopup(true);
+                setTimeout(() => {
+                    navigate('/profile');
+                }, 2000);
+            }
         }
     };
 
@@ -189,7 +204,7 @@ const PreBookingWithoutConfig = () => {
 
                 <div className="pre-book-no-config-page__booking__holder__cardets">
                     <div className="pre-book-no-config-page__booking__label">
-                        <h3 className="pre-book-no-config-page__title" style={{display:'inline-flex',padding:'1rem 0'}}>Selected Model</h3>
+                        <h3 className="pre-book-no-config-page__title" style={{ display: 'inline-flex', padding: '1rem 0' }}>Selected Model</h3>
                         <Link className="pre-book-no-config-page__link" to="/cars">Choose another model</Link>
                     </div>
                     <div className="pre-book-no-config-page__selected_car">
@@ -204,7 +219,7 @@ const PreBookingWithoutConfig = () => {
                 </div>
                 <div className="pre-book-no-config-page__color__holder">
                     <div className="pre-book-no-config-page__title__container">
-                        <h3 className="pre-book-no-config-page__title">Pick your color</h3>
+                        <h3 className="pre-book-no-config-page__title">Pick exterior color</h3>
                         <span>{selectedColor}</span>
                     </div>
                     <div className="pre-book-no-config-page__title__standard-color">
@@ -213,7 +228,58 @@ const PreBookingWithoutConfig = () => {
                                 key={color.name}
                                 className={`pre-book-no-config-page__title__color-swatch ${color.name} ${selectedColor === color.name ? 'selected' : ''}`}
                                 style={{ backgroundColor: color.code }}
-                                onClick={() => handleColorClick(color.name)}
+                                onClick={() => handleColorClick(color.name,color.price)}
+                                data-tooltip={color.name}
+                            ></div>
+                        ))}
+                    </div>
+                </div>
+                <div className="pre-book-no-config-page__color__holder">
+                    <div className="pre-book-no-config-page__title__container">
+                        <h3 className="pre-book-no-config-page__title">Pick interior color</h3>
+                        <span>{selectedIntColor}</span>
+                    </div>
+                    <div className="pre-book-no-config-page__title__standard-color">
+                        {car.customizableOptions[1].options.map(color => (
+                            <div
+                                key={color.name}
+                                className={`pre-book-no-config-page__title__color-swatch ${color.name} ${selectedIntColor === color.name ? 'selected' : ''}`}
+                                style={{ backgroundColor: color.code }}
+                                onClick={() => handleColorClick(color.name,color.price)}
+                                data-tooltip={color.name}
+                            ></div>
+                        ))}
+                    </div>
+                </div>
+                <div className="pre-book-no-config-page__color__holder">
+                    <div className="pre-book-no-config-page__title__container">
+                        <h3 className="pre-book-no-config-page__title">Pick wheel</h3>
+                        <span>{selectedWheelColor}</span>
+                    </div>
+                    <div className="pre-book-no-config-page__title__standard-color">
+                        {car.customizableOptions[2].options.map(color => (
+                            <div
+                                key={color.name}
+                                className={`pre-book-no-config-page__title__color-swatch ${color.name} ${selectedWheelColor === color.name ? 'selected' : ''}`}
+                                style={{ backgroundColor: color.code }}
+                                onClick={() => handleColorClick(color.name,color.price)}
+                                data-tooltip={color.name}
+                            ></div>
+                        ))}
+                    </div>
+                </div>
+                <div className="pre-book-no-config-page__color__holder">
+                    <div className="pre-book-no-config-page__title__container">
+                        <h3 className="pre-book-no-config-page__title">Pick glass type</h3>
+                        <span>{selectedGlassColor}</span>
+                    </div>
+                    <div className="pre-book-no-config-page__title__standard-color">
+                        {car.customizableOptions[3].options.map(color => (
+                            <div
+                                key={color.name}
+                                className={`pre-book-no-config-page__title__color-swatch ${color.name} ${selectedGlassColor === color.name ? 'selected' : ''}`}
+                                style={{ backgroundColor: color.code }}
+                                onClick={() => handleColorClick(color.name,color.price)}
                                 data-tooltip={color.name}
                             ></div>
                         ))}
@@ -222,8 +288,8 @@ const PreBookingWithoutConfig = () => {
             </div>
             <div className="pre-book-no-config-page__fixed-bottom">
                 <div className="fixed-bottom-top">
-                    <p>Booking Amount <span>₹ 999</span></p>
-                    <p>Estimated Price <span>₹ {estimatedPrice}</span></p>
+                    <p>Booking Amount <span>$ 999</span></p>
+                    <p>Estimated Price <span>$ {estimatedPrice}</span></p>
                     <div className="fixed-bottom-right">
                         <span>Fully refundable</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-info-circle-fill" viewBox="0 0 16 16">

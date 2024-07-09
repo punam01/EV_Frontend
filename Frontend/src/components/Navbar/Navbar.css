@@ -12,7 +12,9 @@
   border-bottom: 0.5px solid #CCCBCB;
   
 }
-
+.navbar__link.navbar__items--active{
+  color: green;
+}
 .navbar__logo {
   width: 25px;
   cursor: pointer;

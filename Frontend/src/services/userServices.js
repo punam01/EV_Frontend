@@ -88,3 +88,12 @@ export const checkUserExists = async (phone) => {
       throw new Error('Error checking user existence:', error.message);
   }
 };
+
+export const checkUserByPhoneNumber = async (phoneNumber) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/user/check-user/${phoneNumber}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.message || 'Error checking user by phone number';
+  }
+};

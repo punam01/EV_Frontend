@@ -16,8 +16,8 @@ const Sidebar = ({
     <section className='sidebar-container'>
       <Category handleChange={handleChange} cars={cars}/>
       {/*<Colors handleChange={handleChange} />*/}
-      <Steering handleChange={handleSteeringChange} />
-       {/*<Autopilot handleAutopilotChange={handleAutopilotChange} />
+      {/*<Steering handleChange={handleSteeringChange} />
+       <Autopilot handleAutopilotChange={handleAutopilotChange} />
      <SeatingCapacityFilter handleSeatingCapacityChange={handleSeatingCapacityChange} />*/}
     </section>
   );

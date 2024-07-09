@@ -2,13 +2,14 @@ import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:5000/api/demoBook'; 
 
-export const createDemoBooking = async (userId, locationId, modelName, bookingTime, contact) => {
+export const createDemoBooking = async (userId, locationId, modelName, bookingTime, contact,bookingDate) => {
     try {
         const response = await axios.post(`${API_BASE_URL}`, {
             userId,
             locationId,
             modelName,
             bookingTime,
+            bookingDate,
             contact
         });
         return response.data;

@@ -5,6 +5,7 @@
     overflow-y: hidden;
     height: auto;
     margin: 2rem 0;
+    padding: 1rem;
 }
 
 .personal-details-container__title {
@@ -52,8 +53,7 @@
 }
 
 .personal-details-container__btn {
-    width: 95%; 
-    margin-left: 1rem;
+    width: 100%; 
     padding: 1rem; 
     color: white;
     background-color: #000000; 
@@ -71,7 +71,7 @@
     position: fixed; 
     bottom: 0; 
     right: 0; 
-    width: 60%; 
+    width: 55.5%; 
     z-index: 1000; 
     height: 20%;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 

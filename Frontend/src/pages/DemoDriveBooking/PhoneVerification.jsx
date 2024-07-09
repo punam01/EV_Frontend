@@ -7,8 +7,10 @@ import toast from 'react-hot-toast';
 import { auth } from '../../firebase.config';
 import './PhoneVerification.css'
 
+
 const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, otpSent ,setOtpSent}) => {
     
+  
     const onCaptchVerify = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
@@ -40,6 +42,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
             });
             setLoading(false)
     };
+
 
     return (
         <div className="phone-verification-container">

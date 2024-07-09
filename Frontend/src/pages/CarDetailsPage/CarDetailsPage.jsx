@@ -13,7 +13,7 @@ const CarDetailsPage = () => {
   const handleColorSelect = (color) => {
     setSelectedColor(color);
   };
-  const isLoggedIn = useAuth();
+  const {isLoggedIn} = useAuth();
   const { car } = location.state || {};
   console.log(car)
 
@@ -21,16 +21,15 @@ const CarDetailsPage = () => {
     return <p>No car details available.</p>;
   }
 
-  const handleBack = () => {
-    if (isLoggedIn) {
+  const handleNextPage = () => {
+    //if (isLoggedIn && localStorage.getItem('USER')) {
       navigate('/showroom', { state: { car } });
-    } else {
-      navigate('/signup');
-    }
+    //} else {
+    //  navigate('/signup');
+    //}
   };
   const handleBookNow = () => {
-    console.log('Clicked')
-    if (isLoggedIn) {
+    if (isLoggedIn && localStorage.getItem('USER')) {
       navigate('/noconfig', { state: { car } });
     } else {
       navigate('/signup');
@@ -105,14 +104,10 @@ const CarDetailsPage = () => {
               <p className='car-details-page__logo-content__p'>Experience luxury, comfort, and cutting-edge technology in every drive.</p>
             </div>            
         </div>
-        {/*<h2>{car.name}</h2>
-        <p><strong>Acceleration:</strong> {car.acceleration}</p>
-        <p><strong>CargoCapacity:</strong> ${car.cargoCapacity}</p>
-        <p><strong>ChargerType:</strong> {car.chargerType}</p>
-        <p><strong>Seating Capacity:</strong> {car.seatingCapacity}</p>
-        <p><strong>steering:</strong> {car.steering}</p>
-        {/* Add more car details as needed */}
-        <button onClick={handleBack}>Back to Home</button>
+        <div className="car-details-page__next-pg-btn-grp">
+        <button className="car-details-page__next-pg-btn" onClick={handleNextPage}>Configure & Book</button>
+        </div>
+        
       </div>
     </div>
   </>

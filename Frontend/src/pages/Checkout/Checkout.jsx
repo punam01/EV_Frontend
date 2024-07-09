@@ -7,20 +7,35 @@ import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import Confetti from 'react-confetti'
 import SendEmailComponent from '../../components/SendEmailComponent/SendEmailComponent';
+import { sendEmail } from '../../services/emailServices';
+import useAuth from '../../hooks/useAuth';
+import { Toaster } from 'react-hot-toast';
+import PhoneVerification from '../DemoDriveBooking/PhoneVerification';
+import OTPVerification from '../DemoDriveBooking/OTPVerification';
+import PersonalDetails from '../../components/PersonalDetailsContainer/PersonalDetails';
+import { registerUser } from '../../services/userServices';
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const location = useLocation();
+    const {isLoggedIn,logout}=useAuth()
     const { selectedOptions, totalPrice, carData } = location.state || {};
     const [step, setStep] = useState(1);
     const [userDetails, setUserDetails] = useState({ pincode: '', name: '', email: '' });
     const [nearbyLocations, setNearbyLocations] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [bookingConfirmed, setBookingConfirmed] = useState(false);
+    const [phone, setPhone] = useState('');
+    const [showOtp, setShowOtp] = useState(false);
+    const [otpVerified, setOtpVerified] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [otpSent, setOtpSent] = useState(false);
+    const [userData, setUserData] = useState({ first_name: '',last_name:'', email: '', zipCode: '' });
     console.log("selected :", selectedOptions)
     console.log("totalPrice :", totalPrice)
     console.log("carData :", carData)
-    const [bookingData,setBookingData]=useState()
+    const [bookingData, setBookingData] = useState()
     useEffect(() => {
         setUserDetails({
             pincode: localStorage.getItem('zip') || '',
@@ -65,7 +80,7 @@ const Checkout = () => {
         }
     };
 
-    const handleNavigate=()=>{
+    const handleNavigate = () => {
         navigate('/profile')
     }
     const handleBooking = async () => {
@@ -102,14 +117,14 @@ const Checkout = () => {
                     price: selectedOptions.glass.price
                 }
             },
-            location: 
-                {
-                    pincode: selectedLocation.pincode,
-                    address: selectedLocation.address,
-                    city: selectedLocation.city,
-                    state: selectedLocation.state,
-                    name: selectedLocation.name
-                }
+            location:
+            {
+                pincode: selectedLocation.pincode,
+                address: selectedLocation.address,
+                city: selectedLocation.city,
+                state: selectedLocation.state,
+                name: selectedLocation.name
+            }
             ,
             estimatedPrice: totalPrice
         };
@@ -118,10 +133,18 @@ const Checkout = () => {
         try {
             const result = await bookCar(bookingData);
             setBookingData(result)
-            console.log("Result",result)
+            console.log("Result", result)
             console.log('Booking confirmed:', result);
             setBookingConfirmed(true);
             setStep(4);
+            const emailResult = await sendEmail(result);
+            if (!emailResult.success) {
+                alert(emailResult.message);
+            }
+            else{
+                alert("Email sent successfully!")
+            }
+
         } catch (error) {
             console.error('Error during booking:', error);
             alert('Failed to confirm the booking. Please try again later.');
@@ -133,7 +156,32 @@ const Checkout = () => {
             setStep(stepNumber);
         }
     };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData(prevState => ({ ...prevState, [name]: value }));
+    };
+    const handleRegister = async () => {
+        try {
+            const registeredUser = await registerUser({
+                custom_id: localStorage.getItem('customId'),
+                first_name: userData.first_name,
+                last_name:userData.last_name,
+                email: userData.email,
+                pincode: userData.zipCode,
+                contact: localStorage.getItem('phone').replace('+', '')
+            });
 
+            localStorage.setItem('USER', registeredUser._id);
+            localStorage.setItem('zip', userData.zipCode);
+            setUserId(registeredUser._id);
+            fetchLocations(userData.zipCode);
+            //setShowUserDetails(false);
+            toast.success("User details saved");
+        } catch (error) {
+            console.error('Registration error:', error.message);
+            toast.error('User with the same phone number already exists.');
+        }
+    };
     const handleDownloadInvoice = () => {
         const doc = new jsPDF();
         const title = "Invoice";
@@ -260,7 +308,7 @@ const Checkout = () => {
     };
     return (
         <div className="checkout-page-container">
-            {step!=4 && <section className="step-wizard">
+            {step != 4 && <section className="step-wizard">
                 <ul className="step-wizard-list">
                     <li
                         className={`step-wizard-item ${step === 1 ? 'current-item' : ''}`}
@@ -365,8 +413,33 @@ const Checkout = () => {
                         </div>
                         <button className='checkout-content__next__button' onClick={handleNextStep}>Next</button>
                     </div>
-
                 )}
+                {null && step===1 &&(
+                    <div className="demo-user-details">
+                    <h1>Book <span>{carData && carData.name}</span> Demo Drive</h1>
+                    <div id="recaptcha-container"></div>
+                    <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
+                    <PhoneVerification
+                        phone={phone}
+                        setPhone={setPhone}
+                        setShowOtp={setShowOtp}
+                        loading={loading}
+                        setLoading={setLoading}
+                        otpSent={otpSent}
+                        setOtpSent={setOtpSent}
+                        />
+
+                    {showOtp && !otpVerified && (
+                        <OTPVerification
+                            setOtpVerified={setOtpVerified}
+                            setOtpSent={setOtpSent}
+                        />
+                    )}
+                    <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} disabled={!otpVerified} />
+                </div>
+                )
+
+                }
                 {step === 2 && (
                     <div>
                         <h2>Find Nearby Dealer</h2>
@@ -467,7 +540,7 @@ const Checkout = () => {
                 {step == 4 && bookingConfirmed && (<>
 
                     <div className="confirmation-message">
-                    <SendEmailComponent bookingData={bookingData} />
+                        {/*<SendEmailComponent bookingData={bookingData} />*/}
                         <h2>Congratulations!</h2>
                         <p>Your booking has been confirmed successfully.</p>
                         <p>An email has been sent to {" "}<b>{userDetails.email}</b> {" "}with the booking details.</p>

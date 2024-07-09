@@ -3,17 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
+  const car=localStorage.getItem('CAR');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuName, setMenuName] = useState('');
   const [vehiclesMenuOpen, setVehiclesMenuOpen] = useState(false);
   const navigate=useNavigate();
   const handleNavClick = (menuName) => {
     if (menuName === 'vehicles') {
       setVehiclesMenuOpen(true);
-    } else {
+    } 
+    else {
       setVehiclesMenuOpen(false);
     }
   };
-
+  const handleNav=(menuName)=>{
+    navigate(`/${menuName}`,{ state: { car } });
+  }
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -25,12 +30,13 @@ const Navbar = () => {
       <nav className={`navbar ${menuOpen ? 'navbar--active' : ''}`}>
         <img src="/assets/images/bmw_logo.png" alt="logo" className='navbar__logo' onClick={homePage}/>
         <button className="navbar__menu-btn" onClick={toggleMenu}>Menu</button>
-        <ul className={`navbar__items ${menuOpen ? 'navbar__items--active' : ''}`}>
-          <li className='navbar__item'><Link className='navbar__link' to="/" onClick={() => handleNavClick('home')}>Home</Link></li>
-          {        /* <li className='navbar__item'><Link className='navbar__link' to="/showroom" onClick={() => handleNavClick('showroom')}>Digital Showroom</Link></li>*/}
-{        /*  <li className='navbar__item'><Link className='navbar__link' to="/cars" onClick={() => handleNavClick('vehicles')}>Vehicles</Link></li>*/}
-          <li className='navbar__item'><Link className='navbar__link' to="/blogs" onClick={() => handleNavClick('blog')}>Blog</Link></li>
-          <li className='navbar__item'><Link className='navbar__link' to="/demodrive" onClick={() => handleNavClick('demodrive')}>Demo Drive</Link></li>
+        <ul className={`navbar__items ${menuName ? 'navbar__items--active' : ''}`}>
+          <li className={`navbar__item`}><Link className={`navbar__link ${menuName==='home' ? 'navbar__items--active' : ''}`} to="/" onClick={() => handleNavClick('home')}>Home</Link></li>
+         
+        {/*  <li className='navbar__item'><Link className='navbar__link' to="/cars" onClick={() => handleNavClick('vehicles')}>Vehicles</Link></li>
+          <li className='navbar__item'><Link className='navbar__link' to="/blogs" onClick={() => handleNavClick('blog')}>Blog</Link></li>*/}
+          <li className={`navbar__item ${menuName==='demodrive' ? 'navbar__items--active' : ''}`}><Link className='navbar__link' to="/demodrive" onClick={() => handleNavClick('demodrive')}>Demo Drive</Link></li>
+          <li className={`navbar__item ${menuName==='cars' ? 'navbar__items--active' : ''}`}><Link className='navbar__link' to="/cars" onClick={() => handleNavClick('cars')}>Book Now</Link></li>
         </ul>
         <div className='navbar__profile'>
           <Link className='navbar__link' to="/profile">

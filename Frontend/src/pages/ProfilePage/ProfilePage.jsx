@@ -24,12 +24,12 @@ const ProfilePage = () => {
     const { isLoggedIn, logout } = useAuth();
     const [userName,setUserName]=useState('');
     useEffect(() => {
-        if (customId) {
+        if (customId ) {
             fetchUserProfile(customId);
             setUserName(userProfile.first_name)
         }
-    }, [customId,userName]);
-    
+    }, [customId]);
+
     const findBookingDetails=(carId)=>{
         bookings?.map(booking=>{
             if(booking.carId._id===carId){
@@ -46,6 +46,7 @@ const ProfilePage = () => {
     const fetchUserProfile = async (customId) => {
         try {
             const response = await getUserByCustomId(customId);
+            console.log(response)
             setUserProfile({
                 first_name: response.first_name,
                 last_name: response.last_name,
@@ -55,6 +56,12 @@ const ProfilePage = () => {
                 pincode: response.pincode,
                 custom_id: customId,
             });
+            localStorage.setItem('last_name',response.last_name)
+            localStorage.setItem('email',response.email)
+            localStorage.setItem('phone',response.contact)
+            localStorage.setItem('address',response.address)
+            localStorage.setItem('zip',response.pincode)
+
         } catch (error) {
             console.error('Error fetching user profile:', error);
         }

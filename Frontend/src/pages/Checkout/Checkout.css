@@ -170,6 +170,8 @@
 
 .checkout-content__button_svg{
     background-color: transparent;
+    border:none;
+    cursor: pointer;
 }
 .checkout-content__button_svg:click {
     color: #31A93E;
@@ -216,6 +218,9 @@
     width:100%;
     border-radius: 5px;
     margin:0 1rem 0 0;
+    padding: 1rem;
+    border:none;    
+    cursor: pointer;
 }
 .checkout-content__next__button:hover{
     background-color: #31A93E;
@@ -235,6 +240,7 @@
 .checkout-content__summary__user p svg,
 .location-item__loc__svg{
     margin-right: 10px;
+    border:none;
 }
 .checkout-content__summary{
     display: flex;
@@ -287,6 +293,7 @@
 }
 .checkout-content__summary__user p{
     font-family: 'Poppins',sans-serif;
+    border: none;
 }
 .checkout-content__summary__loc__svg {
     margin-right: 10px;
@@ -294,7 +301,9 @@
 .checkout-content__summary__card__h3{
     margin:0;
 }
-
+.confirmation-message{
+    margin-top:auto;
+}
 
 @keyframes fadeIn {
     from {

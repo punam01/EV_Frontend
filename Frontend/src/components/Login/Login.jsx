@@ -50,7 +50,13 @@ const Login = () => {
     if (res && res.data) {
       const userData = res.data;
       dispatch(setUser(userData));
-      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('USER',userData._id)
+      localStorage.setItem('name',userData.first_name)
+      localStorage.setItem('last_name',userData.last_name)
+      localStorage.setItem('email',userData.email)
+      localStorage.setItem('phone',userData.contact)
+      localStorage.setItem('zip',userData.pincode)
+      localStorage.setItem('address',userData.address)
     }
   };
   function onLogin() {
