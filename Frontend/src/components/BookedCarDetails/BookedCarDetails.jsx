@@ -23,7 +23,7 @@ const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDeta
             </div>
             <div className='booked-car-details__booking-info'>
                 <div className="booked-car-details__booking-info__left">
-                    <img src="/assets/images/car_3d_t.png" alt="" />
+                    <img src={`/assets/images/cars/${filteredBookings[0]?.customization?.exteriorColor?.value.toLowerCase()}_left.png`} alt="" />
                 </div>
             </div>
             <div className="booked-car-details__estimatedPrice">
@@ -35,8 +35,8 @@ const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDeta
                     </tr>
                     <tr>
                         <td>Exterior Color</td>
-                        <td>{filteredBookings[0].customization.exteriorColor.value}</td>
-                        <td>${filteredBookings[0].customization.exteriorColor.price}</td>
+                        <td>{filteredBookings[0].customization.exteriorColor?.value}</td>
+                        <td>${filteredBookings[0].customization.exteriorColor?.price}</td>
                     </tr>
                     <tr>
                         <td>Interior Color</td>

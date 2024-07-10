@@ -23,6 +23,7 @@ const ProfilePage = () => {
     const [selectedCarId, setSelectedCarId] = useState(null);
     const { isLoggedIn, logout } = useAuth();
     const [userName,setUserName]=useState('');
+    const [carImage, setCarImage] = useState('/assets/images/bmw_no_config.jpg');
     useEffect(() => {
         if (customId ) {
             fetchUserProfile(customId);
@@ -264,11 +265,11 @@ const ProfilePage = () => {
                                         bookings?.map((booking) => {
                                             console.log("Booking dets",booking)
                                             const car = carDetails[booking.carId._id];
-                                            console.log("Booked car dets",car)
+                                            console.log("Booked car dets",booking?.customization?.exteriorColor?.value.toLowerCase())
                                             return (
                                                 <div key={booking._id} className="profile-page-container__card-item">
                                                     <div className="profile-page-container__card-img">
-                                                        <img src='/assets/images/bmw_no_config.jpg' alt="Car" />
+                                                        <img src={`/assets/images/cars/${booking?.customization?.exteriorColor?.value.toLowerCase()}_left.png`}alt="Car" />
                                                     </div>
                                                     <div className="profile-page-container__card-dets">
                                                         <div className="profile-page-container__card-left">

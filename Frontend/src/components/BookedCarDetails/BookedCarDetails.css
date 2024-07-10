@@ -17,12 +17,13 @@
 }
 .booked-car-details__booking-info{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 .booked-car-details__booking-info__left{
-    width:50%;
+    width:80%;
     height:auto;
+    padding: 1rem;
 }
 .booked-car-details__carname-left p{
     font-family: 'Poppins',sans-serif;

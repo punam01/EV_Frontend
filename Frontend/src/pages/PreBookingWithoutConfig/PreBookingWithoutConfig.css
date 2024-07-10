@@ -1,5 +1,6 @@
 .pre-book-no-config-page {
-    background-color: #F7F7F7;
+    
+    background-color: white;
     display: flex;
     overflow-y: hidden;
     height: 85vh;
@@ -10,13 +11,16 @@
     background-color: pin;
     overflow: hidden;
     position: relative;
+    display:flex ;
+    justify-content: center;
+    align-items: center;
 }
 
 .pre-book-no-config-page__image__holder img {
     position: absolute;
     left: 0;
     width: 100%;
-    height: 120%;
+    height: auto;
     object-fit: cover;
 }
 
@@ -24,7 +28,7 @@
     width: 40%;
     overflow-y: auto;
     padding: 1rem 3rem;
-    margin-bottom: 10rem;
+    
 }
 .pre-book-no-config-page__booking__holder::-webkit-scrollbar{
     display: none;
@@ -61,14 +65,10 @@
     display: flex;
     background-color: #F3F3F3;
     flex-direction: column; 
-    position: fixed; 
-    bottom: 0; 
-    right: 0; 
-    width: 40%; 
-    z-index: 1000; 
-    height: auto;
+    width: 100%; 
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
     padding:1rem;
+    margin:1rem 0;
 }
 
 .pre-book-no-config-page__title__container {
@@ -201,6 +201,9 @@
     margin:auto;
     border-radius: 10px;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .pre-book-no-config-page__fixed-bottom__next__btn span{
     color:white;
@@ -225,6 +228,7 @@
     .pre-book-no-config-page__booking__holder {
         width:100%;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
     .pre-book-no-config-page__booking__label{
         display: flex;
