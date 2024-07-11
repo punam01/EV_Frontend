@@ -42,6 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width:100%;
 }
 
 .confirmation-popup__actions .btn .btn-confirm {
@@ -50,8 +51,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    margin: auto;
-    
+    text-align: center;
 }
 
 

@@ -35,7 +35,7 @@ const PLP = () => {
 
   const handleChange = (event) => {
     setSelectedModelId(event.target.value);
-    
+
     console.log(selectedModelId)
   };
 
@@ -69,8 +69,8 @@ const PLP = () => {
       filteredCars = filteredCars.filter((car) =>
         car.modelId === selectedModelId
       );
-      
-      console.log(filteredCars,selectedModelId)
+
+      console.log(filteredCars, selectedModelId)
     }
 
     if (selectedSteering) {
@@ -101,12 +101,10 @@ const PLP = () => {
 
   return (
     <div className='plp-page-container'>
-      <h1 className='plp-page-container__page-heading'>
-        Inventory
-      </h1>
-
-      <div className="plp-container">
-        {/*<Recommended handleClick={handleClick} />
+      <div className="plp-page-container__header">
+        <h1 className='plp-page-container__page-heading'>
+          Inventory
+        </h1>
         {cars.length > 0 && (
           <Sidebar
             handleChange={handleChange}
@@ -114,14 +112,20 @@ const PLP = () => {
             handleAutopilotChange={handleAutopilotChange}
             handleSeatingCapacityChange={handleSeatingCapacityChange}
             cars={cars}
-          />*/}
-        
+          />)}
+      </div>
+
+
+      <div className="plp-container">
+        {/*<Recommended handleClick={handleClick} />*/}
+
+
         <div className="vehicles-container">
           {result.map((car) => (
             <div key={car._id} className="car-card">
               <ul className='car-card__ul'>
                 {car && (
-                  <VariantCard key={car._id} variant={car.name} modelId={car.modelId} car={car} id={car._id}/>
+                  <VariantCard key={car._id} variant={car.name} modelId={car.modelId} car={car} id={car._id} />
                 )}
               </ul>
             </div>

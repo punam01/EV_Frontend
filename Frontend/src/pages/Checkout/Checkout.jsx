@@ -356,6 +356,7 @@ const Checkout = () => {
                                 value={userDetails.name}
                                 onChange={handleInputChange}
                                 disabled={!isEditing.name}
+                                required
                             />
                             <button className="checkout-content__button_svg" onClick={() => handleEditClick('name')}>
                                 {isEditing.name ?
@@ -378,6 +379,7 @@ const Checkout = () => {
                                 value={userDetails.email}
                                 onChange={handleInputChange}
                                 disabled={!isEditing.email}
+                                required
                             />
                             <button className="checkout-content__button_svg" onClick={() => handleEditClick('email')}>
                                 {isEditing.email ? <svg width="16" height="16" fill="#31A93E" className="bi bi-save" viewBox="0 0 16 16">
@@ -399,6 +401,7 @@ const Checkout = () => {
                                 value={userDetails.pincode}
                                 onChange={handleInputChange}
                                 disabled={!isEditing.pincode}
+                                required
                             />
                             <button className="checkout-content__button_svg" onClick={() => handleEditClick('pincode')}>
                                 {isEditing.pincode ? <svg width="16" height="16" fill="#31A93E" className="bi bi-save" viewBox="0 0 16 16">

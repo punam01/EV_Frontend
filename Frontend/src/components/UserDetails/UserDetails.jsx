@@ -5,9 +5,12 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../../features/user/userSlice';
 import './UserDetails.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const UserDetailsForm = ({user}) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+
   
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState({
@@ -68,7 +71,13 @@ const UserDetailsForm = ({user}) => {
         phoneNumber: user.phoneNumber,
       }));
       setSubmitted(true);
-      navigate('/profile')
+      if (state && state.from) {
+        navigate(state.from);
+      }
+      else{
+        
+      navigate('/signup')
+      }
     } catch (error) {
       console.error('Failed to register user:', error);
       toast.error(error.message || 'Failed to register user.');

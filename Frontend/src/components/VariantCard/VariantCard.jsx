@@ -14,7 +14,8 @@ const VariantCard = ({ variant, modelId, car }) => {
         if (isLoggedIn ) {
             navigate('/noconfig', { state: { car } });
           } else {
-            navigate('/signup');
+            //navigate('/signup');
+            navigate('/signup/', { state: { from: window.location.pathname } })
           }
     };
 

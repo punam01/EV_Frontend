@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../features/user/userSlice';
@@ -12,10 +12,13 @@ import { getUserByCustomId } from '../../services/userServices';
 
 const Login = () => {
   const dispatch = useDispatch();
+
   const user = useSelector(state => state.user);
   console.log(user)
   const authInstance = getAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
   const [phone, setPhone] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -74,7 +77,6 @@ const Login = () => {
         getUser(user.uid)
           .then(() => {
             toast.success("OTP sent successfully!");
-            navigate('/profile');
           })
           .catch((error) => {
             console.error('Error getting user data:', error);

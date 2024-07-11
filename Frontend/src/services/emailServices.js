@@ -53,7 +53,8 @@ const createTemplateParams = (bookingData) => {
     interiorColor: bookingData.customization.interiorColor.value,
     wheel: bookingData.customization.wheelColor.value,
     glass: bookingData.customization.glass.value || "Tinted Glass",
-    range: bookingData.customization.range.value || "Long Range",
+    range: bookingData?.customization?.range?.value ? bookingData?.customization?.range?.value:"Long Range",
+    estimatedPrice:bookingData?.estimatedPrice
   };
 };
 

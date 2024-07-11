@@ -6,13 +6,13 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Confirmation from '../../components/Confirmation/Confirmation';
 import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
+import { sendEmail } from '../../services/emailServices';
 
 const PreBookingWithoutConfig = () => {
-    const [confirmationMessage, setConfirmationMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const { isLoggedIn, logout } = useAuth();
     const [bookingDetails, setBookingDetails] = useState('');
     const [selectedColor, setSelectedColor] = useState("");
     const [selectedIntColor, setSelectedIntColor] = useState("");
@@ -43,6 +43,13 @@ const PreBookingWithoutConfig = () => {
         }
     }, [selectedColor]);
 
+    const onClose=()=>{
+        setShowPopup(false)
+
+        setTimeout(() => {
+            navigate('/profile');
+        }, 2000);
+    }
     const calculateEstimatedPrice = (customizations) => {
         return Object.values(customizations).reduce((total, option) => {
             if (option && option.price) {
@@ -80,7 +87,6 @@ const PreBookingWithoutConfig = () => {
             });
             setEstimatedPrice(newEstimatedPrice);
 
-            // Update selected color based on type
             switch (type) {
                 case 'Exterior Color':
                     setSelectedColor(color);
@@ -98,7 +104,6 @@ const PreBookingWithoutConfig = () => {
                     break;
             }
         } else {
-            // Reset customization if the color is not found
             setCustomization(prev => ({
                 ...prev,
                 [type.toLowerCase()]: { value: "", price: 0 }
@@ -109,7 +114,6 @@ const PreBookingWithoutConfig = () => {
                 [type.toLowerCase()]: { value: "", price: 0 }
             }));
 
-            // Reset selected color based on type
             switch (type) {
                 case 'Exterior Color':
                     setSelectedColor("");
@@ -218,20 +222,21 @@ const PreBookingWithoutConfig = () => {
         setBookingDetails(bookingData);
         try {
             const response = await bookCar(bookingData);
-            handleDownloadInvoice();
-            setConfirmationMessage('Booking Confirmed! 🚗💨');
-            setTimeout(() => {
-                navigate('/profile');
-            }, 2000);
+            console.log('booking data',response)
+            const emailResult = await sendEmail(response);
+            if (!emailResult.success) {
+                alert(emailResult.message);
+            }
+            else{
+                console.log('email sent')
+                alert("Email sent successfully!")
+            }
         } catch (error) {
             if (error.code === 11000) {
-                alert('You have already booked a similar car within the last 24 hours. Please try again later.');
+                toast('You have already booked a similar car within the last 24 hours. Please try again later.');
             } else {
                 console.error('Error booking car:', error);
-                alert('You have already booked a similar car within the last 24 hours. Please try again later.');
-                setTimeout(() => {
-                    navigate('/profile');
-                }, 2000);
+                toast('You have already booked a similar car within the last 24 hours. Please try again later.');
             }
         }
     };
@@ -337,10 +342,9 @@ const PreBookingWithoutConfig = () => {
             </div>
             {showPopup && (
                 <Confirmation
-                    confirmationMessage={confirmationMessage}
                     handleBooking={handleNextClick}
                     bookingDetails={bookingDetails}
-                    onClose={() => setShowPopup(false)}
+                    onClose={onClose}
                 />
             )}
         </div>

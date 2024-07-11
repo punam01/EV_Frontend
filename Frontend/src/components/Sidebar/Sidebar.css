@@ -3,18 +3,19 @@
     display:flex ;
     justify-content:space-between ;
     align-items: center;
-    width:98%;
     margin:0;
     border-radius: 5px;
-    margin-bottom: 3rem;
+    
+    margin-right:3.5rem ;
 }
 .sidebar-items{
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    width:30%;
+    align-items: center;
+    width:100%;
     margin: 0;
     padding: 10px;
+    
 }
 .item-select,
 .item-label{
