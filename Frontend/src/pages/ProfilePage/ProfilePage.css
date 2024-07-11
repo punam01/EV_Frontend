@@ -24,19 +24,24 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
 }
-.welcome-profile-page-container__ul{
+
+.welcome-profile-page-container__ul {
     padding: 2rem;
 }
-.welcome-profile-page-container__li{
+
+.welcome-profile-page-container__li {
     padding: 0.5rem;
 }
-.welcome-profile-page-container__li svg{
+
+.welcome-profile-page-container__li svg {
     margin-right: 10px;
 }
-.welcome-profile-page-container__li span{
+
+.welcome-profile-page-container__li span {
     font-size: 18px;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
+
 .profile-page-container__sidebar-container {
     width: 30%;
     height: 90vh;
@@ -46,6 +51,7 @@
     justify-content: center;
     align-items: center;
     overflow-y: hidden;
+    border-right: 1px solid #E8EBEB;
 }
 
 .profile-page-container__sidebar-ul {
@@ -59,21 +65,28 @@
     align-items: center;
     cursor: pointer;
 }
-
+.profile-page-container__sidebar-li.active .profile-page-container__sidebar-li-span {
+    color: #31A93E;
+    font-weight: 500;
+}
+.profile-page-container__sidebar-li.active .profile-page-container__sidebar-li svg {
+    color: #31A93E;
+    font-weight: 500;
+}
 .profile-page-container__sidebar-li:hover span {
     color: #31A93E;
 }
 
 .profile-page-container__sidebar-li-span {
     padding: 10px;
-    font-size: 20px;
+    font-size: 17px;
     font-family: 'Poppins', sans-serif;
     color: #5D5F63;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .profile-page-container__sidebar-li-span--active {
-    font-weight: 500;
+    font-weight: 400;
     color: #31A93E;
 }
 
@@ -91,8 +104,8 @@
 }
 
 .profile-page-container__sub-content__h1 {
-    margin: 0.5rem 0 1.5rem 0;
-    font-size: 3rem;
+    margin: 0.5rem 0 1.5rem 1rem;
+    font-size: 2rem;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
 }
@@ -126,6 +139,13 @@
 
 .profile-page-container__data-item input:focus {
     background-color: #E6F4E7;
+
+}
+
+.profile-page-container__data-item input:disabled {
+    background-color: #E6F4E7;
+    color: black;
+    cursor: not-allowed;
 
 }
 
@@ -200,21 +220,25 @@
 .profile-page-container__card-span:hover {
     color: #31A93E;
 }
-.welcome-profile-page-container__link-container{
+
+.welcome-profile-page-container__link-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.welcome-profile-page-container__link{
+
+.welcome-profile-page-container__link {
     font-size: 18px;
-    font-family: 'Poppins',sans-serif;
-    color:#31A93E;
+    font-family: 'Poppins', sans-serif;
+    color: #31A93E;
     text-decoration: underline;
     padding: 2rem;
 }
-.welcome-profile-page-container__link:hover{
-    color:black;
+
+.welcome-profile-page-container__link:hover {
+    color: black;
 }
+
 .profile-page-container__card-right p {
     font-size: 15px;
     text-decoration: underline;

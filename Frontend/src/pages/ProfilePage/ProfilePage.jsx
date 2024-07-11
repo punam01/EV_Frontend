@@ -22,18 +22,19 @@ const ProfilePage = () => {
     const id = localStorage.getItem('USER');
     const [selectedCarId, setSelectedCarId] = useState(null);
     const { isLoggedIn, logout } = useAuth();
-    const [userName,setUserName]=useState('');
+    const [userName, setUserName] = useState('');
     const [carImage, setCarImage] = useState('/assets/images/bmw_no_config.jpg');
+    const [activeLink, setActiveLink] = useState('profile');
     useEffect(() => {
-        if (customId ) {
+        if (customId) {
             fetchUserProfile(customId);
             setUserName(userProfile.first_name)
         }
     }, [customId]);
 
-    const findBookingDetails=(carId)=>{
-        bookings?.map(booking=>{
-            if(booking.carId._id===carId){
+    const findBookingDetails = (carId) => {
+        bookings?.map(booking => {
+            if (booking.carId._id === carId) {
                 setBookingData(booking);
             }
         })
@@ -57,11 +58,11 @@ const ProfilePage = () => {
                 pincode: response.pincode,
                 custom_id: customId,
             });
-            localStorage.setItem('last_name',response.last_name)
-            localStorage.setItem('email',response.email)
-            localStorage.setItem('phone',response.contact)
-            localStorage.setItem('address',response.address)
-            localStorage.setItem('zip',response.pincode)
+            localStorage.setItem('last_name', response.last_name)
+            localStorage.setItem('email', response.email)
+            localStorage.setItem('phone', response.contact)
+            localStorage.setItem('address', response.address)
+            localStorage.setItem('zip', response.pincode)
 
         } catch (error) {
             console.error('Error fetching user profile:', error);
@@ -96,13 +97,13 @@ const ProfilePage = () => {
         bookings.forEach(booking => {
             fetchCarDetails(booking.carId._id);
         });
-    }, [id,bookings]);
+    }, [id, bookings]);
     useEffect(() => {
         bookings.forEach(booking => {
             fetchCarDetails(booking.carId._id);
         });
     }, [bookings]);
-    
+
     const handleEditClick = () => {
         setEditMode(true);
     };
@@ -124,24 +125,28 @@ const ProfilePage = () => {
         }));
     };
     const handleClickProfile = () => {
-        setCarDetails(false)
-        setDemoDriveHistory(false)
-        setOrderHistory(false)
-        setProfile(true)
-    }
-    const handleClickOrder = () => {
+        setActiveLink('profile');
+        setCarDetails(false);
+        setDemoDriveHistory(false);
+        setOrderHistory(false);
+        setProfile(true);
+    };
 
-        setProfile(false)
-        setCarDetails(false)
-        setDemoDriveHistory(false)
-        setOrderHistory(true)
-    }
+    const handleClickOrder = () => {
+        setActiveLink('order');
+        setProfile(false);
+        setCarDetails(false);
+        setDemoDriveHistory(false);
+        setOrderHistory(true);
+    };
+
     const handleClickDemo = () => {
-        setCarDetails(false)
-        setOrderHistory(false)
-        setProfile(false)
-        setDemoDriveHistory(true)
-    }
+        setActiveLink('demo');
+        setCarDetails(false);
+        setOrderHistory(false);
+        setProfile(false);
+        setDemoDriveHistory(true);
+    };
     return (
         <div className='profile-page-container'>
             {isLoggedIn ? (<>
@@ -149,37 +154,36 @@ const ProfilePage = () => {
                     <div>
                         {isLoggedIn ? (
                             <div>
-                                <p>Welcome, </p>
                             </div>
                         ) : (
                             <p>Please log in.</p>
                         )}
                     </div>
                     <ul className='profile-page-container__sidebar-ul'>
-                        <li className='profile-page-container__sidebar-li' onClick={handleClickProfile}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                        <li className={`profile-page-container__sidebar-li ${activeLink === 'profile' ? 'active' : ''}`} onClick={handleClickProfile}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5D5F63" className="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                 <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                             </svg>
                             <span className='profile-page-container__sidebar-li-span'>Profile Settings</span>
                         </li>
-                        <li className='profile-page-container__sidebar-li' onClick={handleClickOrder}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-ev-front-fill" viewBox="0 0 16 16">
+                        <li className={`profile-page-container__sidebar-li ${activeLink === 'order' ? 'active' : ''}`} onClick={handleClickOrder}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5D5F63" className="bi bi-ev-front-fill" viewBox="0 0 16 16">
                                 <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848Zm6.75.51a.186.186 0 0 0-.23.034L6.05 7.246a.188.188 0 0 0 .137.316h1.241l-.673 2.195a.19.19 0 0 0 .085.218c.075.043.17.03.23-.034l2.88-3.187a.188.188 0 0 0-.137-.316H8.572l.782-2.195a.19.19 0 0 0-.085-.218Z" />
                             </svg>
                             <span className='profile-page-container__sidebar-li-span'>Order History</span>
                         </li>
-                        <li className='profile-page-container__sidebar-li' onClick={handleClickDemo}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-card-list" viewBox="0 0 16 16">
+                        <li className={`profile-page-container__sidebar-li ${activeLink === 'demo' ? 'active' : ''}`} onClick={handleClickDemo}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5D5F63" className="bi bi-card-list" viewBox="0 0 16 16">
                                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
                                 <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-5 7a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                             </svg>
                             <span className='profile-page-container__sidebar-li-span'>Demo Drive History</span>
                         </li>
                         <li className='profile-page-container__sidebar-li' onClick={logout}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-card-list" viewBox="0 0 16 16">
-                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
-                                <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M3 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1.5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-5 7a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5D5F63" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                             </svg>
                             <span className='profile-page-container__sidebar-li-span'>Sign Out</span>
                         </li>
@@ -262,27 +266,27 @@ const ProfilePage = () => {
                                 {bookings.length > 0 ? (
                                     <div className="profile-page-container__data">
                                         {
-                                        bookings?.map((booking) => {
-                                            console.log("Booking dets",booking)
-                                            const car = carDetails[booking.carId._id];
-                                            console.log("Booked car dets",booking?.customization?.exteriorColor?.value.toLowerCase())
-                                            return (
-                                                <div key={booking._id} className="profile-page-container__card-item">
-                                                    <div className="profile-page-container__card-img">
-                                                        <img src={`/assets/images/cars/${booking?.customization?.exteriorColor?.value.toLowerCase()}_left.png`}alt="Car" />
-                                                    </div>
-                                                    <div className="profile-page-container__card-dets">
-                                                        <div className="profile-page-container__card-left">
-                                                            <p className='profile-page-container__card__p'>{car?.name || 'Car Name'}</p>
-                                                            <span className='profile-page-container__card-span' onClick={() => handleViewDetails(booking.carId._id)}>View details</span>
+                                            bookings?.map((booking) => {
+                                                console.log("Booking dets", booking)
+                                                const car = carDetails[booking.carId._id];
+                                                console.log("Booked car dets", booking?.customization?.exteriorColor?.value.toLowerCase())
+                                                return (
+                                                    <div key={booking._id} className="profile-page-container__card-item">
+                                                        <div className="profile-page-container__card-img">
+                                                            <img src={`/assets/images/cars/${booking?.customization?.exteriorColor?.value.toLowerCase()}_left.png`} alt="Car" />
                                                         </div>
-                                                        <div className="profile-page-container__card-right">
-                                                            <InvoiceComponent bookingData={booking}/>
+                                                        <div className="profile-page-container__card-dets">
+                                                            <div className="profile-page-container__card-left">
+                                                                <p className='profile-page-container__card__p'>{car?.name || 'Car Name'}</p>
+                                                                <span className='profile-page-container__card-span' onClick={() => handleViewDetails(booking.carId._id)}>View details</span>
+                                                            </div>
+                                                            <div className="profile-page-container__card-right">
+                                                                <InvoiceComponent bookingData={booking} />
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            );
-                                        })}
+                                                );
+                                            })}
                                     </div>
                                 ) : (
                                     <p>No bookings found</p>
@@ -293,11 +297,11 @@ const ProfilePage = () => {
                     {openViewDetails && selectedCarId && (
                         <div className="car-details">
                             {
-                            carDetails[selectedCarId] && bookings ? (
-                                <BookedCarDetails carData={carDetails[selectedCarId]} bookingData={bookings} selectedCarId={selectedCarId} setOpenViewDetails={setOpenViewDetails}/>
-                            ) : (
-                                <p>Loading car details...</p>
-                            )}
+                                carDetails[selectedCarId] && bookings ? (
+                                    <BookedCarDetails carData={carDetails[selectedCarId]} bookingData={bookings} selectedCarId={selectedCarId} setOpenViewDetails={setOpenViewDetails} />
+                                ) : (
+                                    <p>Loading car details...</p>
+                                )}
 
                         </div>
                     )}
