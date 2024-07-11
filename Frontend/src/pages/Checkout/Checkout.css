@@ -176,7 +176,7 @@
 .checkout-content__button_svg:click {
     color: #31A93E;
 }
-/* Location List Styles */
+
 .location-list {
     list-style: none;
     padding: 0;
@@ -316,7 +316,7 @@
     }
 }
 
-/* Responsive Styles */
+
 @media (max-width: 768px) {
     .step-wizard-item {
         font-size: 14px;

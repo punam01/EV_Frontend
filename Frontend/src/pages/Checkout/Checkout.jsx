@@ -5,10 +5,7 @@ import { bookCar } from '../../services/preBookingService';
 import './Checkout.css';
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
-import Confetti from 'react-confetti'
-import SendEmailComponent from '../../components/SendEmailComponent/SendEmailComponent';
 import { sendEmail } from '../../services/emailServices';
-import useAuth from '../../hooks/useAuth';
 import { Toaster } from 'react-hot-toast';
 import PhoneVerification from '../DemoDriveBooking/PhoneVerification';
 import OTPVerification from '../DemoDriveBooking/OTPVerification';
@@ -19,7 +16,6 @@ import { toast } from 'react-toastify';
 const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {isLoggedIn,logout}=useAuth()
     const { selectedOptions, totalPrice, carData } = location.state || {};
     const [step, setStep] = useState(1);
     const [userDetails, setUserDetails] = useState({ pincode: '', name: '', email: '' });
@@ -31,10 +27,7 @@ const Checkout = () => {
     const [otpVerified, setOtpVerified] = useState(false);
     const [loading, setLoading] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
-    const [userData, setUserData] = useState({ first_name: '',last_name:'', email: '', zipCode: '' });
-    console.log("selected :", selectedOptions)
-    console.log("totalPrice :", totalPrice)
-    console.log("carData :", carData)
+    const [userData, setUserData] = useState({ first_name: '', last_name: '', email: '', zipCode: '' });
     const [bookingData, setBookingData] = useState()
     useEffect(() => {
         setUserDetails({
@@ -43,6 +36,7 @@ const Checkout = () => {
             email: localStorage.getItem('email') || '',
         });
     }, []);
+    
     const handlePincodeChange = (e) => {
         setUserDetails(prev => ({ ...prev, pincode: e.target.value }));
     };
@@ -73,7 +67,7 @@ const Checkout = () => {
         }
         else if (step == 3) {
             if (!bookingConfirmed) {
-                alert('Error occured while booking please try again later');
+                alert('Error occured while booking. Please try again later');
                 return;
             }
             setStep(4);
@@ -133,20 +127,17 @@ const Checkout = () => {
         try {
             const result = await bookCar(bookingData);
             setBookingData(result)
-            console.log("Result", result)
-            console.log('Booking confirmed:', result);
             setBookingConfirmed(true);
             setStep(4);
             const emailResult = await sendEmail(result);
             if (!emailResult.success) {
                 alert(emailResult.message);
             }
-            else{
+            else {
                 alert("Email sent successfully!")
             }
 
         } catch (error) {
-            console.error('Error during booking:', error);
             alert('Failed to confirm the booking. Please try again later.');
         }
     };
@@ -165,7 +156,7 @@ const Checkout = () => {
             const registeredUser = await registerUser({
                 custom_id: localStorage.getItem('customId'),
                 first_name: userData.first_name,
-                last_name:userData.last_name,
+                last_name: userData.last_name,
                 email: userData.email,
                 pincode: userData.zipCode,
                 contact: localStorage.getItem('phone').replace('+', '')
@@ -175,13 +166,13 @@ const Checkout = () => {
             localStorage.setItem('zip', userData.zipCode);
             setUserId(registeredUser._id);
             fetchLocations(userData.zipCode);
-            //setShowUserDetails(false);
             toast.success("User details saved");
         } catch (error) {
             console.error('Registration error:', error.message);
             toast.error('User with the same phone number already exists.');
         }
     };
+
     const handleDownloadInvoice = () => {
         const doc = new jsPDF();
         const title = "Invoice";
@@ -217,7 +208,7 @@ const Checkout = () => {
                 1: { cellWidth: 130 }
             }
         });
-        // Car Details
+
         const carData = [
             [selectedOptions.exteriorColor.name, selectedOptions.interiorColor.name, selectedOptions.wheel.name, selectedOptions.glass.name, `$${totalPrice}`]
         ];
@@ -234,8 +225,8 @@ const Checkout = () => {
                 valign: 'middle'
             },
             headStyles: {
-                fillColor: [0, 123, 255], // Different blue
-                textColor: [255, 255, 255], // White text
+                fillColor: [0, 123, 255],
+                textColor: [255, 255, 255],
                 fontStyle: 'bold',
                 halign: 'center'
             },
@@ -282,7 +273,6 @@ const Checkout = () => {
             }
         });
         doc.output('dataurlnewwindow');
-        //doc.save(`bmw_invoice_${userDetails.name}.pdf`);
     };
     const [isEditing, setIsEditing] = useState({
         name: false,
@@ -417,29 +407,29 @@ const Checkout = () => {
                         <button className='checkout-content__next__button' onClick={handleNextStep}>Next</button>
                     </div>
                 )}
-                {null && step===1 &&(
+                {null && step === 1 && (
                     <div className="demo-user-details">
-                    <h1>Book <span>{carData && carData.name}</span> Demo Drive</h1>
-                    <div id="recaptcha-container"></div>
-                    <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
-                    <PhoneVerification
-                        phone={phone}
-                        setPhone={setPhone}
-                        setShowOtp={setShowOtp}
-                        loading={loading}
-                        setLoading={setLoading}
-                        otpSent={otpSent}
-                        setOtpSent={setOtpSent}
-                        />
-
-                    {showOtp && !otpVerified && (
-                        <OTPVerification
-                            setOtpVerified={setOtpVerified}
+                        <h1>Book <span>{carData && carData.name}</span> Demo Drive</h1>
+                        <div id="recaptcha-container"></div>
+                        <Toaster position="top-center" toastOptions={{ success: { duration: 3000 } }} />
+                        <PhoneVerification
+                            phone={phone}
+                            setPhone={setPhone}
+                            setShowOtp={setShowOtp}
+                            loading={loading}
+                            setLoading={setLoading}
+                            otpSent={otpSent}
                             setOtpSent={setOtpSent}
                         />
-                    )}
-                    <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} disabled={!otpVerified} />
-                </div>
+
+                        {showOtp && !otpVerified && (
+                            <OTPVerification
+                                setOtpVerified={setOtpVerified}
+                                setOtpSent={setOtpSent}
+                            />
+                        )}
+                        <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} disabled={!otpVerified} />
+                    </div>
                 )
 
                 }
@@ -543,7 +533,6 @@ const Checkout = () => {
                 {step == 4 && bookingConfirmed && (<>
 
                     <div className="confirmation-message">
-                        {/*<SendEmailComponent bookingData={bookingData} />*/}
                         <h2>Congratulations!</h2>
                         <p>Your booking has been confirmed successfully.</p>
                         <p>An email has been sent to {" "}<b>{userDetails.email}</b> {" "}with the booking details.</p>

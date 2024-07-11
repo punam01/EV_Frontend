@@ -79,7 +79,7 @@ const DemoDriveBooking = () => {
             setShowUserDetails(false);
             toast.success("User details saved");
         } catch (error) {
-            console.error('Registration error:', error.message);
+            //console.error('Registration error:', error.message);
             toast.error('User with the same phone number already exists.');
         }
     };
@@ -89,7 +89,7 @@ const DemoDriveBooking = () => {
             const data = await getCarAvailabilityByPincode(zipCode);
             setLocations(data);
         } catch (error) {
-            console.error('Error fetching locations:', error.message);
+            //console.error('Error fetching locations:', error.message);
             setLocations([]);
         }
     };
@@ -126,7 +126,7 @@ const DemoDriveBooking = () => {
             setBookingDetails(bookingResponse);
             setBookingSubmitted(true);
         } catch (error) {
-            console.error('Error creating demo booking:', error.message);
+            //console.error('Error creating demo booking:', error.message);
             toast.error("Already booked 1 demo", {
                 duration: 3000,
                 onClose: () => {
@@ -143,7 +143,7 @@ const DemoDriveBooking = () => {
     };
 
     const handleFetchLocations = () => {
-        console.log("dd:",zipCode)
+        //console.log("dd:",zipCode)
         fetchLocations(zipCode).then((locations) => {
             if (locations && locations.length === 0) {
                 toast.error('No locations found. Please try another ZIP code.');

@@ -1,6 +1,5 @@
 import React from 'react';
 import PhoneInput from 'react-phone-input-2';
-//import 'react-phone-input-2/lib/style.css';
 import { CgSpinner } from "react-icons/cg";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import toast from 'react-hot-toast';
@@ -9,8 +8,6 @@ import './PhoneVerification.css'
 
 
 const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, otpSent ,setOtpSent}) => {
-    
-  
     const onCaptchVerify = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
@@ -32,7 +29,7 @@ const PhoneVerification = ({ phone, setPhone, setShowOtp, loading, setLoading, o
                 window.confirmationResult = confirmationResult;
                 setLoading(false);
                 setShowOtp(true);
-                setOtpSent(true); // Set otpSent to true
+                setOtpSent(true); 
                 toast.success("OTP sent successfully!");
                 
             }).catch((error) => {

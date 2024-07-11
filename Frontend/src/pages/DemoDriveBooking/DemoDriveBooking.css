@@ -53,7 +53,6 @@
     background-color: #CCCBCB;
     font-weight: 500;
 }
-/*IMAGE*/
 .demo-img-holder {
     flex: 1;  
     box-sizing: border-box;
@@ -79,7 +78,7 @@
     }
 
     .demo-img-holder {
-        display: none; /* Hide the image on smaller screens */
+        display: none; 
     }
     
     .demo-booking-holder {
@@ -91,15 +90,15 @@
 @media (max-width: 480px) {
     .demo-user-details h1,
     .demo-booking-details h1 {
-        font-size: 2rem; /* Smaller font size for smaller screens */
+        font-size: 2rem; 
     }
     
     .demo-booking-details__button {
-        font-size: 14px; /* Adjust button text size */
-        padding: 0.5rem 1rem; /* Adjust button padding */
+        font-size: 14px; 
+        padding: 0.5rem 1rem; 
     }
     
     .demo-booking-details__input {
-        font-size: 12px; /* Adjust input text size */
+        font-size: 12px;
     }
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { GoShieldLock } from "react-icons/go";
 import { CgSpinner } from "react-icons/cg";
 import OtpInput from 'react-otp-input';
 import { useDispatch } from 'react-redux';
@@ -14,12 +13,12 @@ const OTPVerification = ({ setOtpVerified, setOtpSent }) => {
     
     const onOTPVerify = () => {
         setLoading(true);
-        console.log('verifying')
+        //console.log('verifying')
         window.confirmationResult.confirm(otp).then(async (res) => {
             setLoading(false);
             setOtpVerified(true);
             setOtpSent(true);
-            console.log('setting userid:', res.user.uid)
+            //console.log('setting userid:', res.user.uid)
             localStorage.setItem('customId', res.user.uid)
             localStorage.setItem('phone', res.user.phoneNumber)
             dispatch(setUser({
