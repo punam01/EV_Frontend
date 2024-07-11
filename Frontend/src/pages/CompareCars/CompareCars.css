@@ -77,6 +77,7 @@
     align-items: center;
     width:100%;
 }
+
 .car-compare-container__result__item-item-col{
     margin:2rem 0 0 0;
     padding:1rem;
@@ -97,6 +98,7 @@
     font-size: 18px;
     font-weight: 500;
     padding: 0 3rem;
+    text-align: center;
 }
 .car-compare-container__result__item-item img{
     width:100%;

@@ -325,6 +325,19 @@
     display: flex;
     justify-content: flex-end;
 }
+.home-page-container__scroll-button-container{
+    display: flex;
+    justify-content:flex-end ;
+    padding:2rem
+}
+.home-page-container__scroll-button{
+    background-color: transparent;
+    border: none;
+    margin: 0.5rem;
+}
+.home-page-container__scroll-button:focus{
+    background-color: none;
+}
 @keyframes appear {
     from {
         opacity: 1;

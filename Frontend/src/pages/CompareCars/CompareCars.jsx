@@ -8,6 +8,8 @@ const CompareCars = () => {
   const [model1, setModel1] = useState('');
   const [model2, setModel2] = useState('');
   const [comparisonData, setComparisonData] = useState(null);
+  const [color1, setColor1] = useState('black');
+  const [color2, setColor2] = useState('olive');
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const CompareCars = () => {
     try {
       const data = await compareCars(model1, model2);
       setComparisonData(data);
-      console.log(data)
+      console.log("COMPARE DATA",data)
       setError('');
     } catch (err) {
       setError('Error comparing car models');
@@ -40,11 +42,11 @@ const CompareCars = () => {
     }
   };
 
+ 
   return (
     <div className='car-compare-container'>
-      <h1 className='car-compare-container__header'>Compare BMW models</h1>
+      <h1 className='car-compare-container__header'>Compare models</h1>
       <div className='car-compare-container__link'>
-        <Link className="car-compare-container__link-link" to="/cars">Book Now</Link>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#31A93E" class="bi bi-arrow-right" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
         </svg>
@@ -61,7 +63,7 @@ const CompareCars = () => {
             <div className='car-compare-container__result'>
               <div className="car-compare-container__result__item">
                 <div className="car-compare-container__result__item-item">
-                  <img src="/assets/images/car_3d_t.png" alt="Car Model 1" />
+                  <img src={`/assets/images/cars/${color1.toLowerCase()}_left.png`} alt="Car Model 1" />
                 </div>
                 <div className="car-compare-container__result__item-item">
                   <div className="car-compare-container__result__item-item">
@@ -71,15 +73,14 @@ const CompareCars = () => {
                           key={color.code}
                           className="color-swatch"
                           style={{ backgroundColor: color.code }}
-                          onClick={() => handleColorClick(color.name)}
+                          onClick={() => setColor1(color.name)}
                         ></div>
                       ))}
                     </div>
                   </div>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
-                  <p className='car-compare-container__result__item__basePrice'>From ${comparisonData.basePrice1}.00*</p><br />
-                  <Link className="car-compare-container__result__item-link" to="/noconfig">Book now</Link>
+                  <p className='car-compare-container__result__item__basePrice'>From ₹{comparisonData.basePrice1}.00*</p><br />
                   <Link className="car-compare-container__result__item-link-nobg" to="/cars">Learn More</Link>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
@@ -154,24 +155,26 @@ const CompareCars = () => {
             <div className='car-compare-container__result'>
               <div className="car-compare-container__result__item">
                 <div className="car-compare-container__result__item-item">
-                  <img src="/assets/images/car_3d_t.png" alt="Car Model 1" />
+                  <img src={`/assets/images/cars/${color2.toLowerCase()}_left.png`} alt="Car Model 1" />
+                  {console.log(color2)}
                 </div>
                 <div className="car-compare-container__result__item-item">
                   <div className="car-compare-container__result__item-item">
                     <div className="car-compare-container__standard-color">
-                      {comparisonData.customizableOptions1.find(option => option.name === 'Exterior Color')?.options.map(color => (
+                      {comparisonData.customizableOptions2.find(option => option.name === 'Exterior Color')?.options.map(color => (
                         <div
                           key={color.code}
                           className="color-swatch"
                           style={{ backgroundColor: color.code }}
-                          onClick={() => handleColorClick(color.name)}
+                          onClick={() => setColor2(color.name)}
+                          tooltip={color.name}
                         ></div>
                       ))}
                     </div>
                   </div>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
-                  <p className='car-compare-container__result__item__basePrice'>From ${comparisonData.basePrice1}.00*</p><br />
+                  <p className='car-compare-container__result__item__basePrice'>From ₹{comparisonData.basePrice1}.00*</p><br />
                   <Link className="car-compare-container__result__item-link" to="/noconfig">Book now</Link>
                   <Link className="car-compare-container__result__item-link-nobg" to="/cars">Learn More</Link>
                 </div>
@@ -180,7 +183,7 @@ const CompareCars = () => {
                     <path d="M2.5 1a.5.5 0 0 0-.5.5V5h-.5A1.5 1.5 0 0 0 0 6.5v7a1.5 1.5 0 0 0 1 1.415v.335a.75.75 0 0 0 1.5 0V15H4v-1H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V7h1v-.5A1.5 1.5 0 0 0 6.5 5H6V1.5a.5.5 0 0 0-.5-.5zM5 5H3V2h2z" />
                     <path d="M3 7.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0zM11 6a1.5 1.5 0 0 1 1.5 1.5V8h2A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 14.5v-5A1.5 1.5 0 0 1 6.5 8h2v-.5A1.5 1.5 0 0 1 10 6zM9.5 7.5V8h2v-.5A.5.5 0 0 0 11 7h-1a.5.5 0 0 0-.5.5M6 9.5v5a.5.5 0 0 0 .5.5H7V9h-.5a.5.5 0 0 0-.5.5m7 5.5V9H8v6zm1.5 0a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H14v6z" />
                   </svg>
-                  <p>Spacious cargo capacity of {comparisonData.cargoCapacity} cu. mt.</p>
+                  <p>Spacious cargo capacity of {comparisonData.cargoCapacity2} cu. mt.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg fill="#000000" height="70" width="70" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -223,7 +226,7 @@ const CompareCars = () => {
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24Z" fill="#2F88FF" />
                     <path d="M32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <p>{comparisonData.steering2}</p>
+                  <p>{comparisonData.steering2} Steering.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#000000" class="bi bi-ev-station" viewBox="0 0 16 16">

@@ -47,6 +47,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/noconfig" element={<PreBookingWithoutConfig />} />
       </Routes>
+      <Footer/>
     </div>
   );
 };

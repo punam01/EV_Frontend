@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './CarDetailsPage.css';
 import useAuth from '../../hooks/useAuth';
 import './CarDetailsPage.css'
-import reel1 from '/public/assets/reel1.mp4';
+
 import CarouselComponent from '../../components/Carousel/CarouselComponent';
 const CarDetailsPage = () => {
   const location = useLocation();
@@ -40,7 +40,7 @@ const CarDetailsPage = () => {
     <div className="car-details-page__container">
       <div className="car-details">
         <div className="car-reels">
-          <video src={reel1} autoPlay
+          <video src='/assets/videos/reel1.mp4' autoPlay
             loop
             muted></video>
           <div className="overlay-text">

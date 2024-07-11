@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllCars } from '../../services/carServices';
-import useAuth from '../../hooks/useAuth';
 import './HomePage.css';
 
 const HomePage = () => {
   const [cars, setCars] = useState([]);
-  const [selectedColor,setSelectedColor]=useState('')
+  const [selectedColor, setSelectedColor] = useState('')
   const navigate = useNavigate();
-  const [carImage,setCarImage]=useState('')
+  const [carImage, setCarImage] = useState('')
+  
+  const scrollContainerRefExplore = useRef(null);  
+  const scrollContainerRefFind = useRef(null);
   useEffect(() => {
     const fetchCars = async () => {
       try {
         const data = await getAllCars();
         console.log("Car details:", data[0]);
-        localStorage.setItem("CAR",JSON.stringify(data[0]));
+        localStorage.setItem("CAR", JSON.stringify(data[0]));
         setCars(data);
       } catch (error) {
         console.error("Error fetching cars:", error);
@@ -23,15 +25,15 @@ const HomePage = () => {
     fetchCars();
   }, []);
 
-  const handleColorClick=(color,carId)=>{
-    console.log(color,carId)
+  const handleColorClick = (color, carId) => {
+    console.log(color, carId)
     setSelectedColor(color);
   }
   useEffect(() => {
     if (selectedColor) {
-        setCarImage(`/assets/images/cars/${selectedColor.toLowerCase()}_left.png`);
+      setCarImage(`/assets/images/cars/${selectedColor.toLowerCase()}_left.png`);
     }
-}, [selectedColor]);
+  }, [selectedColor]);
   const handleBookCar = (car) => {
     navigate('/cardetails', { state: { car } });
   }
@@ -42,18 +44,26 @@ const HomePage = () => {
     navigate('/noconfig', { state: { car } });
   }
 
-  const scrollContainerRef = useRef(null);
 
   const scrollLeft = () => {
-    console.log(scrollContainerRef.current)
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    if (scrollContainerRefExplore.current) {
+      scrollContainerRefExplore.current.scrollBy({ left: -350, behavior: 'smooth' });
+    }
+  }
+  const scrollLeftFind = () => {
+    if (scrollContainerRefFind.current) {
+      scrollContainerRefFind.current.scrollBy({ left: -350, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    if (scrollContainerRefExplore.current) {
+      scrollContainerRefExplore.current.scrollBy({ left: 350, behavior: 'smooth' });
+    }
+  }
+    const scrollRightFind = () => {
+    if (scrollContainerRefFind.current) {
+      scrollContainerRefFind.current.scrollBy({ left: 350, behavior: 'smooth' });
     }
   };
   return (<>
@@ -78,10 +88,21 @@ const HomePage = () => {
               <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
             </svg>
           </div>
-
         </div>
-        <div className="home-page-container__explore-section" ref={scrollContainerRef}>
-          <div className="home-page-container__explore-model-list">
+        <div className="home-page-container__explore-section">
+          <div className="home-page-container__scroll-button-container">
+            <button className="home-page-container__scroll-button" onClick={scrollLeft}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1" />
+              </svg>
+            </button>
+            <button className="home-page-container__scroll-button" onClick={scrollRight}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1" />
+              </svg>
+            </button>
+          </div>
+          <div className="home-page-container__explore-model-list" ref={scrollContainerRefExplore}>
             {cars.map(car => (
               <div className="home-page-container__explore-model-item__container">
                 <div key={car.carId} className="home-page-container__explore-model-item">
@@ -92,7 +113,7 @@ const HomePage = () => {
                         key={color.code}
                         className="color-swatch"
                         style={{ backgroundColor: color.code }}
-                        onClick={() => handleColorClick(color.name.toLowerCase(),car.carId)}
+                        onClick={() => handleColorClick(color.name.toLowerCase(), car.carId)}
                       ></div>
                     ))}
                   </div>
@@ -157,7 +178,19 @@ const HomePage = () => {
         <div className="home-page-container__model-hearder-section">
           <div className='model-list__title'>Find your Perfect Car.</div>
         </div>
-        <div className="home-page-container__find-section">
+        <div className="home-page-container__scroll-button-container">
+            <button className="home-page-container__scroll-button" onClick={scrollLeftFind}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1" />
+              </svg>
+            </button>
+            <button className="home-page-container__scroll-button" onClick={scrollRightFind}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1" />
+              </svg>
+            </button>
+          </div>
+        <div className="home-page-container__find-section" ref={scrollContainerRefFind}>
           <div className="home-page-container__find-model-list">
             <div className="home-page-container__find__card">
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-car-front" viewBox="0 0 16 16">

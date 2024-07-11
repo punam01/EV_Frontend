@@ -10,8 +10,8 @@ const Footer = () => {
         </div>
         <ul className="footer-container__link-holder">
             <Link className="footer-container__link-holder_li" to="/">Home</Link>
-            <Link className="footer-container__link-holder_li" to="/">Demo Drive</Link>
-            <Link className="footer-container__link-holder_li" to="/">BMW Models</Link>
+            <Link className="footer-container__link-holder_li" to="/demodrive">Demo Drive</Link>
+            <Link className="footer-container__link-holder_li" to="/cars">Models</Link>
         </ul>
       </div>
       <div className="footer-container__lines"></div>

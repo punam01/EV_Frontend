@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${menuOpen ? 'navbar--active' : ''}`}>
-      <img src="/assets/images/bmw_logo.png" alt="logo" className='navbar__logo' onClick={() => setMenuOpen(false)} />
+      <img src="/assets/images/bmw_logo.png" alt="logo" className='navbar__logo' onClick={() => navigate('/')} />
       <button className="navbar__menu-btn" onClick={toggleMenu}>Menu</button>
       <ul className={`navbar__items ${menuOpen ? 'navbar__items--active' : ''}`}>
         <li className={isActive('/')}>

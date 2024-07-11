@@ -36,6 +36,7 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
+    "swiper": "^11.1.4",
     "three": "^0.165.0"
   },
   "devDependencies": {
