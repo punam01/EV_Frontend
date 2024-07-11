@@ -253,7 +253,7 @@ const PreBookingPage = () => {
           {carDetails ? carDetails.modelId : ''}
         </div>
         <div className="pre-booking-page__step__1__booking__summary__name">
-          $499/-
+        ₹499/-
         </div>
       </div>
       <div className="pre-booking-page__step__1__booking__summary">

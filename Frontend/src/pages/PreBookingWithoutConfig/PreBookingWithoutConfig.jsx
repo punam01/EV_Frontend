@@ -170,7 +170,7 @@ const PreBookingWithoutConfig = () => {
         });
 
         const carData = [
-            [selectedColor || 'No Color Selected', selectedIntColor || 'Black', selectedWheelColor || 'Black', selectedGlassColor || 'Tinted', `$${estimatedPrice}`]
+            [selectedColor || 'No Color Selected', selectedIntColor || 'Black', selectedWheelColor || 'Black', selectedGlassColor || 'Tinted', `₹${estimatedPrice}`]
         ];
         doc.autoTable({
             startY: doc.previousAutoTable.finalY + 10,
@@ -311,8 +311,8 @@ const PreBookingWithoutConfig = () => {
                 </div>
                 <div className="pre-book-no-config-page__fixed-bottom">
                     <div className="fixed-bottom-top">
-                        <p>Booking Amount <br/><span>$ 999</span></p>
-                        <p>Estimated Price <br/><span>$ {estimatedPrice}</span></p>
+                        <p>Booking Amount <br/><span>₹ 999</span></p>
+                        <p>Estimated Price <br/><span>₹ {estimatedPrice}</span></p>
                     </div>
                 </div>
                 <div className="pre-book-no-config-page__fixed-bottom__next__btn" onClick={() => setShowPopup(true)}>

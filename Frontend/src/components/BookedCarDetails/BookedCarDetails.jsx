@@ -55,7 +55,7 @@ const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDeta
                     </tr>
                     <tr>
                         <td colSpan={2}>Base Price</td>
-                        <td>${carData.basePrice}</td>
+                        <td>₹{carData.basePrice}</td>
                     </tr>
                     <tr>
                         <td colSpan={2} style={{fontWeight:'bold'}}>TOTAL PRICE</td>

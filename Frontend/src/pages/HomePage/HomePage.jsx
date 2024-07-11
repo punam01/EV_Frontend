@@ -6,8 +6,6 @@ import './HomePage.css';
 
 const HomePage = () => {
   const [cars, setCars] = useState([]);
-  const modelListRef = useRef(null);
-  const {isLoggedIn,logout} = useAuth();
   const [selectedColor,setSelectedColor]=useState('')
   const navigate = useNavigate();
   const [carImage,setCarImage]=useState('')
@@ -100,7 +98,7 @@ const HomePage = () => {
                   </div>
                   <div className="home-page-container__explore-model-item__carName">{car.modelId}</div>
                   <div className="home-page-container__explore-model-item__carModel">The ultimate {car.name}.</div>
-                  <div className="home-page-container__explore-model-item__basePrice">Starting from ${car.basePrice}/-* onwards</div>
+                  <div className="home-page-container__explore-model-item__basePrice">Starting from ₹{car.basePrice}/-* onwards</div>
                   <div className="home-page-container__explore-model-item__btnGrp">
                     <button className="home-page-container__learnMore" onClick={() => handleBookCar(car)}>Learn More</button>
                     <div className="model-list__btn-container">

@@ -31,7 +31,7 @@ const VariantCard = ({ variant, modelId, car }) => {
                     <p className='variant-card__item__carname__p'>{modelId}</p>
                 </div>
                 <div className="variant-card__carprice">
-                    <p style={{ color: "#31A93E" }}>${car.basePrice}</p>
+                    <p style={{ color: "#31A93E" }}>₹{car.basePrice}</p>
                     <p className='variant-card__item__carprice__p'>Starting Price</p>
                 </div>
             </div>

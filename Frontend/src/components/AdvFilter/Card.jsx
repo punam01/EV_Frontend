@@ -21,7 +21,7 @@ const Card = ({ img, title, star, reviews, prevPrice, id }) => {
       <img src={img} alt={title} className="card-img" />
       <div className="card-details">
         <h2 className="card-title">{title}</h2>
-        <div className="card-price">Starting at ${prevPrice}</div>
+        <div className="card-price">Starting at ₹{prevPrice}</div>
         <div className="card-star">
           <AiFillStar /> {star} ({reviews} reviews)
         </div>

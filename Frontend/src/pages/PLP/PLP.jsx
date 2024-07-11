@@ -12,6 +12,7 @@ const PLP = () => {
   const [selectedSteering, setSelectedSteering] = useState(null);
   const [selectedAutopilot, setSelectedAutopilot] = useState(false);
   const [selectedSeatingCapacity, setSelectedSeatingCapacity] = useState(null);
+  const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -34,10 +35,12 @@ const PLP = () => {
 
   const handleChange = (event) => {
     setSelectedModelId(event.target.value);
-
-    //console.log(selectedModelId)
   };
 
+  const handlePriceRangeChange = (event) => {
+    console.log(event.target.value)
+    setSelectedPriceRange(event.target.value);
+  };
   const handleSteeringChange = (event) => {
     setSelectedSteering(event.target.value);
   };
@@ -55,7 +58,7 @@ const PLP = () => {
     //console.log("Selected Model ID:", modelId);
   };
 
-  const filteredData = (cars, selectedModelId, selectedSteering, selectedAutopilot, selectedSeatingCapacity, query) => {
+  const filteredData = (cars, selectedModelId, selectedSteering, selectedAutopilot,selectedPriceRange, selectedSeatingCapacity, query) => {
     let filteredCars = cars;
 
     if (query) {
@@ -68,8 +71,13 @@ const PLP = () => {
       filteredCars = filteredCars.filter((car) =>
         car.modelId === selectedModelId
       );
+    }
 
-      //console.log(filteredCars, selectedModelId)
+    if (selectedPriceRange) {
+      const [minPrice, maxPrice] = selectedPriceRange.split('-').map(Number);
+      filteredCars = filteredCars.filter((car) =>
+        car.basePrice >= minPrice && (maxPrice ? car.basePrice <= maxPrice : true)
+      );
     }
 
     if (selectedSteering) {
@@ -89,7 +97,7 @@ const PLP = () => {
     return filteredCars;
   };
 
-  const result = filteredData(cars, selectedModelId, selectedSteering, selectedAutopilot, selectedSeatingCapacity, query);
+  const result = filteredData(cars, selectedModelId, selectedSteering, selectedAutopilot,selectedPriceRange, selectedSeatingCapacity, query);
   //console.log("PLP result", result);
 
   return (
@@ -104,6 +112,7 @@ const PLP = () => {
             handleSteeringChange={handleSteeringChange}
             handleAutopilotChange={handleAutopilotChange}
             handleSeatingCapacityChange={handleSeatingCapacityChange}
+            handlePriceRangeChange={handlePriceRangeChange}
             cars={cars}
           />)}
       </div>

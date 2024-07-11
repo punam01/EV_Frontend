@@ -50,7 +50,7 @@ const PDP = () => {
             <span className="acc">0-60mph</span>
           </div>
         </div>
-        <p className='pdp-container__item__model-price'>${car.basePrice} Vehicle Price</p>
+        <p className='pdp-container__item__model-price'>₹{car.basePrice} Vehicle Price</p>
         <div className="pdp-container__item__model-price-info">
           Excludes taxes and fees
         </div>

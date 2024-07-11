@@ -124,39 +124,6 @@ const PurchaseHistory = () => {
                         </div>
                     </div>
                 </div>
-                /*{<ul style={{ display: 'block' }}>
-                    {purchaseHistory.map((history) => (
-                        <li key={history._id} className="purchase-item">
-                            <div className="purchase-details">
-                                <p>Booking ID: {history._id}</p>
-                                <p>Location ID: {history.locationId}</p>
-                                <p>Model Name: {history.modelName}</p>
-                                <p>Booking Time: {history.bookingTime}</p>
-                                <p>Contact: {history.contact}</p>
-                                <p>Status: {history.bookStatus}</p>
-                                {carDetails && (
-                                    <>
-                                        <p>Car Name: {carDetails.name}</p>
-                                        <p>Base Price: ${carDetails.basePrice}</p>
-                                        <p>Range: {carDetails.range}</p>
-                                        <p>Top Speed: {carDetails.topSpeed} mph</p>
-                                        <p>Seating Capacity: {carDetails.seatingCapacity}</p>
-                                        <p>Cargo Capacity: {carDetails.cargoCapacity} cubic feet</p>
-                                        <p>Acceleration: {carDetails.acceleration} seconds (0-60 mph)</p>
-                                    </>
-                                )}
-                            </div>
-                            {history.bookStatus !== 'cancelled' && (
-                                <button
-                                    className="cancel-btn"
-                                    onClick={() => handleCancelBooking(history._id)}
-                                >
-                                    Cancel Booking
-                                </button>
-                            )}
-                        </li>
-                    ))}
-                </ul>}*/
             )}
         </div>
     );

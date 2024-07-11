@@ -36,7 +36,7 @@ const Checkout = () => {
             email: localStorage.getItem('email') || '',
         });
     }, []);
-    
+
     const handlePincodeChange = (e) => {
         setUserDetails(prev => ({ ...prev, pincode: e.target.value }));
     };
@@ -210,7 +210,7 @@ const Checkout = () => {
         });
 
         const carData = [
-            [selectedOptions.exteriorColor.name, selectedOptions.interiorColor.name, selectedOptions.wheel.name, selectedOptions.glass.name, `$${totalPrice}`]
+            [selectedOptions.exteriorColor.name, selectedOptions.interiorColor.name, selectedOptions.wheel.name, selectedOptions.glass.name, `₹${totalPrice}`]
         ];
 
         doc.autoTable({
@@ -472,32 +472,32 @@ const Checkout = () => {
                         <h2>Summary</h2>
                         <>
                             <span className='checkout-content__summary__book-text'>Booking Price</span>
-                            <h3 className='checkout-content__summary__book_amount'>$ 999</h3>
+                            <h3 className='checkout-content__summary__book_amount'>₹ 999</h3>
 
                             <div className="checkout-content__summary__cardets">
                                 <div className="checkout-content__summary__card">
                                     <h3 className='checkout-content__summary__card__h3'>Exterior Color</h3>
-                                    <p className='checkout-content__summary__card__p'>${selectedOptions.exteriorColor.price}</p>
+                                    <p className='checkout-content__summary__card__p'>₹{selectedOptions.exteriorColor.price}</p>
                                     <span className='checkout-content__summary__card__span'>{selectedOptions.exteriorColor.name}</span>
                                 </div>
                                 <div className="checkout-content__summary__card">
                                     <h3 className='checkout-content__summary__card__h3'>Interior Color</h3>
-                                    <p className='checkout-content__summary__card__p'>${selectedOptions.interiorColor.price}</p>
+                                    <p className='checkout-content__summary__card__p'>₹{selectedOptions.interiorColor.price}</p>
                                     <span className='checkout-content__summary__card__span'>{selectedOptions.interiorColor.name}</span>
                                 </div>
                                 <div className="checkout-content__summary__card">
                                     <h3 className='checkout-content__summary__card__h3'>Wheel</h3>
-                                    <p className='checkout-content__summary__card__p'>${selectedOptions.wheel.price}</p>
+                                    <p className='checkout-content__summary__card__p'>₹{selectedOptions.wheel.price}</p>
                                     <span className='checkout-content__summary__card__span'>{selectedOptions.wheel.name}</span>
                                 </div>
                                 <div className="checkout-content__summary__card">
                                     <h3 className='checkout-content__summary__card__h3'>Charger Type</h3>
-                                    <p className='checkout-content__summary__card__p'>${selectedOptions.chargerType.price}</p>
+                                    <p className='checkout-content__summary__card__p'>₹{selectedOptions.chargerType.price}</p>
                                     <span className='checkout-content__summary__card__span'>{selectedOptions.chargerType.value}</span>
                                 </div>
                                 <div className="checkout-content__summary__card">
                                     <h3 className='checkout-content__summary__card__h3'>Range</h3>
-                                    <p className='checkout-content__summary__card__p'>${selectedOptions.range.price}</p>
+                                    <p className='checkout-content__summary__card__p'>₹{selectedOptions.range.price}</p>
                                     <span className='checkout-content__summary__card__span'>{selectedOptions.range.value}</span>
                                 </div>
                             </div>

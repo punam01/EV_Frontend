@@ -5,8 +5,10 @@ import Steering from './Steering/Steering';
 import Autopilot from './Autopilot/Autopilot';
 import SeatingCapacityFilter from './SeatingCapacity/SeatingCapacity';
 import './Sidebar.css'
+import Price from './Price/Price';
 const Sidebar = ({
   handleChange,
+  handlePriceRangeChange,
   handleSteeringChange,
   handleAutopilotChange,
   handleSeatingCapacityChange,
@@ -15,6 +17,7 @@ const Sidebar = ({
   return (
     <section className='sidebar-container'>
       <Category handleChange={handleChange} cars={cars}/>
+      <Price  handlePriceRangeChange={handlePriceRangeChange}/>
       {/*<Colors handleChange={handleChange} />*/}
       {/*<Steering handleChange={handleSteeringChange} />
        <Autopilot handleAutopilotChange={handleAutopilotChange} />

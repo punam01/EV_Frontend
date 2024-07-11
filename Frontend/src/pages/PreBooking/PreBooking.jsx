@@ -24,11 +24,11 @@ const PreBooking = () => {
               <h1>Your Configured {carData.name}</h1>
               <div className="pre-booking-page__right__carname__baseprice">
                 <p>Base Price</p>
-                <p>${carData.basePrice}</p>
+                <p>₹{carData.basePrice}</p>
               </div>
               <div className="pre-booking-page__right__carname__addprice">
                 <p>Additional Price</p>
-                <p>${totalPrice}</p>
+                <p>₹{totalPrice}</p>
               </div>
             </div>
             <div className="pre-booking-page__right__cardetails">
@@ -44,7 +44,7 @@ const PreBooking = () => {
                     <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z" />
                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
                   </svg>
-                  <p>${selectedOptions.exteriorColor.price}</p>
+                  <p>₹{selectedOptions.exteriorColor.price}</p>
                 </div>
               </div>
               <div className="pre-booking-page__right__cardetails__item">
@@ -60,7 +60,7 @@ const PreBooking = () => {
                     <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z" />
                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
                   </svg>
-                  <p>${selectedOptions.interiorColor.price}</p>
+                  <p>₹{selectedOptions.interiorColor.price}</p>
                 </div>
               </div>
               <div className="pre-booking-page__right__cardetails__item">
@@ -76,7 +76,7 @@ const PreBooking = () => {
                     <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z" />
                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
                   </svg>
-                  <p>${selectedOptions.wheel.price}</p>
+                  <p>₹{selectedOptions.wheel.price}</p>
                 </div>
               </div>
               <div className="pre-booking-page__right__cardetails__item">
@@ -92,7 +92,7 @@ const PreBooking = () => {
                     <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z" />
                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
                   </svg>
-                  <p>${selectedOptions.glass.price}</p>
+                  <p>₹{selectedOptions.glass.price}</p>
                 </div>
               </div>
               <div className="pre-booking-page__right__cardetails__item">
@@ -108,7 +108,7 @@ const PreBooking = () => {
                     <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z" />
                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
                   </svg>
-                  <p>${selectedOptions.range.price}</p>
+                  <p>₹{selectedOptions.range.price}</p>
                 </div>
               </div>
               <div className="pre-booking-page__right__cardetails__item">
@@ -124,11 +124,10 @@ const PreBooking = () => {
                     <path d="M3 2v4.586l7 7L14.586 9l-7-7zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586z" />
                     <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
                   </svg>
-                  <p>${selectedOptions.chargerType.price}</p>
+                  <p>₹{selectedOptions.chargerType.price}</p>
                 </div>
               </div>
             </div>
-
             <button onClick={handleCheckout} className="pre-booking-page__right__cardetails__checkout">Checkout</button>
           </div>
         </>

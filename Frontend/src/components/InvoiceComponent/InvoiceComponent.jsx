@@ -37,10 +37,10 @@ const InvoiceComponent = ({bookingData}) => {
         const customization = bookingData.customization;
         console.log("customizartion",customization)
         const carData = [
-            ['Exterior Color', customization.exteriorColor.value || 'No Color Selected', `$${customization.exteriorColor.price || 0}`],
-            ['Interior Color', customization.interiorColor.value || 'Black', `$${customization.interiorColor.price || 0}`],
-            ['Wheel Color', customization.wheelColor.value || 'Black', `$${customization.wheelColor.price || 0}`],
-            ['Glass', customization.glass.value || 'Tinted', `$${customization.glass.price || 0}`],
+            ['Exterior Color', customization.exteriorColor.value || 'No Color Selected', `₹${customization.exteriorColor.price || 0}`],
+            ['Interior Color', customization.interiorColor.value || 'Black', `₹${customization.interiorColor.price || 0}`],
+            ['Wheel Color', customization.wheelColor.value || 'Black', `₹${customization.wheelColor.price || 0}`],
+            ['Glass', customization.glass.value || 'Tinted', `₹${customization.glass.price || 0}`],
             
         ];
         
@@ -71,15 +71,15 @@ const InvoiceComponent = ({bookingData}) => {
         });
 
         // Adding total price
-        const totalPrice = `$${bookingData.estimatedPrice || 0}`;
-        const basePrice = `$${bookingData.carId.basePrice || 0}`;
-        const totalPriceTextB = `Total Price Before Configuration: ${totalPrice}`;
+        const totalPrice = `₹${bookingData.estimatedPrice || 0}`;
+        const basePrice = `₹${bookingData.carId.basePrice || 0}`;
+        const totalPriceTextB = `Total Price Before Configuration: ₹${totalPrice}`;
         
         doc.setFontSize(12);
         doc.text(totalPriceTextB, padding, doc.previousAutoTable.finalY + 20);
         
         
-        const totalPriceTextA = `Total Price After Configuration: $${tot}`;
+        const totalPriceTextA = `Total Price After Configuration: ₹${tot}`;
         doc.setFontSize(12);
         doc.text(totalPriceTextA, padding, doc.previousAutoTable.finalY + 50);
 
