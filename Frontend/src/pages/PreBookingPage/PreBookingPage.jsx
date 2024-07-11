@@ -44,7 +44,7 @@ const PreBookingPage = () => {
         toast.error('Error fetching cars');
       }
     };
-    console.log(cars)
+    //console.log(cars)
     fetchCars();
   }, []);
   
@@ -75,7 +75,7 @@ const PreBookingPage = () => {
       toast.success("User details saved");
       setStep(2);
     } catch (error) {
-      console.error('Registration error:', error.message);
+      //console.error('Registration error:', error.message);
       toast.error('User with the same phone number already exists.');
     }
   };
@@ -83,7 +83,7 @@ const PreBookingPage = () => {
   const handleGetLocation = () => {
     if (navigator.geolocation) {
       setLoading(true);
-      console.log('Searching');
+      //console.log('Searching');
       handleBookingConfirmation();
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -108,7 +108,7 @@ const PreBookingPage = () => {
   };
 
   const fetchNearestLocations = async (lat, lon) => {
-    console.log(lon, lat, selectedModel);
+    //console.log(lon, lat, selectedModel);
     try {
       const response = await axios.get('http://localhost:5000/api/location/locations', {
         params: {
@@ -117,13 +117,13 @@ const PreBookingPage = () => {
           modelId: selectedModel || undefined // Make modelId optional
         }
       });
-      console.log(response);
+      //console.log(response);
       const locationsWithKm = response.data.map(location => ({
         ...location,
         distance: location.distance / 1000
       }));
       setAvailableLocations(locationsWithKm);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (err) {
       setError('Error fetching locations');
     } finally {
@@ -139,8 +139,8 @@ const PreBookingPage = () => {
       const initialColor = carDetails.color[0];
       setSelectedColors((prevColors) => ({ ...prevColors, [modelName]: initialColor }));
     }
-    console.log(`Selected model: ${modelName}`);
-    console.log(`Car details: ${JSON.stringify(carDetails)}`);
+    //console.log(`Selected model: ${modelName}`);
+    //console.log(`Car details: ${JSON.stringify(carDetails)}`);
   };
 
   const handleColorClick = (modelName, color) => {
@@ -149,7 +149,7 @@ const PreBookingPage = () => {
 
   const handleLocationClick = (location) => {
     setSelectedLocation(location);
-    console.log(`Selected location: ${JSON.stringify(location)}`);
+    //console.log(`Selected location: ${JSON.stringify(location)}`);
   };
 
   const handleNextStep = () => {
