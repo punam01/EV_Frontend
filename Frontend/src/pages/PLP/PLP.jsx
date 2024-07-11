@@ -19,9 +19,9 @@ const PLP = () => {
       try {
         const data = await getAllCars();
         setCars(data);
-        console.log("Fetched cars:", data);
+        //console.log("Fetched cars:", data);
       } catch (error) {
-        console.error("Error fetching cars:", error);
+        //console.error("Error fetching cars:", error);
       }
     };
 
@@ -35,7 +35,7 @@ const PLP = () => {
   const handleChange = (event) => {
     setSelectedModelId(event.target.value);
 
-    console.log(selectedModelId)
+    //console.log(selectedModelId)
   };
 
   const handleSteeringChange = (event) => {
@@ -52,7 +52,7 @@ const PLP = () => {
 
   const handleClick = (modelId) => {
     setSelectedModelId(modelId);
-    console.log("Selected Model ID:", modelId);
+    //console.log("Selected Model ID:", modelId);
   };
 
   const filteredData = (cars, selectedModelId, selectedSteering, selectedAutopilot, selectedSeatingCapacity, query) => {
@@ -69,7 +69,7 @@ const PLP = () => {
         car.modelId === selectedModelId
       );
 
-      console.log(filteredCars, selectedModelId)
+      //console.log(filteredCars, selectedModelId)
     }
 
     if (selectedSteering) {
@@ -84,19 +84,13 @@ const PLP = () => {
       );
     }
 
-    /*if (selectedSeatingCapacity) {
-      filteredCars = filteredCars.filter((car) =>
-        car.seatingCapacity == selectedSeatingCapacity
-      );
-    }
-*/
-    console.log("Filtered cars:", filteredCars);
+    //console.log("Filtered cars:", filteredCars);
 
     return filteredCars;
   };
 
   const result = filteredData(cars, selectedModelId, selectedSteering, selectedAutopilot, selectedSeatingCapacity, query);
-  console.log("PLP result", result);
+  //console.log("PLP result", result);
 
   return (
     <div className='plp-page-container'>

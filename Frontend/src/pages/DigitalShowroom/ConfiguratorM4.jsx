@@ -64,7 +64,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   const carData = location.state?.car ? location.state.car : car;
 
   console.log(carData)
-  console.log("custom................", carData.customizableOptions)
+  //console.log("custom................", carData.customizableOptions)
   const [selectedOptions, setSelectedOptions] = useState({
     exteriorColor: {
       code: carData?.customizableOptions?.find(option => option.name === "Exterior Color")?.options[0]?.code || null,

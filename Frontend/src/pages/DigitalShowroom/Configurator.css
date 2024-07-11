@@ -105,7 +105,7 @@ td {
 .color-swatch:hover::after {
   content: attr(data-tooltip);
     position: absolute;
-    bottom: 125%; /* Adjust this value to move the tooltip above the element */
+    bottom: 125%; 
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
@@ -223,7 +223,7 @@ td {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) inset;
     z-index: -100;
 }
-/* Styles for the range selection radio buttons */
+
 .range-selection {
   display: flex;
   flex-direction: column;
@@ -241,7 +241,7 @@ td {
 
 .range-option input {
   margin-right: 10px;
-  accent-color: #007BFF; /* Change the color of the radio button */
+  accent-color: #007BFF; 
   
 }
 
@@ -284,20 +284,18 @@ td {
     color:black;
     border-radius: 20px;
 }
-/* Configurator.css */
 
-/* Overlay container */
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.5); 
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000; /* Ensure overlay is on top */
+    z-index: 1000;
   }
   
   .total-price {
@@ -317,7 +315,6 @@ td {
     margin-bottom: 20px;
   }
   
-  /* Overlay content */
   .overlay-content {
     background: white;
     padding: 20px;
