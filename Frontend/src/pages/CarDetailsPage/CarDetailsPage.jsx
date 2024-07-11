@@ -16,7 +16,7 @@ const CarDetailsPage = () => {
 
   const {isLoggedIn} = useAuth();
   const { car } = location.state || {};
-  console.log(car)
+  //console.log(car)
 
   if (!car) {
     return <p>No car details available.</p>;

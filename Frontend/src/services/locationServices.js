@@ -52,7 +52,7 @@ export const removeDateTimeFromAvailability = async (locationId, carModel, dateT
             dateTimeToRemove: dateTimeToRemove
         });
 
-        return response.data.success; // Assuming your backend returns { success: true } upon successful update
+        return response.data.success; 
     } catch (error) {
         console.error('Error updating availability:', error.message);
         throw error;

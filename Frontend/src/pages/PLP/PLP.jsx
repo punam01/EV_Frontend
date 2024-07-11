@@ -1,6 +1,5 @@
-// src/pages/PLP/PLP.jsx
 import React, { useEffect, useState } from 'react';
-import transition from '../../transition';
+import transition from '../../animations/transition';
 import './PLP.css';
 import Recommended from '../../components/Recommended/Recommended';
 import Sidebar from '../../components/Sidebar/Sidebar';

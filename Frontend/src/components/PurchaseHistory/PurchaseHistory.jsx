@@ -7,36 +7,32 @@ import { fetchUserHistory, cancelBooking } from '../../services/testRideService'
 import { getLocationById } from '../../services/locationServices';
 
 const PurchaseHistory = () => {
-    const user = useSelector(selectUser);
+    //const user = useSelector(selectUser);
     const customId = localStorage.getItem('USER');
-    console.log(customId)
     const [purchaseHistory, setPurchaseHistory] = useState([]);
-    console.log(user, customId)
     const [carDetails, setCarDetails] = useState({});
     const [locationDetails, setLocationDetails] = useState({});
 
     useEffect(() => {
+        const fetchHistory = async (customId) => {
+            try {
+                const response = await fetchUserHistory(customId);
+                setPurchaseHistory(response);
+    
+                if (response.length > 0) {
+                    fetchCarDetails(response[0].modelName);
+                    fetchLocationDetails(response[0].locationId);
+                }
+            } catch (error) {
+                console.error('Error fetching purchase history:', error);
+            }
+        };
+    
         if (customId) {
             fetchHistory(customId);
         }
-    }, [user]);
+    }, [customId]);
 
-    useEffect(() => {
-        setPurchaseHistory(purchaseHistory);
-    }, [purchaseHistory]);
-
-    const fetchHistory = async (customId) => {
-        try {
-            const response = await fetchUserHistory(customId);
-            setPurchaseHistory(response);
-            console.log(response)
-            console.log(response[0].modelName)
-            fetchCarDetails(response[0].modelName);
-            fetchLocationDetails(response[0].locationId)
-        } catch (error) {
-            console.error('Error fetching purchase history:', error);
-        }
-    };
 
     const handleCancelBooking = async (bookId) => {
         try {
@@ -68,7 +64,6 @@ const PurchaseHistory = () => {
             console.error('Error fetching location details:', error);
         }
     };
-    console.log("CAR DETAILS ::::::::::::::::::::", locationDetails)
     return (
         <div id="purchase" className="purchase-history-container">
             {purchaseHistory.length === 0 ? (

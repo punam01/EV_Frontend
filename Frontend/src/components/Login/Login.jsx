@@ -81,7 +81,9 @@ const Login = () => {
           .catch((error) => {
             console.error('Error getting user data:', error);
           });
+          
       }
+
       }).catch((error) => {
         console.log(error);
         setLoading(false);

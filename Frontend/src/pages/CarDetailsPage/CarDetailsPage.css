@@ -109,11 +109,4 @@
   .car-details-page__next-pg-btn:hover{
     font-weight: bold;
   }
-  @keyframes text_appear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+ 
