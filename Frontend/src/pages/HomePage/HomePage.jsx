@@ -8,8 +8,9 @@ const HomePage = () => {
   const [cars, setCars] = useState([]);
   const modelListRef = useRef(null);
   const {isLoggedIn,logout} = useAuth();
+  const [selectedColor,setSelectedColor]=useState('')
   const navigate = useNavigate();
-  
+  const [carImage,setCarImage]=useState('')
   useEffect(() => {
     const fetchCars = async () => {
       try {
@@ -24,6 +25,15 @@ const HomePage = () => {
     fetchCars();
   }, []);
 
+  const handleColorClick=(color,carId)=>{
+    console.log(color,carId)
+    setSelectedColor(color);
+  }
+  useEffect(() => {
+    if (selectedColor) {
+        setCarImage(`/assets/images/cars/${selectedColor.toLowerCase()}_left.png`);
+    }
+}, [selectedColor]);
   const handleBookCar = (car) => {
     navigate('/cardetails', { state: { car } });
   }
@@ -52,10 +62,10 @@ const HomePage = () => {
     <div className="home-page-container">
       <div className="home-page-container__header-section">
         <div className="header-section__name">
-          BMW
+          Auto3D
         </div>
         <div className="header-section__tagline">
-          The Ultimate Driving Machine.
+          The Automotive Design and Drive.
         </div>
       </div>
       <div className="home-page-container__video-container">
@@ -77,14 +87,14 @@ const HomePage = () => {
             {cars.map(car => (
               <div className="home-page-container__explore-model-item__container">
                 <div key={car.carId} className="home-page-container__explore-model-item">
-                  {<img src="/assets/images/car_3d_t.png" alt="Car Image" className="car-image" />}
+                  <img src={carImage || '/assets/images/cars/black_left.png'} alt="Car Image" className="car-image" />
                   <div className="home-page-container__explore-model-item__standard-color">
                     {car.customizableOptions.find(option => option.name === 'Exterior Color').options.map(color => (
                       <div
                         key={color.code}
                         className="color-swatch"
                         style={{ backgroundColor: color.code }}
-                        onClick={() => handleColorClick(color.name)}
+                        onClick={() => handleColorClick(color.name.toLowerCase(),car.carId)}
                       ></div>
                     ))}
                   </div>
@@ -147,7 +157,7 @@ const HomePage = () => {
       </div>
       <div className="home-page-container__shopping-tools">
         <div className="home-page-container__model-hearder-section">
-          <div className='model-list__title'>Find your BMW Car.</div>
+          <div className='model-list__title'>Find your Perfect Car.</div>
         </div>
         <div className="home-page-container__find-section">
           <div className="home-page-container__find-model-list">

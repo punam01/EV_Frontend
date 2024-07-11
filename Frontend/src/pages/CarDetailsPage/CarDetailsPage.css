@@ -68,16 +68,12 @@
     font-family: 'Poppins',sans-serif;
     margin:0;
     transition: all 0.6s;
-    animation: text_appear  linear;
-    animation-timeline: view(); 
   }
   .car-details-page__closer-look{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 5rem;
-    animation: appear  linear;
-    animation-timeline: view(); 
   }
   .car-details-page__logo-content{
     padding:0 3rem 3rem 3rem;
@@ -90,8 +86,6 @@
     font-family: 'Poppins',sans-serif;
     color:white;
     font-weight: 600;
-    animation: appear  linear;
-    animation-timeline: view(); 
   }
   .car-details-page__logo-content__p{
     font-family: 'Poppins',sans-serif;
@@ -99,8 +93,6 @@
     font-weight: 400;
     transition: all 0.5s ease;
     font-size: 20px;
-    animation: appear_noscale  linear;
-    animation-timeline: view(); 
   }
   .car-details-page__next-pg-btn-grp{
     text-align: center;
@@ -120,11 +112,8 @@
   @keyframes text_appear {
     from {
         opacity: 0;
-        transform: scale(0.5);
     }
     to {
         opacity: 1;
-        transform: scale(0.8);
-        color: white;
     }
 }

@@ -4,7 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import './Carousel.css'
 
-const CarouselComponent=({autoPlay,height})=>{
+const CarouselComponent=({carColor})=>{
         return (
             <Carousel className='carousel-container'
             showThumbs={false}
@@ -14,13 +14,13 @@ const CarouselComponent=({autoPlay,height})=>{
             interval={3000}
             >
                 <div className='carousel__item'>
-                    <img className="carousel__item__img" src="/assets/images/car_1.png" />
+                    <img className="carousel__item__img" src={`/assets/images/cars/${carColor.toLowerCase()}_right.png`}/>
                 </div>
                 <div className='carousel__item'>
-                    <img className="carousel__item__img" src="/assets/images/car_2.png" />
+                    <img className="carousel__item__img" src={`/assets/images/cars/${carColor.toLowerCase()}_front.png`} />
                 </div>
                 <div className='carousel__item'>
-                    <img className="carousel__item__img" src="/assets/images/car_3.png" />
+                    <img className="carousel__item__img" src={`/assets/images/cars/${carColor.toLowerCase()}_left.png`} />
                 </div>
             </Carousel>
         );

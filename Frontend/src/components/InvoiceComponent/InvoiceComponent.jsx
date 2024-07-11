@@ -83,7 +83,7 @@ const InvoiceComponent = ({bookingData}) => {
         doc.setFontSize(12);
         doc.text(totalPriceTextA, padding, doc.previousAutoTable.finalY + 50);
 
-        doc.save(`bmw_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
+        doc.save(`auto3d_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
     };
 
     return (

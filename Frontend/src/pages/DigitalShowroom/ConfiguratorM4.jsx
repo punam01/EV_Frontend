@@ -56,15 +56,15 @@ const car = {
     }
   ]
 };
-  
+
 const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSelectWinGlass }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const carData = location.state?.car ? location.state.car : car;
 
   console.log(carData)
-  console.log("custom................",carData.customizableOptions)
+  console.log("custom................", carData.customizableOptions)
   const [selectedOptions, setSelectedOptions] = useState({
     exteriorColor: {
       code: carData?.customizableOptions?.find(option => option.name === "Exterior Color")?.options[0]?.code || null,
@@ -220,7 +220,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
 
   return (
     <div className='config-container'>
-      <h1 className='car-name-container'>{carData?.name || 'BMW M4 2024'}</h1>
+      <h1 className='car-name-container'>{carData?.name || 'BMW'}</h1>
       <div className='configurator'>
         <div className="configurator-content">
           <div className="content-item">
@@ -278,8 +278,6 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
                 ></div>
               ))}
             </div>
-          </div>
-          <div className="content-item">
             <h3 className="content-heading">Glass</h3>
             <div className="standard-color">
               {Object.keys(prices.glass).map(glass => (
@@ -339,11 +337,13 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
             </label>
           </div>
           <div className="content-item-price">
-            <h3 className="content-heading">Total price ${calculateTotalPrice()}</h3>
-            <p>Base price ${carData.basePrice}</p>
-            <button className="content-item-price-button" onClick={handleSubmit}><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#31A93E" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-              <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-            </svg></button>
+            <h3 className="content-heading">Total price <br/>${calculateTotalPrice()}</h3>
+            <div className="content-item-price__next" >
+              <p>Base price ${carData.basePrice}</p>
+              <button className="content-item-price-button" onClick={handleSubmit}><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#000" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+              </svg></button>
+            </div>
           </div>
         </div>
       </div>

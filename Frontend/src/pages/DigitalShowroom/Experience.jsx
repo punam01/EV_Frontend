@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { PresentationControls, Stage, Environment, MeshReflectorMaterial } from '@react-three/drei';
+import { PresentationControls, Stage, Environment, MeshReflectorMaterial, Html } from '@react-three/drei';
 import Bmw_m4_f82 from './Bmw_m4_f82';
 
-const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,autoRotateSpeed }) => {
+const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,autoRotateSpeed ,carName}) => {
     return (
-        <Canvas shadows camera={{ position: [0, 0, 2], fov: 50 }} style={{ width: '100vw', height: '120vh' ,backgroundColor:'#f3f2f2'}}>
+        <Canvas shadows camera={{ position: [0, 0, 2], fov: 50 }} style={{ width: '98vw', height: '120vh' ,backgroundColor:'#f3f2f2'}}>
             <ambientLight intensity={0.5} />
             <directionalLight
                 position={[5, 5, 5]}
@@ -28,6 +28,11 @@ const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,a
                     autoRotateSpeed={autoRotateSpeed}>
                     <Stage environment={null} intensity={1} contactShadow={false}>
                         <Bmw_m4_f82 exteriorColor={color} interiorColor={interiorColor} rimColor={wheelColor} windowGlass={windowGlass} />
+                        <Html position={[0,2.5, 0]} center>
+                            <div style={{width:'400px', color: 'black', padding: '10px', borderRadius: '5px',textAlign:'center'}}>
+                                <p style={{fontSize:'6rem',color:'white', fontFamily:'Poppins,sans-serif',fontWeight:'700'}}>BMW i5</p>
+                            </div>
+                        </Html>
                     </Stage>
                     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow position={[0, -1, 0]}>
                         <planeGeometry args={[200, 200]} />
@@ -47,7 +52,7 @@ const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,a
                     </mesh>
                     <Environment preset="city" />
                 </PresentationControls>
-            </Suspense>
+            </Suspense>            
         </Canvas>
     );
 };

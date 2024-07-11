@@ -13,6 +13,7 @@ const CarDetailsPage = () => {
   const handleColorSelect = (color) => {
     setSelectedColor(color);
   };
+
   const {isLoggedIn} = useAuth();
   const { car } = location.state || {};
   console.log(car)
@@ -85,7 +86,7 @@ const CarDetailsPage = () => {
         <div className="car-details-page__closer-look">
             <img src="/assets/images/bmw_front.jpg"></img>
             <div className="car-details-page__logo-content">
-              <h2 className='car-details-page__logo-content__h2'>The Iconic BMW Logo</h2>
+              <h2 className='car-details-page__logo-content__h2'>The Iconic Auto3D Logo</h2>
               <p className='car-details-page__logo-content__p'>A symbol of performance, luxury, and German engineering excellence.</p>
             </div>
         </div>
@@ -100,14 +101,13 @@ const CarDetailsPage = () => {
           
         <img src="/assets/images/bmw_interior.jpg"></img>
             <div className="car-details-page__logo-content">
-              <h2 className='car-details-page__logo-content__h2'>The Ultimate BMW Interior</h2>
+              <h2 className='car-details-page__logo-content__h2'>The Ultimate Auto3D Interior</h2>
               <p className='car-details-page__logo-content__p'>Experience luxury, comfort, and cutting-edge technology in every drive.</p>
             </div>            
         </div>
         <div className="car-details-page__next-pg-btn-grp">
         <button className="car-details-page__next-pg-btn" onClick={handleNextPage}>Configure & Book</button>
         </div>
-        
       </div>
     </div>
   </>

@@ -17,7 +17,7 @@ const PreBooking = () => {
       {selectedOptions ? (
         <>
           <div className='pre-booking-page__left'>
-            <CarouselComponent />
+            <CarouselComponent carColor={selectedOptions.exteriorColor.name.toLowerCase()}/>
           </div>
           <div className='pre-booking-page__right'>
             <div className="pre-booking-page__right__carname">

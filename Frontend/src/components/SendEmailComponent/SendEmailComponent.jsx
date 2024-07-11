@@ -57,7 +57,7 @@ const SendEmailComponent = ({ bookingData }) => {
       to_name: 'Customer',
       to_email: bookingData.contact, 
       bookingId: bookingData._id.slice(-10),
-      carModel: 'BMW',
+      carModel: 'Auto3D',
       date: formatDate(bookingData.bookingTime),
       time: formatTime(bookingData.bookingTime),
       address: bookingData.location.name+", "+bookingData.location.address+", "+bookingData.location.city+', '+bookingData.location.state+', '+bookingData.location.pincode || "400020",

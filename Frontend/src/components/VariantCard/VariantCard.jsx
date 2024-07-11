@@ -1,4 +1,3 @@
-// src/components/VariantCard/VariantCard.jsx
 import React from 'react';
 import './VariantCard.css'
 import { useNavigate } from 'react-router-dom';
@@ -10,16 +9,19 @@ const VariantCard = ({ variant, modelId, car }) => {
         navigate(`/cardetails`,{ state: { car } });
     };
     
-  const {isLoggedIn} = useAuth();
+    const {isLoggedIn} = useAuth();
     const handleBookNow = () => {
         if (isLoggedIn ) {
             navigate('/noconfig', { state: { car } });
           } else {
             navigate('/signup');
           }
-
     };
 
+    const handleConfigClick=()=>{
+        navigate('/showroom', { state: { car } });
+    }
+    console.log("car config",car.isConfig)
     return (
         <li className="variant-card__item">
             <div className="variant-card__item__nameprice">
@@ -37,12 +39,12 @@ const VariantCard = ({ variant, modelId, car }) => {
             </div>
             <div className="variant-card__item__model-details">
                 <div className="variant-card__item__model-details__item__range">
-                    <p className="range">260<span>mi</span></p>
+                    <p className="range">{car.range}<span>mi</span></p>
                     <span className="range">Range</span>
                 </div>
                 <div className="variant-card__item__model-details__item__speed">
                     <p className="speed">{car.topSpeed}<span>mph</span></p>
-                    <span className="speed">Top Speed</span>
+                    <span className="speed">Speed</span>
                 </div>
                 <div className="variant-card__item__model-details__item__acc">
                     <p className="acc">{car.acceleration}<span>s</span></p>
@@ -66,25 +68,11 @@ const VariantCard = ({ variant, modelId, car }) => {
                         </svg>
                         <p className='feature'>{car.autopilot ? "Autopilot" : "No Autopilot"}</p>
                     </div>
+                    <div className="variant-card__item__model__right-section__config">
+                        {car.isConfig[0]?<img src="/assets/images/360_deg_icon.png" alt="" onClick={handleConfigClick} />:''}
+                    </div>
                 </div>
             </div>
-
-            {/*variant.customizableOptions && variant.customizableOptions.map((option, index) => (
-                <div key={index} className='variant-card__item__model__option-list'>
-                    <p className='feature'>Available {option.name}s</p>
-                    <ul className="variant-card__item__model__option-list__ul">
-                        {option.name === 'color' ? (
-                            option.options.map((opt, idx) => {
-                                console.log(opt.name);
-                                (
-                                <li key={idx} className="color-swatch">
-                                    <span className="color-box" style={{ backgroundColor: opt.name }}></span>
-                                </li>
-                            )})
-                        ) : ''}
-                    </ul>
-                </div>
-            ))*/}
             <div className="variant-card__btn-group">
                 <button className="variant-card__btn-group_btn" onClick={handleViewDetails}>View Details</button>
                 <button className="variant-card__btn-group_btn" onClick={handleBookNow}>Book Now</button>

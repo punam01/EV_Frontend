@@ -29,16 +29,16 @@
     margin: 1rem 0;
 }
 .variant-card__item__carname__name{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 .variant-card__item__carprice__p,
 .variant-card__item__carname__p{
-    font-size:18px;
+    font-size:14px;
     font-weight: 400;
 }
 .variant-card__carprice{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
@@ -63,13 +63,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 1rem;
+    padding: 1rem 1rem;
     margin: 2px;
+    width:100px;
 }
 .variant-card__item__model-details__item__range p,
 .variant-card__item__model-details__item__speed p,
 .variant-card__item__model-details__item__acc p{
-    font-size: 2rem;
+    font-size: 18px;
     font-weight: 500;
 }
 .variant-card__item__carprice__p,
@@ -77,7 +78,7 @@
 .variant-card__item__model-details__item__speed span,
 .variant-card__item__model-details__item__acc span{
     color:#918F8F;
-    font-size: 14px;
+    font-size: 13px;
 }
 .variant-card__item__model-details__item__speed .speed,
 .variant-card__item__model-details__item p{
@@ -89,32 +90,53 @@
 }
 .variant-card__item__model__model-data{
     display: flex;
+    margin: 0;
+    padding: 0;
     justify-content: center;
 }
 .variant-card__item__model__right-section,
 .variant-card__item__model__left-section{
     width:50%;
-    height: 100%;;
-    padding: 2rem;
+    height: 100px;
+    padding: 1rem;
 }
 .variant-card__item__model__left-section .steering,
 .variant-card__item__model__left-section .seatingCap,
 .variant-card__item__model__right-section .autopilot{
     display: flex;
-    line-height: 18px;
+    line-height: 15px;
+    border: 1px solid #31A93E;
+    padding: 5px;
+    margin:2px;
+    border-radius:5px;
 }
 .variant-card__item__model__right-section .autopilot svg{
     padding: 0 5px;
     width:30px;
     height: auto;
 }
+.variant-card__item__model__right-section__config{
+    text-align: right;
+    padding: 0.5rem;
+    transition: all ease 0.3s;
+    cursor: pointer;
+}
+.variant-card__item__model__right-section__config:hover{
+    padding: 0;
+}
+.variant-card__item__model__right-section__config img{
+    width:50%;
+    height: auto;
+    object-fit:cover;
+}
 .variant-card__item__model__left-section .steering .feature,
 .variant-card__item__model__option-list .feature,
 .variant-card__item__model__left-section .seatingCap .feature,
 .variant-card__item__model__right-section .autopilot .feature{
     font-weight: 400;
-    font-size: 18px;
-    padding: 0.5rem 0;
+    font-size: 13px;
+    padding: 0.5rem 1rem 0 0;
+    text-transform: capitalize;
 }
 .variant-card__item__model__option-list__ul{
     margin:0 2rem;
@@ -142,7 +164,8 @@
     color:white;
     border: none;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 5px;
+    font-size: 13px;
     font-family: "Poppins",sans-serif;
 }
 .variant-card__btn-group_btn:hover{

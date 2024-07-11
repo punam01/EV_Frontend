@@ -5,44 +5,19 @@ import './DigitalShowroom.css';
 
 const DigitalShowroom = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedColor, setSelectedColor] = useState('#333333'); // Default selected exterior color
-  const [selectedIntColor, setSelectedIntColor] = useState('#333333'); // Default selected interior color
-  const [selectedRim, setSelectedRim] = useState('black');
-  const [windowGlass,setWindowGlass]=useState('tintedGlass')
-  const slides = [
-    { component: <Experience color={selectedColor} interiorColor={selectedIntColor} wheelColor={selectedRim} windowGlass={windowGlass} />, configurator: <ConfiguratorM4 onSelectColor={setSelectedColor} onSelectIntColor={setSelectedIntColor} onSelectWheel={setSelectedRim} onSelectWinGlass={setWindowGlass}/> },
-    { component: <Experience color={selectedColor} interiorColor={selectedIntColor} wheelColor={selectedRim} windowGlass={windowGlass}/>, configurator: <ConfiguratorM4 onSelectColor={setSelectedColor} onSelectIntColor={setSelectedIntColor}  onSelectWheel={setSelectedRim} onSelectWinGlass={setWindowGlass}/> },
-    { component: <Experience color={selectedColor} interiorColor={selectedIntColor} wheelColor={selectedRim} windowGlass={windowGlass}/>, configurator: <ConfiguratorM4 onSelectColor={setSelectedColor} onSelectIntColor={setSelectedIntColor}  onSelectWheel={setSelectedRim} onSelectWinGlass={setWindowGlass}/> },
-  ];
-
-  const handleDotClick = (index) => {
-    setCurrentSlide(index);
-  };
-
+  const [selectedColor, setSelectedColor] = useState('#333333');
+  const [selectedIntColor, setSelectedIntColor] = useState('#333333');
+  const [selectedRim, setSelectedRim] = useState('gray');
+  const [windowGlass, setWindowGlass] = useState('tintedGlass')
+  
   return (
     <div className="showroom-container">
       <div
         className="carousel-content"
-        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        style={{ transform: `translateX(0)` }}
       >
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
-          >
-            {slide.component}
-            {slide.configurator}
-          </div>
-        ))}
-      </div>
-      <div className="carousel-dots">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            className={`dot ${index === currentSlide ? 'active' : ''}`}
-            onClick={() => handleDotClick(index)}
-          />
-        ))}
+        <Experience color={selectedColor} interiorColor={selectedIntColor} wheelColor={selectedRim} windowGlass={windowGlass} />
+        <ConfiguratorM4 onSelectColor={setSelectedColor} onSelectIntColor={setSelectedIntColor} onSelectWheel={setSelectedRim} onSelectWinGlass={setWindowGlass} />
       </div>
     </div>
   );
