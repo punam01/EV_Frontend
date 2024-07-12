@@ -7,6 +7,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 .car-compare-container__header{
     font-size: 4rem;
@@ -18,6 +20,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.car-compare-container__link-text{
+    color:#31A93E;
+    font-family: 'Poppins',sans-serif;
+    text-decoration: underline;
+    cursor: pointer;
 }
 .car-compare-container__link-link{
     padding:1rem;
@@ -79,7 +87,7 @@
 }
 
 .car-compare-container__result__item-item-col{
-    margin:2rem 0 0 0;
+    margin:0;
     padding:1rem;
     height: fit-content;
     display: flex;
@@ -102,6 +110,7 @@
 }
 .car-compare-container__result__item-item img{
     width:100%;
+    max-height: 250px;
     object-fit:cover ;
 }
 .car-compare-container__standard-color{

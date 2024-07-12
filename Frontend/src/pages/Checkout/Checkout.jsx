@@ -82,7 +82,6 @@ const Checkout = () => {
             alert('Please select a location before booking.');
             return;
         }
-
         const bookingData = {
             userId: localStorage.getItem('USER'),
             carId: carData.carId,
@@ -107,7 +106,7 @@ const Checkout = () => {
                     price: selectedOptions.range.price
                 },
                 glass: {
-                    value: selectedOptions.glass.value,
+                    value: selectedOptions.glass.name,
                     price: selectedOptions.glass.price
                 }
             },
@@ -537,7 +536,6 @@ const Checkout = () => {
                         <p>Your booking has been confirmed successfully.</p>
                         <p>An email has been sent to {" "}<b>{userDetails.email}</b> {" "}with the booking details.</p>
                         <div className="checkout-content__button__grp">
-                            <button className="checkout-content__book__button" onClick={handleDownloadInvoice}>Download Invoice</button>
                             <button className="checkout-content__book__button" onClick={handleNavigate}>Go to Order History</button>
                         </div>
                     </div></>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import transition from '../../animations/transition';
 import './PLP.css';
-import Recommended from '../../components/Recommended/Recommended';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { getAllCars } from '../../services/carServices';
 import VariantCard from '../../components/VariantCard/VariantCard';
@@ -20,7 +19,6 @@ const PLP = () => {
       try {
         const data = await getAllCars();
         setCars(data);
-        //console.log("Fetched cars:", data);
       } catch (error) {
         //console.error("Error fetching cars:", error);
       }
@@ -38,8 +36,13 @@ const PLP = () => {
   };
 
   const handlePriceRangeChange = (event) => {
+    if (event.target.value === "All") {
+      setSelectedPriceRange('0-5000000');
+    } 
+    else{
+      setSelectedPriceRange(event.target.value);
+    }
     console.log(event.target.value)
-    setSelectedPriceRange(event.target.value);
   };
   const handleSteeringChange = (event) => {
     setSelectedSteering(event.target.value);
@@ -53,10 +56,6 @@ const PLP = () => {
     setSelectedSeatingCapacity(parseInt(event.target.value));
   };
 
-  const handleClick = (modelId) => {
-    setSelectedModelId(modelId);
-    //console.log("Selected Model ID:", modelId);
-  };
 
   const filteredData = (cars, selectedModelId, selectedSteering, selectedAutopilot,selectedPriceRange, selectedSeatingCapacity, query) => {
     let filteredCars = cars;
@@ -92,13 +91,10 @@ const PLP = () => {
       );
     }
 
-    //console.log("Filtered cars:", filteredCars);
-
     return filteredCars;
   };
 
   const result = filteredData(cars, selectedModelId, selectedSteering, selectedAutopilot,selectedPriceRange, selectedSeatingCapacity, query);
-  //console.log("PLP result", result);
 
   return (
     <div className='plp-page-container'>
@@ -120,8 +116,6 @@ const PLP = () => {
 
       <div className="plp-container">
         {/*<Recommended handleClick={handleClick} />*/}
-
-
         <div className="vehicles-container">
           {result.map((car) => (
             <div key={car._id} className="car-card">

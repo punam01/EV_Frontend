@@ -126,7 +126,6 @@ const DemoDriveBooking = () => {
             setBookingDetails(bookingResponse);
             setBookingSubmitted(true);
         } catch (error) {
-            //console.error('Error creating demo booking:', error.message);
             toast.error("Already booked 1 demo", {
                 duration: 3000,
                 onClose: () => {
@@ -170,10 +169,13 @@ const DemoDriveBooking = () => {
         navigate('/');
     };
 
+    const profilePageRedirect = () => {
+        navigate('/profile');
+    };
     return (
         <div className='demo-drive-page'>
             <div className="demo-img-holder">
-                <video src="/assets/images/bmw_video.mp4" autoPlay muted loop></video>
+                <video src="/assets/videos/bmw_video.mp4" autoPlay muted loop></video>
             </div>
             <div className="demo-booking-holder">
                 {!bookingSubmitted ? (
@@ -233,6 +235,7 @@ const DemoDriveBooking = () => {
                             selectedDate={selectedDate}
                             selectedTime={selectedTime}
                             homePageRedirect={homePageRedirect}
+                            profilePageRedirect={profilePageRedirect}
                         />
                     )
                 )}

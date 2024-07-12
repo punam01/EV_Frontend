@@ -36,7 +36,6 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cars/:id" element={<PDP />} />
-        <Route path="/profile1" element={<UserProfilePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path='/prebooking/:id' element={<PreBooking />} />
@@ -47,7 +46,6 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/noconfig" element={<PreBookingWithoutConfig />} />
       </Routes>
-      <Footer/>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const Footer = () => {
     <div className='footer-container'>
       <div className="footer-container__links">
         <div className="footer-container__logo">
-            <img src="/assets/images/bmw_logo.png" alt="" />
+            <img src="/assets/images/car_logo.png" alt="" />
         </div>
         <ul className="footer-container__link-holder">
             <Link className="footer-container__link-holder_li" to="/">Home</Link>

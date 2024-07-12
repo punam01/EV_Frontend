@@ -1,7 +1,7 @@
 import React from 'react'
 import './BookingSuccess.css'
 import Button from '../Button/Button';
-const BookingSuccess = ({locationName,locationCity,locationState,selectedModel,selectedDate,selectedTime,homePageRedirect}) => {
+const BookingSuccess = ({ locationName, locationCity, locationState, selectedModel, selectedDate, selectedTime, homePageRedirect, profilePageRedirect }) => {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const day = date.getDate();
@@ -19,7 +19,7 @@ const BookingSuccess = ({locationName,locationCity,locationState,selectedModel,s
             }
         }
         const daySuffix = getDaySuffix(day);
-       return `${day}${daySuffix} ${month} '${year}`;
+        return `${day}${daySuffix} ${month} '${year}`;
     }
     const formatTime = (time) => {
         let [hours, minutes] = time.split('T')[1].split(':').slice(0, 2);
@@ -63,7 +63,10 @@ const BookingSuccess = ({locationName,locationCity,locationState,selectedModel,s
                         </svg>
                     </strong> {selectedTime}</div>
                 <div className='congratulations-message__text'>The same information is sent to your registered email.</div>
-                <Button btnText='Go to Home' handleBtnClick={homePageRedirect}/>
+                <div className="congratulations-message__btnGrp">
+                    <button onClick={homePageRedirect}>Home</button>
+                    <button onClick={profilePageRedirect}>Profile</button>
+                </div>
             </div>
         </div>
     )

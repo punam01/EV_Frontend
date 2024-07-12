@@ -8,20 +8,18 @@ const InvoiceComponent = ({bookingData}) => {
         const doc = new jsPDF();
         const padding = 15;
 
-        // Adding the logo
-        const logo = '/assets/images/bmw_logo.png';
+        const logo = '/assets/images/car_logo.png';
         const logoWidth = 40;
         const logoHeight = 40;
         const centerLogo = (doc.internal.pageSize.width / 2) - (logoWidth / 2);
         doc.addImage(logo, 'PNG', centerLogo, padding, logoWidth, logoHeight);
 
-        // Adding the tagline
-        const tagline = "Your Ultimate Driving Machine";
+        
+        const tagline = "The Automotive Design and Drive.";
         const taglineWidth = doc.getTextWidth(tagline);
         const centerTagline = (doc.internal.pageSize.width / 2) - (taglineWidth / 2);
         doc.text(tagline, centerTagline, padding + logoHeight + 10);
 
-        // User data
         doc.setFontSize(12);
         const userName = localStorage.getItem("name") || 'N/A';
         const lastName = localStorage.getItem("last_name") || 'N/A';
@@ -33,7 +31,6 @@ const InvoiceComponent = ({bookingData}) => {
         
         doc.text(userText, padding, padding + logoHeight + 20);
         
-        // Car customization data
         const customization = bookingData.customization;
         console.log("customizartion",customization)
         const carData = [
@@ -70,9 +67,8 @@ const InvoiceComponent = ({bookingData}) => {
             }
         });
 
-        // Adding total price
+       
         const totalPrice = `₹${bookingData.estimatedPrice || 0}`;
-        const basePrice = `₹${bookingData.carId.basePrice || 0}`;
         const totalPriceTextB = `Total Price Before Configuration: ₹${totalPrice}`;
         
         doc.setFontSize(12);

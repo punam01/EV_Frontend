@@ -9,13 +9,13 @@
     margin:0;
     color:white;
 }
-.car-reels{
-    margin-top: 3rem;
+.car-details-page__car-reels{
     border-radius: 20px;
-    animation: appear  linear;
-    animation-timeline: view(); 
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
-.car-reels .overlay-text {
+.car-details-page__car-reels .overlay-text {
     position: absolute;
     top: 80%;
     left: 20%;
@@ -29,6 +29,9 @@
     line-height: 50px;
     font-weight: 200;
   }
+  .car-details-page__car-reels video{
+    width:100%;
+  }
   .car-details-page__btn{
     background-color: transparent;
     color: white;
@@ -41,18 +44,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5rem;
+    width:100%;
   }
-  .car-details-page__car-performance__item{
-    
-    width:25%;
+  .car-details-page__car-performance__item{    
+    width:20%;
     height:250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 2rem;
-    padding:4rem;
+    padding:1rem;
   }
 
   .car-details-page__car-performance__item-label{
@@ -68,7 +70,10 @@
     font-family: 'Poppins',sans-serif;
     margin:0;
     transition: all 0.6s;
+    text-align: center;
+    font-size: 20px;
   }
+
   .car-details-page__closer-look{
     display: flex;
     justify-content: flex-start;
@@ -96,6 +101,9 @@
   }
   .car-details-page__next-pg-btn-grp{
     text-align: center;
+    padding: 2rem;
+    display: flex;
+    justify-content: flex-start;
   }
   .car-details-page__next-pg-btn{
     margin: auto;

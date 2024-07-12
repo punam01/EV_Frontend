@@ -5,7 +5,7 @@ import InvoiceComponent from '../InvoiceComponent/InvoiceComponent';
 const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDetails }) => {
 
     const filteredBookings = bookingData.filter(booking => booking.carId._id === selectedCarId);
-    console.log("Filtered", filteredBookings)
+    console.log("Filtered", bookingData)
     const totalPrice=filteredBookings[0].estimatedPrice+carData.basePrice;
     return (
         <div className='booked-car-details__container'>
@@ -36,22 +36,22 @@ const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDeta
                     <tr>
                         <td>Exterior Color</td>
                         <td>{filteredBookings[0].customization.exteriorColor?.value}</td>
-                        <td>${filteredBookings[0].customization.exteriorColor?.price}</td>
+                        <td>{filteredBookings[0].customization.exteriorColor?.price}</td>
                     </tr>
                     <tr>
                         <td>Interior Color</td>
                         <td>{filteredBookings[0].customization.interiorColor.value}</td>
-                        <td>${filteredBookings[0].customization.interiorColor.price}</td>
+                        <td>₹{filteredBookings[0].customization.interiorColor.price}</td>
                     </tr>
                     <tr>
                         <td>Wheel</td>
                         <td>{filteredBookings[0].customization.wheelColor.value}</td>
-                        <td>${filteredBookings[0].customization.wheelColor.price}</td>
+                        <td>₹{filteredBookings[0].customization.wheelColor.price}</td>
                     </tr>
                     <tr>
                         <td>Glass</td>
                         <td>{filteredBookings[0].customization.glass.value}</td>
-                        <td>${filteredBookings[0].customization.glass.price}</td>
+                        <td>₹{filteredBookings[0].customization.glass.price}</td>
                     </tr>
                     <tr>
                         <td colSpan={2}>Base Price</td>
@@ -59,7 +59,7 @@ const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDeta
                     </tr>
                     <tr>
                         <td colSpan={2} style={{fontWeight:'bold'}}>TOTAL PRICE</td>
-                        <td style={{fontWeight:'bold'}}>${totalPrice}</td>
+                        <td style={{fontWeight:'bold'}}>₹{totalPrice}</td>
                     </tr>
                 </table>
             </div>

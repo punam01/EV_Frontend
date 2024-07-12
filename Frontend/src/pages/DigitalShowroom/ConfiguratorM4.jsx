@@ -64,7 +64,6 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   const carData = location.state?.car ? location.state.car : car;
 
   console.log(carData)
-  //console.log("custom................", carData.customizableOptions)
   const [selectedOptions, setSelectedOptions] = useState({
     exteriorColor: {
       code: carData?.customizableOptions?.find(option => option.name === "Exterior Color")?.options[0]?.code || null,
@@ -166,12 +165,14 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   };
 
   const handleGlassClick = (glass) => {
-    console.log('glss', glass)
+    //console.log('glss:', glass)
     const glassDetails = carData.customizableOptions.find(option => option.name === "Glass")?.options.find(opt => opt.code === glass);
     if (onSelectWinGlass) {
+      //console.log(glassDetails.code)
       onSelectWinGlass(glassDetails.code);
     }
     setSelectedOptions(prev => ({ ...prev, glass: glassDetails }));
+    console.log(selectedOptions)
   };
 
   const handleRangeChange = (event) => {
@@ -187,8 +188,8 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
   };
 
   const handleSubmit = async () => {
-    const userId = localStorage.getItem('userId');
-    const contact = localStorage.getItem('contact');
+    const userId = localStorage.getItem('USER');
+    const contact = localStorage.getItem('phone');
 
     const customization = {
       exteriorColor: selectedOptions.exteriorColor,

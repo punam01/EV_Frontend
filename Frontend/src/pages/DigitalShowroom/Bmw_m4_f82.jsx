@@ -6,7 +6,6 @@ const Bmw_m4_f82 = ({ props, exteriorColor,interiorColor,rimColor,windowGlass}) 
   console.log("rimcolor",rimColor)
   const { nodes, materials } = useGLTF('../../public/assets/models/bmw_m4_f82.glb')
   const rimMaterial = new THREE.MeshStandardMaterial({ color: rimColor });
- // console.log("MATERIALS",materials)
 
   if (materials.ARm4_m_bmw_logo) {
     materials.ARm4_m_bmw_logo.visible = false;

@@ -70,7 +70,7 @@ const VariantCard = ({ variant, modelId, car }) => {
                         <p className='feature'>{car.autopilot ? "Autopilot" : "No Autopilot"}</p>
                     </div>
                     <div className="variant-card__item__model__right-section__config">
-                        {car.isConfig[0]?<img src="/assets/images/360_deg_icon.png" alt="" onClick={handleConfigClick} />:''}
+                        {car.isConfig?<img src="/assets/images/360_deg_icon.png" alt="" onClick={handleConfigClick} />:''}
                     </div>
                 </div>
             </div>

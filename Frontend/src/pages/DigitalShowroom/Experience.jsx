@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { PresentationControls, Stage, Environment, MeshReflectorMaterial, Html } from '@react-three/drei';
 import Bmw_m4_f82 from './Bmw_m4_f82';
 
-const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,autoRotateSpeed ,carName}) => {
+const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,autoRotateSpeed ,car}) => {
     return (
         <Canvas shadows camera={{ position: [0, 0, 2], fov: 50 }} style={{ width: '98vw', height: '120vh' ,backgroundColor:'#f3f2f2'}}>
             <ambientLight intensity={0.5} />
@@ -29,8 +29,8 @@ const Experience = ({ color, interiorColor, wheelColor, windowGlass,autoRotate,a
                     <Stage environment={null} intensity={1} contactShadow={false}>
                         <Bmw_m4_f82 exteriorColor={color} interiorColor={interiorColor} rimColor={wheelColor} windowGlass={windowGlass} />
                         <Html position={[0,2.5, 0]} center>
-                            <div style={{width:'400px', color: 'black', padding: '10px', borderRadius: '5px',textAlign:'center'}}>
-                                <p style={{fontSize:'6rem',color:'white', fontFamily:'Poppins,sans-serif',fontWeight:'700'}}>BMW i5</p>
+                            <div style={{width:'900px', color: 'black', padding: '10px', borderRadius: '5px',textAlign:'center'}}>
+                                <p style={{fontSize:'6rem',color:'white', fontFamily:'Poppins,sans-serif',fontWeight:'700'}}>{car.name}</p>
                             </div>
                         </Html>
                     </Stage>

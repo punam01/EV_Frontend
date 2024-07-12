@@ -18,9 +18,9 @@
 }
 
 .time-container__card {
-    padding: 2rem;
-    margin: 10px;
-    width: 200px;
+    padding: 1rem;
+    margin: 5px;
+    width: 180px;
     height: 100px;
     display: flex;
     flex-direction: column;

@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${menuOpen ? 'navbar--active' : ''}`}>
-      <img src="/assets/images/bmw_logo.png" alt="logo" className='navbar__logo' onClick={() => navigate('/')} />
+      <img src="/assets/images/car_logo.png" alt="logo" className='navbar__logo' onClick={() => navigate('/')} />
       <button className="navbar__menu-btn" onClick={toggleMenu}>Menu</button>
       <ul className={`navbar__items ${menuOpen ? 'navbar__items--active' : ''}`}>
         <li className={isActive('/')}>
