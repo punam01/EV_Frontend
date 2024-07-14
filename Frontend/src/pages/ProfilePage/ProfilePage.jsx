@@ -8,6 +8,7 @@ import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import BookedCarDetails from '../../components/BookedCarDetails/BookedCarDetails';
 import InvoiceComponent from '../../components/InvoiceComponent/InvoiceComponent';
+
 const ProfilePage = () => {
     const [profile, setProfile] = useState(true);
     const [openViewDetails, setOpenViewDetails] = useState(false)
@@ -23,7 +24,6 @@ const ProfilePage = () => {
     const [selectedCarId, setSelectedCarId] = useState(null);
     const { isLoggedIn, logout } = useAuth();
     const [userName, setUserName] = useState('');
-    const [carImage, setCarImage] = useState('/assets/images/bmw_no_config.jpg');
     const [activeLink, setActiveLink] = useState('profile');
     useEffect(() => {
         if (customId) {
@@ -123,6 +123,8 @@ const ProfilePage = () => {
             ...prevState,
             [name]: value,
         }));
+        userProfile.pincode=localStorage.setItem('zip',userProfile.pincode)
+      
     };
     const handleClickProfile = () => {
         setActiveLink('profile');
@@ -315,7 +317,7 @@ const ProfilePage = () => {
                     )}
                 </div></>) :
                 <div className='welcome-profile-page-container'>
-                    <h1 className='welcome-profile-page-container__h1'>Welcome to BMW</h1>
+                    <h1 className='welcome-profile-page-container__h1'>Welcome to Phoenix</h1>
                     <p className='welcome-profile-page-container__p'>Register and take advantage of the benefits:</p>
                     <ul className='welcome-profile-page-container__ul'>
                         <li className='welcome-profile-page-container__li'>
@@ -324,7 +326,7 @@ const ProfilePage = () => {
                                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                                     <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
                                 </svg>
-                                <span>Configure Your BMW</span>
+                                <span>Configure Your Car</span>
                             </div>
                         </li>
                         <li className='welcome-profile-page-container__li'>

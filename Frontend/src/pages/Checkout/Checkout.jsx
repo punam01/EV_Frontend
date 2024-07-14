@@ -342,21 +342,19 @@ const Checkout = () => {
                                 className='checkout-content__input-container__input'
                                 type="text"
                                 name="name"
-                                value={userDetails.name}
+                                value={userDetails.name || localStorage.getItem('name')}
                                 onChange={handleInputChange}
                                 disabled={!isEditing.name}
                                 required
                             />
                             <button className="checkout-content__button_svg" onClick={() => handleEditClick('name')}>
                                 {isEditing.name ?
-                                    <svg width="16" height="16" fill="#31A93E" className="bi bi-save" viewBox="0 0 16 16">
-                                        <path d="M8 12a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-1 0v2.5A.5.5 0 0 0 8 12zM7 8a1 1 0 0 1 1-1h.5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8z" />
-                                        <path d="M13.5 0h-11A1.5 1.5 0 0 0 1 1.5v13A1.5 1.5 0 0 0 2.5 16h11A1.5 1.5 0 0 0 15 14.5V1.5A1.5 1.5 0 0 0 13.5 0zm-11 1h11a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-12a.5.5 0 0 1 .5-.5z" />
-                                    </svg>
-                                    : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#31A93E" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                    </svg>}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                  </svg>
+                                    : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
+                                  </svg>}
                             </button>
                         </div>
                         <div className="checkout-content__input-container">
@@ -371,14 +369,12 @@ const Checkout = () => {
                                 required
                             />
                             <button className="checkout-content__button_svg" onClick={() => handleEditClick('email')}>
-                                {isEditing.email ? <svg width="16" height="16" fill="#31A93E" className="bi bi-save" viewBox="0 0 16 16">
-                                    <path d="M8 12a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-1 0v2.5A.5.5 0 0 0 8 12zM7 8a1 1 0 0 1 1-1h.5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8z" />
-                                    <path d="M13.5 0h-11A1.5 1.5 0 0 0 1 1.5v13A1.5 1.5 0 0 0 2.5 16h11A1.5 1.5 0 0 0 15 14.5V1.5A1.5 1.5 0 0 0 13.5 0zm-11 1h11a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-12a.5.5 0 0 1 .5-.5z" />
-                                </svg>
-                                    : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#31A93E" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                    </svg>}
+                                {isEditing.email ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                  </svg>
+                                    :<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
+                                  </svg>}
                             </button>
                         </div>
                         <div className="checkout-content__input-container">
@@ -387,20 +383,18 @@ const Checkout = () => {
                                 className='checkout-content__input-container__input'
                                 type="text"
                                 name="pincode"
-                                value={userDetails.pincode}
+                                value={userDetails.pincode }
                                 onChange={handleInputChange}
                                 disabled={!isEditing.pincode}
                                 required
                             />
                             <button className="checkout-content__button_svg" onClick={() => handleEditClick('pincode')}>
-                                {isEditing.pincode ? <svg width="16" height="16" fill="#31A93E" className="bi bi-save" viewBox="0 0 16 16">
-                                    <path d="M8 12a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-1 0v2.5A.5.5 0 0 0 8 12zM7 8a1 1 0 0 1 1-1h.5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8z" />
-                                    <path d="M13.5 0h-11A1.5 1.5 0 0 0 1 1.5v13A1.5 1.5 0 0 0 2.5 16h11A1.5 1.5 0 0 0 15 14.5V1.5A1.5 1.5 0 0 0 13.5 0zm-11 1h11a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-12a.5.5 0 0 1 .5-.5z" />
-                                </svg>
-                                    : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#31A93E" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                    </svg>}
+                                {isEditing.pincode ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                  </svg>
+                                    : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
+                                  </svg>}
                             </button>
                         </div>
                         <button className='checkout-content__next__button' onClick={handleNextStep}>Next</button>
@@ -505,7 +499,7 @@ const Checkout = () => {
                                     <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
                                         <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                         <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492z" />
-                                    </svg> {userDetails.name}</p>
+                                    </svg> {userDetails.name || localStorage.getItem('name')}</p>
                                     <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
                                     </svg> {userDetails.email}</p>

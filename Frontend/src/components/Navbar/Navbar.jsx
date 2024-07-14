@@ -28,6 +28,9 @@ const Navbar = () => {
         <li className={isActive('/cars')}>
           <Link to="/cars" className='navbar__link' onClick={() => setMenuOpen(false)}>Book Now</Link>
         </li>
+        <li className={isActive('/showroom')}>
+          <Link to="/showroom" className='navbar__link' onClick={() => setMenuOpen(false)}>DigitalShowroom</Link>
+        </li>
       </ul>
       <div className='navbar__profile'>
         <Link className='navbar__link' to="/profile">

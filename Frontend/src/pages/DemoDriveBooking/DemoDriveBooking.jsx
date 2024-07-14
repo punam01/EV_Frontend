@@ -201,7 +201,7 @@ const DemoDriveBooking = () => {
                                         setOtpSent={setOtpSent}
                                     />
                                 )}
-                                <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} disabled={!otpVerified} />
+                                { otpVerified && <PersonalDetails userData={userData} handleChange={handleChange} handleRegister={handleRegister} disabled={!otpVerified} />}
                             </div>
                         ) : (
                             <div className="demo-booking-details">

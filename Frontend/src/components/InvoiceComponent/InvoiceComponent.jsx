@@ -24,10 +24,10 @@ const InvoiceComponent = ({bookingData}) => {
         const userName = localStorage.getItem("name") || 'N/A';
         const lastName = localStorage.getItem("last_name") || 'N/A';
         const userEmail = localStorage.getItem("email") || 'N/A';
-        const userAddress = localStorage.getItem("address") || 'N/A';
+        const userAddress = localStorage.getItem("zip") || 'N/A';
         const phone = localStorage.getItem("phone") || 'N/A';
         const orderId=bookingData._id.slice(-10)
-        const userText = `Name: ${userName} ${lastName}\nEmail: ${userEmail}\nAddress: ${userAddress}\nRegistered Phone: ${phone}\nOrder ID: ${"#"+orderId}`;
+        const userText = `Name: ${userName} ${lastName}\nEmail: ${userEmail}\nRegistered Phone: ${phone}\nOrder ID: ${"#"+orderId}`;
         
         doc.text(userText, padding, padding + logoHeight + 20);
         
@@ -68,8 +68,8 @@ const InvoiceComponent = ({bookingData}) => {
         });
 
        
-        const totalPrice = `₹${bookingData.estimatedPrice || 0}`;
-        const totalPriceTextB = `Total Price Before Configuration: ₹${totalPrice}`;
+        const totalPrice = '₹ '+ bookingData.estimatedPrice || 0;
+        const totalPriceTextB = `Total Price Before Configuration: ${totalPrice}`;
         
         doc.setFontSize(12);
         doc.text(totalPriceTextB, padding, doc.previousAutoTable.finalY + 20);
@@ -79,7 +79,7 @@ const InvoiceComponent = ({bookingData}) => {
         doc.setFontSize(12);
         doc.text(totalPriceTextA, padding, doc.previousAutoTable.finalY + 50);
 
-        doc.save(`auto3d_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
+        doc.save(`phoenix_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
     };
 
     return (

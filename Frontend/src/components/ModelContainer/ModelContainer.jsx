@@ -15,6 +15,7 @@ const ModelContainer = ({availableModels,selectedModel,handleModelChange}) => {
                     </div>
                 ))}
             </div>
+            {selectedModel && <p className='model-container__card__note-text'><strong>Note: </strong>In case a specific car model is not available, please contact our customer service team for <br/>assistance</p>}
         </div>
 
     )

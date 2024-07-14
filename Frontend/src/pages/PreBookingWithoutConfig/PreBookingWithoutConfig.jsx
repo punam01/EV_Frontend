@@ -200,7 +200,7 @@ const PreBookingWithoutConfig = () => {
             }
         });
 
-        doc.save(`bmw_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
+        doc.save(`phoenix_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
     };
 
     const handleNextClick = async () => {

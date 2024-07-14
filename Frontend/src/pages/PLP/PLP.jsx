@@ -37,7 +37,7 @@ const PLP = () => {
 
   const handlePriceRangeChange = (event) => {
     if (event.target.value === "All") {
-      setSelectedPriceRange('0-5000000');
+      setSelectedPriceRange('300000-5000000');
     } 
     else{
       setSelectedPriceRange(event.target.value);

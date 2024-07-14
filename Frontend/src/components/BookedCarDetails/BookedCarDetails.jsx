@@ -31,35 +31,35 @@ const BookedCarDetails = ({ carData, bookingData, selectedCarId, setOpenViewDeta
                     <tr>
                         <th>Configuration</th>
                         <th>Value</th>
-                        <th>Amount</th>
+                        <th className='booked-car-details__price'>Amount</th>
                     </tr>
                     <tr>
                         <td>Exterior Color</td>
                         <td>{filteredBookings[0].customization.exteriorColor?.value}</td>
-                        <td>{filteredBookings[0].customization.exteriorColor?.price}</td>
+                        <td className='booked-car-details__price'>₹{filteredBookings[0].customization.exteriorColor?.price}</td>
                     </tr>
                     <tr>
                         <td>Interior Color</td>
                         <td>{filteredBookings[0].customization.interiorColor.value}</td>
-                        <td>₹{filteredBookings[0].customization.interiorColor.price}</td>
+                        <td className='booked-car-details__price'>₹{filteredBookings[0].customization.interiorColor.price}</td>
                     </tr>
                     <tr>
                         <td>Wheel</td>
                         <td>{filteredBookings[0].customization.wheelColor.value}</td>
-                        <td>₹{filteredBookings[0].customization.wheelColor.price}</td>
+                        <td className='booked-car-details__price'>₹{filteredBookings[0].customization.wheelColor.price}</td>
                     </tr>
                     <tr>
                         <td>Glass</td>
                         <td>{filteredBookings[0].customization.glass.value}</td>
-                        <td>₹{filteredBookings[0].customization.glass.price}</td>
+                        <td className='booked-car-details__price'>₹{filteredBookings[0].customization.glass.price}</td>
                     </tr>
                     <tr>
                         <td colSpan={2}>Base Price</td>
-                        <td>₹{carData.basePrice}</td>
+                        <td className='booked-car-details__price'>₹{carData.basePrice}</td>
                     </tr>
                     <tr>
                         <td colSpan={2} style={{fontWeight:'bold'}}>TOTAL PRICE</td>
-                        <td style={{fontWeight:'bold'}}>₹{totalPrice}</td>
+                        <td className='booked-car-details__price' style={{fontWeight:'bold'}}>₹{totalPrice}</td>
                     </tr>
                 </table>
             </div>

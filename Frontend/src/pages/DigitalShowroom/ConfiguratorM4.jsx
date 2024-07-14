@@ -3,65 +3,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Configurator.css';
 
-const car = {
-  _id: "668502e0e0a58a6efcf4ac2d",
-  modelId: "BMW-i5-M60",
-  name: "BMW-i5",
-  basePrice: 70000,
-  range: "LR",
-  topSpeed: 182,
-  seatingCapacity: 4,
-  cargoCapacity: 17,
-  acceleration: 3.8,
-  images: ["/assets/images/bmw_1.jpg", "https://example.com/images/bmw-m4-2024-2.jpg"],
-  color: ["#D9D9D9", "#68736B", "#333333", "#001A4D", "#F1F1F1"],
-  steering: "wheel",
-  autopilot: true,
-  edition: "standard",
-  chargerType: "Type 2 Plug",
-  customizableOptions: [
-    {
-      name: "Exterior Color",
-      options: [
-        { name: "Black", price: 1000, code: "#0c0908" },
-        { name: "Olive", price: 1200, code: "#68736B" },
-        { name: "Gray", price: 1500, code: "#333333" },
-        { name: "Blue", price: 1800, code: "#000F89" },
-        { name: "White", price: 2000, code: "#F1F1F1" },
-      ]
-    },
-    {
-      name: "Interior Color",
-      options: [
-        { name: "Orange", price: 800, code: "#F5A777" },
-        { name: "Maroon", price: 900, code: "#730721" },
-        { name: "Black", price: 1000, code: "#070707" },
-        { name: "White", price: 1100, code: "#F1F1F1" },
-      ]
-    },
-    {
-      name: "Wheels",
-      options: [
-        { name: "Gray Wheels", price: 2500, code: "gray" },
-        { name: "Black Wheels", price: 2700, code: "black" }
-      ]
-    },
-    {
-      name: "Glass",
-      options: [
-        { name: "Tinted Glass", price: 300, code: "tintedGlass" },
-        { name: "Tempered Glass", price: 400, code: "temperedGlass" },
-        { name: "Laminated Glass", price: 500, code: "laminatedGlass" }
-      ]
-    }
-  ]
-};
 
-const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSelectWinGlass }) => {
+const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSelectWinGlass,car }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const carData = location.state?.car ? location.state.car : car;
+  const [carData,setCarData]=useState(car);
+  //const carData = location.state?.car;
+  useEffect(() => {
+    if (location.state?.car) {
+      console.log(" car set")
+      setCarData(location.state.car);
+    } else {
+      console.log(" default car set")
+      setCarData(car);
+    }
+  }, [location.state?.car]);
 
   console.log(carData)
   const [selectedOptions, setSelectedOptions] = useState({
@@ -221,7 +177,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
 
   return (
     <div className='config-container'>
-      <h1 className='car-name-container'>{carData?.name || 'BMW'}</h1>
+      <h1 className='car-name-container'>{carData?.name || 'Phoenix'}</h1>
       <div className='configurator'>
         <div className="configurator-content">
           <div className="content-item">
@@ -338,9 +294,9 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
             </label>
           </div>
           <div className="content-item-price">
-            <h3 className="content-heading">Total price <br/>₹{calculateTotalPrice()}</h3>
+            <h3 className="content-heading">Base price ₹{carData.basePrice}</h3>
             <div className="content-item-price__next" >
-              <p>Base price ₹{carData.basePrice}</p>
+              <p>Addon Price <br/>₹{calculateTotalPrice()}</p>
               <button className="content-item-price-button" onClick={handleSubmit}><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#000" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
                 <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
               </svg></button>

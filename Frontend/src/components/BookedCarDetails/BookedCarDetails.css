@@ -82,3 +82,6 @@
 .booked-car-details__estimatedPrice{
     padding: 2rem;
 }
+.booked-car-details__price{
+    text-align: right;
+}

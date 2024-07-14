@@ -101,6 +101,7 @@ const UserDetailsForm = ({user}) => {
   localStorage.setItem('last_name',userDetails.last_name)
   localStorage.setItem('zip',userDetails.pincode)
   localStorage.setItem('address',userDetails.address)
+  
 
   return (
     <section className='user-deatils-container'>

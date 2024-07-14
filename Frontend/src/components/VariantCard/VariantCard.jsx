@@ -36,7 +36,7 @@ const VariantCard = ({ variant, modelId, car }) => {
                 </div>
             </div>
             <div className="variant-card__item__imgholder">
-                <img src="/assets/images/car_3d_t.png" alt="" />
+                <img src={`/assets/images/cars/${car.customizableOptions[0].options[0].name.toLowerCase()}_left.png `}alt="" />
             </div>
             <div className="variant-card__item__model-details">
                 <div className="variant-card__item__model-details__item__range">

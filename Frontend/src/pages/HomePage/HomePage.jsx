@@ -81,7 +81,7 @@ const HomePage = () => {
     <div className="home-page-container">
       <div className="home-page-container__header-section">
         <div className="header-section__name">
-          Auto3D
+          Phoenix
         </div>
         <div className="header-section__tagline">
           The Automotive Design and Drive.
@@ -92,6 +92,98 @@ const HomePage = () => {
           <video src="/assets/videos/autumn_in.mp4" type="video/mp4" autoPlay loop muted preload="auto" />
         </div>
       </div>
+      <div className="home-page-container__model-list" >
+        <div className="home-page-container__model-hearder-section">
+          <div className='model-list__title'>Explore the line-up.</div>
+          <div className="model-list__link-container">
+            <Link className='model-list__link' to='/compare'>Compare models</Link>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#31A93E" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
+            </svg>
+          </div>
+        </div>
+        <div className="home-page-container__explore-section">
+          <div className="home-page-container__scroll-button-container">
+            <button className="home-page-container__scroll-button" onClick={scrollLeft}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1" />
+              </svg>
+            </button>
+            <button className="home-page-container__scroll-button" onClick={scrollRight}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1" />
+              </svg>
+            </button>
+          </div>
+          <div className="home-page-container__explore-model-list" ref={scrollContainerRefExplore}>
+            {cars.map(car => (
+              <div className="home-page-container__explore-model-item__container">
+                <div key={car.carId} className="home-page-container__explore-model-item">
+                  <img src={`/assets/images/cars/${car.customizableOptions[0].options[0].name.toLowerCase()}_left.png`} alt="Car Image" className="car-image" />
+                  <div className="home-page-container__explore-model-item__standard-color">
+                    {car.customizableOptions.find(option => option.name === 'Exterior Color').options.map(color => (
+                      <div
+                        key={color.code}
+                        className="color-swatch"
+                        style={{ backgroundColor: color.code }}
+                        onClick={() => handleColorClick(color.name.toLowerCase(), car.carId)}
+                        data-tooltip={color.name}
+                      ></div>
+                    ))}
+                  </div>
+                  <div className="home-page-container__explore-model-item__carName">{car.name}</div>
+                  <div className="home-page-container__explore-model-item__carModel">The ultimate {car.modelId}.</div>
+                  <div className="home-page-container__explore-model-item__basePrice">Starting from ₹{car.basePrice}/-* onwards</div>
+                  <div className="home-page-container__explore-model-item__btnGrp">
+                    <button className="home-page-container__learnMore" onClick={() => handleBookCar(car)}>Learn More</button>
+      
+                  </div>
+                </div>
+                <div className="home-page-container__explore-model-item__compare">
+                  <div className="home-page-container__explore-model-item__cargo-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#777779" class="bi bi-luggage" viewBox="0 0 16 16">
+                      <path d="M2.5 1a.5.5 0 0 0-.5.5V5h-.5A1.5 1.5 0 0 0 0 6.5v7a1.5 1.5 0 0 0 1 1.415v.335a.75.75 0 0 0 1.5 0V15H4v-1H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V7h1v-.5A1.5 1.5 0 0 0 6.5 5H6V1.5a.5.5 0 0 0-.5-.5zM5 5H3V2h2z" />
+                      <path d="M3 7.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0zM11 6a1.5 1.5 0 0 1 1.5 1.5V8h2A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 14.5v-5A1.5 1.5 0 0 1 6.5 8h2v-.5A1.5 1.5 0 0 1 10 6zM9.5 7.5V8h2v-.5A.5.5 0 0 0 11 7h-1a.5.5 0 0 0-.5.5M6 9.5v5a.5.5 0 0 0 .5.5H7V9h-.5a.5.5 0 0 0-.5.5m7 5.5V9H8v6zm1.5 0a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H14v6z" />
+                    </svg>
+                    <span>Spacious cargo capacity of {car.cargoCapacity} cu. ft.  </span>
+                  </div>
+                  <div className="home-page-container__explore-model-item__seating-container">
+                    <svg fill="#777779" height="40" width="40" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 353.926 353.926" xml:space="preserve">
+                      <path d="M210.286,344.926c0,4.971-4.029,9-9,9h-48.65c-4.971,0-9-4.029-9-9s4.029-9,9-9h48.65
+	C206.257,335.926,210.286,339.955,210.286,344.926z M289.677,258.958v25.928c0,19.259-15.67,34.928-34.931,34.928H99.177
+	c-19.259,0-34.928-15.668-34.928-34.928v-25.928c0-4.971,4.029-9,9-9h2.394c-0.021-0.258-0.033-0.52-0.033-0.784v-24.118
+	c-0.013-0.535,0.023-1.066,0.105-1.588c0.204-1.329,0.699-2.561,1.418-3.631c0.705-1.055,1.639-1.969,2.767-2.659
+	c0.457-0.281,0.94-0.522,1.446-0.719c3.564-1.483,7.107-3.016,10.605-4.586V101.909c0-17.877,11.375-33.581,27.599-39.623
+	c-0.019-0.492-0.028-0.984-0.028-1.48V38.578C119.521,17.306,136.827,0,158.098,0h37.725C217.095,0,234.4,17.306,234.4,38.578
+	v22.229c0,0.495-0.01,0.988-0.028,1.478c6.395,2.378,12.129,6.28,16.702,11.351c0.16-0.3,0.318-0.599,0.478-0.899
+	c2.318-4.396,7.761-6.081,12.16-3.76c4.396,2.319,6.079,7.764,3.76,12.16c-16.845,31.926-41.307,61.508-72.707,87.923
+	c-25.063,21.083-53.512,39.294-84.813,54.313v26.586h134.02V141.64c0-4.971,4.029-9,9-9s9,4.029,9,9v108.318h18.706
+	C285.647,249.958,289.677,253.987,289.677,258.958z M137.521,60.807c0,1.842,0.243,3.629,0.699,5.33
+	c0.073,0.22,0.138,0.444,0.193,0.672c2.574,8.428,10.424,14.576,19.684,14.576h37.725c9.259,0,17.109-6.146,19.685-14.573
+	c0.057-0.231,0.122-0.458,0.195-0.68c0.455-1.699,0.698-3.484,0.698-5.325V38.578C216.4,27.231,207.169,18,195.822,18h-37.725
+	c-11.346,0-20.576,9.231-20.576,20.578V60.807z M109.951,203.272c56.184-28.521,102.335-68.15,131.162-112.739
+	c-2.612-4.871-6.75-8.658-11.666-10.83c-6.622,11.738-19.213,19.681-33.625,19.681h-37.725c-14.411,0-27.002-7.944-33.624-19.682
+	c-8.604,3.8-14.522,12.438-14.522,22.207V203.272z M271.677,267.958h-18.57c-0.046,0-0.091,0.001-0.136,0.001h-152.02
+	c-0.045,0-0.09,0-0.136-0.001H82.249v16.928c0,9.334,7.594,16.928,16.928,16.928h155.569c9.336,0,16.931-7.594,16.931-16.928
+	V267.958z"/>
+                    </svg>
+                    <span>Comfortably accommodates up to {car.seatingCapacity} passengers.</span>
+                  </div>
+                  <div className="home-page-container__explore-model-item__acceleration-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#777779" class="bi bi-speedometer2" viewBox="0 0 16 16">
+                      <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z" />
+                      <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3" />
+                    </svg>
+                    <span>Accelerates from 0 to 60 mph in {car.acceleration} seconds.</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      
       <div className="home-page-container__shopping-tools">
         <div className="home-page-container__model-hearder-section">
           <div className='model-list__title'>Find your Perfect Car.</div>
@@ -159,97 +251,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="home-page-container__model-list" >
-        <div className="home-page-container__model-hearder-section">
-          <div className='model-list__title'>Explore the line-up.</div>
-          <div className="model-list__link-container">
-            <Link className='model-list__link' to='/compare'>Compare models</Link>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#31A93E" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
-            </svg>
-          </div>
-        </div>
-        <div className="home-page-container__explore-section">
-          <div className="home-page-container__scroll-button-container">
-            <button className="home-page-container__scroll-button" onClick={scrollLeft}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
-                <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1" />
-              </svg>
-            </button>
-            <button className="home-page-container__scroll-button" onClick={scrollRight}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
-                <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1" />
-              </svg>
-            </button>
-          </div>
-          <div className="home-page-container__explore-model-list" ref={scrollContainerRefExplore}>
-            {cars.map(car => (
-              <div className="home-page-container__explore-model-item__container">
-                <div key={car.carId} className="home-page-container__explore-model-item">
-                  <img src={carImage || '/assets/images/cars/black_left.png'} alt="Car Image" className="car-image" />
-                  <div className="home-page-container__explore-model-item__standard-color">
-                    {car.customizableOptions.find(option => option.name === 'Exterior Color').options.map(color => (
-                      <div
-                        key={color.code}
-                        className="color-swatch"
-                        style={{ backgroundColor: color.code }}
-                        onClick={() => handleColorClick(color.name.toLowerCase(), car.carId)}
-                      ></div>
-                    ))}
-                  </div>
-                  <div className="home-page-container__explore-model-item__carName">{car.name}</div>
-                  <div className="home-page-container__explore-model-item__carModel">The ultimate {car.modelId}.</div>
-                  <div className="home-page-container__explore-model-item__basePrice">Starting from ₹{car.basePrice}/-* onwards</div>
-                  <div className="home-page-container__explore-model-item__btnGrp">
-                    <button className="home-page-container__learnMore" onClick={() => handleBookCar(car)}>Learn More</button>
-      
-                  </div>
-                </div>
-                <div className="home-page-container__explore-model-item__compare">
-                  <div className="home-page-container__explore-model-item__cargo-container">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#777779" class="bi bi-luggage" viewBox="0 0 16 16">
-                      <path d="M2.5 1a.5.5 0 0 0-.5.5V5h-.5A1.5 1.5 0 0 0 0 6.5v7a1.5 1.5 0 0 0 1 1.415v.335a.75.75 0 0 0 1.5 0V15H4v-1H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V7h1v-.5A1.5 1.5 0 0 0 6.5 5H6V1.5a.5.5 0 0 0-.5-.5zM5 5H3V2h2z" />
-                      <path d="M3 7.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0zM11 6a1.5 1.5 0 0 1 1.5 1.5V8h2A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 14.5v-5A1.5 1.5 0 0 1 6.5 8h2v-.5A1.5 1.5 0 0 1 10 6zM9.5 7.5V8h2v-.5A.5.5 0 0 0 11 7h-1a.5.5 0 0 0-.5.5M6 9.5v5a.5.5 0 0 0 .5.5H7V9h-.5a.5.5 0 0 0-.5.5m7 5.5V9H8v6zm1.5 0a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H14v6z" />
-                    </svg>
-                    <span>Spacious cargo capacity of {car.cargoCapacity} cu. ft.  </span>
-                  </div>
-                  <div className="home-page-container__explore-model-item__seating-container">
-                    <svg fill="#777779" height="40" width="40" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                      viewBox="0 0 353.926 353.926" xml:space="preserve">
-                      <path d="M210.286,344.926c0,4.971-4.029,9-9,9h-48.65c-4.971,0-9-4.029-9-9s4.029-9,9-9h48.65
-	C206.257,335.926,210.286,339.955,210.286,344.926z M289.677,258.958v25.928c0,19.259-15.67,34.928-34.931,34.928H99.177
-	c-19.259,0-34.928-15.668-34.928-34.928v-25.928c0-4.971,4.029-9,9-9h2.394c-0.021-0.258-0.033-0.52-0.033-0.784v-24.118
-	c-0.013-0.535,0.023-1.066,0.105-1.588c0.204-1.329,0.699-2.561,1.418-3.631c0.705-1.055,1.639-1.969,2.767-2.659
-	c0.457-0.281,0.94-0.522,1.446-0.719c3.564-1.483,7.107-3.016,10.605-4.586V101.909c0-17.877,11.375-33.581,27.599-39.623
-	c-0.019-0.492-0.028-0.984-0.028-1.48V38.578C119.521,17.306,136.827,0,158.098,0h37.725C217.095,0,234.4,17.306,234.4,38.578
-	v22.229c0,0.495-0.01,0.988-0.028,1.478c6.395,2.378,12.129,6.28,16.702,11.351c0.16-0.3,0.318-0.599,0.478-0.899
-	c2.318-4.396,7.761-6.081,12.16-3.76c4.396,2.319,6.079,7.764,3.76,12.16c-16.845,31.926-41.307,61.508-72.707,87.923
-	c-25.063,21.083-53.512,39.294-84.813,54.313v26.586h134.02V141.64c0-4.971,4.029-9,9-9s9,4.029,9,9v108.318h18.706
-	C285.647,249.958,289.677,253.987,289.677,258.958z M137.521,60.807c0,1.842,0.243,3.629,0.699,5.33
-	c0.073,0.22,0.138,0.444,0.193,0.672c2.574,8.428,10.424,14.576,19.684,14.576h37.725c9.259,0,17.109-6.146,19.685-14.573
-	c0.057-0.231,0.122-0.458,0.195-0.68c0.455-1.699,0.698-3.484,0.698-5.325V38.578C216.4,27.231,207.169,18,195.822,18h-37.725
-	c-11.346,0-20.576,9.231-20.576,20.578V60.807z M109.951,203.272c56.184-28.521,102.335-68.15,131.162-112.739
-	c-2.612-4.871-6.75-8.658-11.666-10.83c-6.622,11.738-19.213,19.681-33.625,19.681h-37.725c-14.411,0-27.002-7.944-33.624-19.682
-	c-8.604,3.8-14.522,12.438-14.522,22.207V203.272z M271.677,267.958h-18.57c-0.046,0-0.091,0.001-0.136,0.001h-152.02
-	c-0.045,0-0.09,0-0.136-0.001H82.249v16.928c0,9.334,7.594,16.928,16.928,16.928h155.569c9.336,0,16.931-7.594,16.931-16.928
-	V267.958z"/>
-                    </svg>
-                    <span>Comfortably accommodates up to {car.seatingCapacity} passengers.</span>
-                  </div>
-                  <div className="home-page-container__explore-model-item__acceleration-container">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#777779" class="bi bi-speedometer2" viewBox="0 0 16 16">
-                      <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z" />
-                      <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3" />
-                    </svg>
-                    <span>Accelerates from 0 to 60 mph in {car.acceleration} seconds.</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      
     </div>
     <Footer />
   </>
