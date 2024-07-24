@@ -1,4 +1,4 @@
-# Auto3d | The Automotive Design and Drive
+# Phoenix | The Automotive Design and Drive
 
 ## Introduction
 Auto3D is a modern and user-friendly car dealership website designed to revolutionize the car buying experience. It integrates advanced features like an interactive 3D car configuration tool to empower users in customizing and exploring the available cars.
