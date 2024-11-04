@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api/demoBook'; 
+const API_BASE_URL = 'http://localhost:3000/api/demoBook'; 
 
 export const createDemoBooking = async (userId, locationId, modelName, bookingTime, contact,bookingDate) => {
     try {

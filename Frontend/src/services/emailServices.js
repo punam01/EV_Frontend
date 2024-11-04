@@ -40,27 +40,28 @@ const formatTime = (dateString, use24HourFormat = false) => {
   }
 };
 
-const createTemplateParams = (bookingData) => {
+const createTemplateParams = (response) => {
+  const bookingData=JSON.parse(localStorage.getItem("bookingData"));
   return {
     to_name: 'Customer',
-    to_email: bookingData.contact,
-    bookingId: bookingData._id.slice(-10),
+    to_email: response.contact,
+    bookingId: response._id.slice(-10),
     carModel: 'Phoenix',
-    date: formatDate(bookingData.bookingTime),
-    time: formatTime(bookingData.bookingTime),
-    address: `${bookingData.location.name}, ${bookingData.location.address}, ${bookingData.location.city}, ${bookingData.location.state}, ${bookingData.location.pincode || "400020"}`,
+    date: formatDate(response.bookingTime),
+    time: formatTime(response.bookingTime),
+    //address: `${response.location.address}, ${response.location.city}, ${response.location.state}, ${response.location.pincode || "400020"}`,
     exteriorColor: bookingData.customization.exteriorColor.value,
     interiorColor: bookingData.customization.interiorColor.value,
     wheel: bookingData.customization.wheelColor.value,
     glass: bookingData.customization.glass.value || "Tinted Glass",
-    range: bookingData?.customization?.range?.value ? bookingData?.customization?.range?.value:"Long Range",
+    range: bookingData?.customization?.range?.value ? response?.customization?.range?.value:"Long Range",
     estimatedPrice:bookingData?.estimatedPrice
   };
 };
 
-const sendEmail = async (bookingData) => {
-  const templateParams = createTemplateParams(bookingData);
-
+const sendEmail = async (response) => {
+  const templateParams = createTemplateParams(response);
+  console.log(response);
   try {
     const response = await emailjs.send('service_5qfsdxa', 'template_e4p9166', templateParams, 'qVtlGMpfckPpBoe7-');
     console.log('Email sent successfully:', response);

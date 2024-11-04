@@ -36,7 +36,7 @@ const PreBookingWithoutConfig = () => {
     });
     const [estimatedPrice, setEstimatedPrice] = useState(0);
     const { car } = location.state || {};
-
+    console.log("CAR ",car);
     useEffect(() => {
         if (selectedColor) {
             setCarImage(`/assets/images/cars/${selectedColor.toLowerCase()}_left.png`);
@@ -209,8 +209,19 @@ const PreBookingWithoutConfig = () => {
             navigate('/signup');
             return;
         }
-        console.log(customization)
+        console.log("CUTOMIZATION ",customization)
+        console.log("Car id ",car.carId);
         const bookingData = {
+            userId: localStorage.getItem('USER'),
+            carId: car._id,
+            bookingTime: new Date(),
+            contact: localStorage.getItem('email') || localStorage.getItem('phone'),
+            customization: customization,
+            //pincode: car?.pincode || localStorage.getItem('zip'),
+            estimatedPrice: estimatedPrice
+        };
+        console.log(bookingData);
+        /*const bookingData = {
             userId: localStorage.getItem('USER'),
             carId: car.carId,
             bookingTime: new Date(),
@@ -218,8 +229,9 @@ const PreBookingWithoutConfig = () => {
             customization: customization,
             pincode: car.pincode || localStorage.getItem('zip'),
             estimatedPrice: estimatedPrice
-        };
+        };*/
         setBookingDetails(bookingData);
+        localStorage.setItem("bookingData",JSON.stringify(bookingData));
         try {
             const response = await bookCar(bookingData);
             console.log('booking data',response)

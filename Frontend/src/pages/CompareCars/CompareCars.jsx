@@ -16,18 +16,21 @@ const CompareCars = () => {
   useEffect(() => {
     const fetchModels = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/car/models');
+        const response = await axios.get('http://localhost:3000/api/car/models');
+        
+        console.log(response.data);
         setModels(response.data);
       } catch (err) {
         setError('Error fetching car models');
       }
     };
-
+    
     fetchModels();
   }, []);
 
   const handleCompare = async () => {
     if (!model1 || !model2 || model1 === model2) {
+      console.log(model1,model2)
       setError('Please select two different car models for comparison.');
       return;
     }
@@ -39,7 +42,7 @@ const CompareCars = () => {
       setError('');
     } catch (err) {
       setError('Error comparing car models');
-      console.error(err);
+      console.error("ERROR",err);
     }
   };
  
@@ -64,7 +67,7 @@ const CompareCars = () => {
           <select className="car-compare-container__select-select" style={{ display: 'block' }} value={model1} onChange={(e) => setModel1(e.target.value)}>
             <option value="">Select Model 1</option>
             {models.map((model) => (
-              <option key={model.modelId} value={model.modelId}>{model.name}</option>
+              <option key={model.name} value={model.modelId}>{model.name}</option>
             ))}
           </select>
           {comparisonData && (
@@ -76,7 +79,7 @@ const CompareCars = () => {
                 <div className="car-compare-container__result__item-item">
                   <div className="car-compare-container__result__item-item">
                     <div className="car-compare-container__standard-color">
-                      {comparisonData.customizableOptions1.find(option => option.name === 'Exterior Color')?.options.map(color => (
+                      {comparisonData?.customizableOptions1.find(option => option.name === 'Exterior Color')?.options.map(color => (
                         <div
                           key={color.code}
                           className="color-swatch"
@@ -88,14 +91,14 @@ const CompareCars = () => {
                   </div>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
-                  <p className='car-compare-container__result__item__basePrice'>From ₹{comparisonData.basePrice1}.00*</p><br />
+                  <p className='car-compare-container__result__item__basePrice'>From ₹{comparisonData?.basePrice1}.00*</p><br />
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" class="bi bi-luggage" viewBox="0 0 16 16">
                     <path d="M2.5 1a.5.5 0 0 0-.5.5V5h-.5A1.5 1.5 0 0 0 0 6.5v7a1.5 1.5 0 0 0 1 1.415v.335a.75.75 0 0 0 1.5 0V15H4v-1H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V7h1v-.5A1.5 1.5 0 0 0 6.5 5H6V1.5a.5.5 0 0 0-.5-.5zM5 5H3V2h2z" />
                     <path d="M3 7.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0zM11 6a1.5 1.5 0 0 1 1.5 1.5V8h2A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 14.5v-5A1.5 1.5 0 0 1 6.5 8h2v-.5A1.5 1.5 0 0 1 10 6zM9.5 7.5V8h2v-.5A.5.5 0 0 0 11 7h-1a.5.5 0 0 0-.5.5M6 9.5v5a.5.5 0 0 0 .5.5H7V9h-.5a.5.5 0 0 0-.5.5m7 5.5V9H8v6zm1.5 0a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H14v6z" />
                   </svg>
-                  <p>Spacious cargo capacity of {comparisonData.cargoCapacity1} cu. ft.</p>
+                  <p>Spacious cargo capacity of {comparisonData?.cargoCapacity1} cu. ft.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg fill="#000000" height="30" width="30" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -118,14 +121,14 @@ const CompareCars = () => {
 	c-0.045,0-0.09,0-0.136-0.001H82.249v16.928c0,9.334,7.594,16.928,16.928,16.928h155.569c9.336,0,16.931-7.594,16.931-16.928
 	V267.958z"/>
                   </svg>
-                  <p>Comfortably accommodates up to {comparisonData.seatingCapacity1} passengers.</p>
+                  <p>Comfortably accommodates up to {comparisonData?.seatingCapacity1} passengers.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" class="bi bi-speedometer2" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z" />
                     <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3" />
                   </svg>
-                  <p>Accelerates from 0 to 60 mph in {comparisonData.acceleration1} seconds.</p>
+                  <p>Accelerates from 0 to 60 mph in {comparisonData?.acceleration1} seconds.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,14 +141,14 @@ const CompareCars = () => {
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24Z" fill="#2F88FF" />
                     <path d="M32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <p>{comparisonData.steering1} Steering</p>
+                  <p>{comparisonData?.steering1} Steering</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" class="bi bi-ev-station" viewBox="0 0 16 16">
                     <path d="M3.5 2a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5zm2.131 10.46H4.14v-.893h1.403v-.505H4.14v-.855h1.49v-.54H3.485V13h2.146zm1.316.54h.794l1.106-3.333h-.733l-.74 2.615h-.031l-.747-2.615h-.764z" />
                     <path d="M3 0a2 2 0 0 0-2 2v13H.5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1H11v-4a1 1 0 0 1 1 1v.5a1.5 1.5 0 0 0 3 0V4a.5.5 0 0 0-.146-.354l-.5-.5a.5.5 0 0 0-.707 0l-.5.5A.5.5 0 0 0 13 4v3c0 .71.38 1.096.636 1.357l.007.008c.253.258.357.377.357.635v3.5a.5.5 0 1 1-1 0V12a2 2 0 0 0-2-2V2a2 2 0 0 0-2-2zm7 2v13H2V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
                   </svg>
-                  <p>{comparisonData.chargerType1}</p>
+                  <p>{comparisonData?.chargerType1}</p>
                 </div>
               </div>
             </div>
@@ -155,7 +158,7 @@ const CompareCars = () => {
           <select className="car-compare-container__select-select" style={{ display: 'block' }} value={model2} onChange={(e) => setModel2(e.target.value)}>
             <option value="">Select Model 2</option>
             {models.filter((model) => model.modelId !== model1).map((model) => (
-              <option key={model.modelId} value={model.modelId}>{model.name}</option>
+              <option key={model.name} value={model.modelId}>{model.name}</option>
             ))}
           </select>
           {comparisonData && (
@@ -168,7 +171,7 @@ const CompareCars = () => {
                 <div className="car-compare-container__result__item-item">
                   <div className="car-compare-container__result__item-item">
                     <div className="car-compare-container__standard-color">
-                      {comparisonData.customizableOptions2.find(option => option.name === 'Exterior Color')?.options.map(color => (
+                      {comparisonData?.customizableOptions2.find(option => option.name === 'Exterior Color')?.options.map(color => (
                         <div
                           key={color.code}
                           className="color-swatch"
@@ -181,14 +184,14 @@ const CompareCars = () => {
                   </div>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
-                  <p className='car-compare-container__result__item__basePrice'>From ₹{comparisonData.basePrice2}.00*</p><br />
+                  <p className='car-compare-container__result__item__basePrice'>From ₹{comparisonData?.basePrice2}.00*</p><br />
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" class="bi bi-luggage" viewBox="0 0 16 16">
                     <path d="M2.5 1a.5.5 0 0 0-.5.5V5h-.5A1.5 1.5 0 0 0 0 6.5v7a1.5 1.5 0 0 0 1 1.415v.335a.75.75 0 0 0 1.5 0V15H4v-1H1.5a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V7h1v-.5A1.5 1.5 0 0 0 6.5 5H6V1.5a.5.5 0 0 0-.5-.5zM5 5H3V2h2z" />
                     <path d="M3 7.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0zM11 6a1.5 1.5 0 0 1 1.5 1.5V8h2A1.5 1.5 0 0 1 16 9.5v5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 14.5v-5A1.5 1.5 0 0 1 6.5 8h2v-.5A1.5 1.5 0 0 1 10 6zM9.5 7.5V8h2v-.5A.5.5 0 0 0 11 7h-1a.5.5 0 0 0-.5.5M6 9.5v5a.5.5 0 0 0 .5.5H7V9h-.5a.5.5 0 0 0-.5.5m7 5.5V9H8v6zm1.5 0a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5H14v6z" />
                   </svg>
-                  <p>Spacious cargo capacity of {comparisonData.cargoCapacity2} cu. mt.</p>
+                  <p>Spacious cargo capacity of {comparisonData?.cargoCapacity2} cu. mt.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg fill="#000000" height="30" width="30" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -211,14 +214,14 @@ const CompareCars = () => {
 	c-0.045,0-0.09,0-0.136-0.001H82.249v16.928c0,9.334,7.594,16.928,16.928,16.928h155.569c9.336,0,16.931-7.594,16.931-16.928
 	V267.958z"/>
                   </svg>
-                  <p>Comfortably accommodates up to {comparisonData.seatingCapacity2} passengers.</p>
+                  <p>Comfortably accommodates up to {comparisonData?.seatingCapacity2} passengers.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" class="bi bi-speedometer2" viewBox="0 0 16 16">
                     <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z" />
                     <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3" />
                   </svg>
-                  <p>Accelerates from 0 to 60 mph in {comparisonData.acceleration2} seconds.</p>
+                  <p>Accelerates from 0 to 60 mph in {comparisonData?.acceleration2} seconds.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -231,14 +234,14 @@ const CompareCars = () => {
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24Z" fill="#2F88FF" />
                     <path d="M32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24Z" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <p>{comparisonData.steering2} Steering.</p>
+                  <p>{comparisonData?.steering2} Steering.</p>
                 </div>
                 <div className="car-compare-container__result__item-item-col">
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#000000" class="bi bi-ev-station" viewBox="0 0 16 16">
                     <path d="M3.5 2a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5zm2.131 10.46H4.14v-.893h1.403v-.505H4.14v-.855h1.49v-.54H3.485V13h2.146zm1.316.54h.794l1.106-3.333h-.733l-.74 2.615h-.031l-.747-2.615h-.764z" />
                     <path d="M3 0a2 2 0 0 0-2 2v13H.5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1H11v-4a1 1 0 0 1 1 1v.5a1.5 1.5 0 0 0 3 0V4a.5.5 0 0 0-.146-.354l-.5-.5a.5.5 0 0 0-.707 0l-.5.5A.5.5 0 0 0 13 4v3c0 .71.38 1.096.636 1.357l.007.008c.253.258.357.377.357.635v3.5a.5.5 0 1 1-1 0V12a2 2 0 0 0-2-2V2a2 2 0 0 0-2-2zm7 2v13H2V2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
                   </svg>
-                  <p>{comparisonData.chargerType2}</p>
+                  <p>{comparisonData?.chargerType2}</p>
                 </div>
               </div>
             </div>

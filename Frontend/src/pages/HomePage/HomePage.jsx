@@ -17,8 +17,8 @@ const HomePage = () => {
     const fetchCars = async () => {
       try {
         const data = await getAllCars();
-        console.log("Car details:", data[0]);
-        localStorage.setItem("CAR", JSON.stringify(data[0]));
+        console.log("Car details:", data);//data[0]
+        localStorage.setItem("CAR", JSON.stringify(data));//data[0]
         setCars(data);
       } catch (error) {
         console.error("Error fetching cars:", error);
@@ -116,7 +116,7 @@ const HomePage = () => {
             </button>
           </div>
           <div className="home-page-container__explore-model-list" ref={scrollContainerRefExplore}>
-            {cars.map(car => (
+            {cars?.map(car => ( 
               <div className="home-page-container__explore-model-item__container">
                 <div key={car.carId} className="home-page-container__explore-model-item">
                   <img src={`/assets/images/cars/${car.customizableOptions[0].options[0].name.toLowerCase()}_left.png`} alt="Car Image" className="car-image" />

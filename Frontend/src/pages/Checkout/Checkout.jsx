@@ -84,7 +84,7 @@ const Checkout = () => {
         }
         const bookingData = {
             userId: localStorage.getItem('USER'),
-            carId: carData.carId,
+            carId: carData._id,
             bookingTime: new Date(),
             paymentMade: false,
             contact: userDetails.email,
