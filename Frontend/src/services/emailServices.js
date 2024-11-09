@@ -46,7 +46,7 @@ const createTemplateParams = (response) => {
     to_name: 'Customer',
     to_email: response.contact,
     bookingId: response._id.slice(-10),
-    carModel: 'Phoenix',
+    carModel: 'Auto 3D',
     date: formatDate(response.bookingTime),
     time: formatTime(response.bookingTime),
     //address: `${response.location.address}, ${response.location.city}, ${response.location.state}, ${response.location.pincode || "400020"}`,

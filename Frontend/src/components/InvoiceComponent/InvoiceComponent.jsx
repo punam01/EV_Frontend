@@ -79,7 +79,7 @@ const InvoiceComponent = ({bookingData}) => {
         doc.setFontSize(12);
         doc.text(totalPriceTextA, padding, doc.previousAutoTable.finalY + 50);
 
-        doc.save(`phoenix_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
+        doc.save(`Auto 3D_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
     };
 
     return (

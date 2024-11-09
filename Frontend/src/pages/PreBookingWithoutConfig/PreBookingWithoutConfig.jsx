@@ -200,7 +200,7 @@ const PreBookingWithoutConfig = () => {
             }
         });
 
-        doc.save(`phoenix_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
+        doc.save(`Auto 3D_invoice_${localStorage.getItem("name") || 'user'}.pdf`);
     };
 
     const handleNextClick = async () => {

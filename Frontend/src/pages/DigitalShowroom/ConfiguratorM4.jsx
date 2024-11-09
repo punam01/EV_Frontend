@@ -177,7 +177,7 @@ const ConfiguratorM4 = ({ onSelectColor, onSelectIntColor, onSelectWheel, onSele
 
   return (
     <div className='config-container'>
-      <h1 className='car-name-container'>{carData?.name || 'Phoenix'}</h1>
+      <h1 className='car-name-container'>{carData?.name || 'Auto 3D'}</h1>
       <div className='configurator'>
         <div className="configurator-content">
           <div className="content-item">

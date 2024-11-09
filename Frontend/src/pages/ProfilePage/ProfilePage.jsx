@@ -317,7 +317,7 @@ const ProfilePage = () => {
                     )}
                 </div></>) :
                 <div className='welcome-profile-page-container'>
-                    <h1 className='welcome-profile-page-container__h1'>Welcome to Phoenix</h1>
+                    <h1 className='welcome-profile-page-container__h1'>Welcome to Auto 3D</h1>
                     <p className='welcome-profile-page-container__p'>Register and take advantage of the benefits:</p>
                     <ul className='welcome-profile-page-container__ul'>
                         <li className='welcome-profile-page-container__li'>

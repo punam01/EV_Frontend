@@ -81,10 +81,10 @@ const HomePage = () => {
     <div className="home-page-container">
       <div className="home-page-container__header-section">
         <div className="header-section__name">
-          Phoenix
+          Auto <span style={{color:"#31A93E"}}>3D.</span>
         </div>
         <div className="header-section__tagline">
-          The Automotive Design and Drive.
+          The Automotive <span style={{color:"#31A93E"}}>Design</span> and Drive.
         </div>
       </div>
       <div className="home-page-container__video-container__main">

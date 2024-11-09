@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 
 const defaultCar = {
   _id: "668502e0e0a58a6efcf4ac2d",
-  modelId: "Phoenix-M60",
-  name: "Phoenix-i5",
+  modelId: "Auto 3D-M60",
+  name: "Auto 3D-i5",
   basePrice: 70000,
   range: "LR",
   topSpeed: 182,
